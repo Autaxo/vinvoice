@@ -1,0 +1,27 @@
+{
+  "featured": {
+    "cii": "sale-25a.fx.cii.xml",
+    "ubl": "sale-25a.peppol.ubl.xml"
+  },
+  "carriers": {
+    "fx": "Factur-X 1.09.2 / ZUGFeRD, EN 16931 profile",
+    "ext": "Factur-X 1.09.2 / ZUGFeRD, EXTENDED profile",
+    "xr": "XRechnung 3.0.2",
+    "peppol": "Peppol BIS Billing 3.0"
+  },
+  "scenarios": {
+    "sale-25a": "Used car sold between two dealers under the margin scheme (second-hand goods), conformance level 2.",
+    "sale-25a-level1": "The same margin-scheme sale at level 1: vehicle rows only, no line object identifier (BT-128).",
+    "sale-25a-xborder": "Margin-scheme sale of a used car to a dealer in another EU member state.",
+    "credit-25a": "Credit note cancelling the margin-scheme sale.",
+    "export-25a": "Margin-scheme export of a used car to a buyer outside the EU (VAT category G).",
+    "new-intra-eu": "New means of transport supplied VAT-exempt to a business buyer in another member state; vehicle already registered, so the date of first entry into service is given.",
+    "new-intra-eu-unregistered": "New means of transport supplied VAT-exempt to a business buyer in another member state; unregistered vehicle.",
+    "sale-regular-odometer-defective": "Used car sold under normal VAT with a defective odometer: the status is stated and no reading is given.",
+    "workshop": "Workshop invoice: a zero-value vehicle reference line with the rows, labour and parts lines linked to the vehicle by BT-128, and the VIN in BT-18.",
+    "level0": "Conformance level 0: the vehicle is identified by BT-128 only, without any rows.",
+    "neg-margin-k": "Negative control for the checker: margin-scheme flag on an intra-EU exempt line (category K) and further faults. Valid EN 16931, not a valid VINvoice line.",
+    "neg-profile": "Negative control for the checker: malformed rows (statutory key without its label, duplicates, grammar violations).",
+    "neg-profile2": "Negative control for the checker: reader edge cases (unknown major version, unknown key, both odometer units, unmarked rows)."
+  }
+}

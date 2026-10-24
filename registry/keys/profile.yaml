@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.profile
+tier: core
+status: draft
+labelEn: Vehicle data standard
+labelDe: Fahrzeugdaten-Standard
+definition: Marker that makes an invoice line a vehicle line and states the major.minor version of
+  the convention. It stands in for a BT-24 announcement, which a Factur-X hybrid (closed list) and
+  Peppol (fixed prefix, R004) cannot carry.
+valueFormat: ^vehicle/[1-9][0-9]*[.](0|[1-9][0-9]*)$, e.g. vehicle/1.0 (no patch number, never a URL)
+grammar: '^vehicle/[1-9][0-9]*[.](0|[1-9][0-9]*)$'
+unit: null
+codeList: none (version token)
+conditionality: MUST, exactly once, on every vehicle line, SHOULD be the first row; MUST NOT appear on other lines
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'Fahrzeugdaten-Standard [vehicle.profile]', BT-161 'vehicle/1.0'"
+anchors: "Stands in for BT-24 (Factur-X EN16931 codedb closed list; PEPPOL-EN16931-R004). Precedent
+  for a machine token in BT-160: KoSIT CIUS XRechnung CVD v0.9 attribute 'cva'. Same major.minor
+  practice as XRechnung identifiers."

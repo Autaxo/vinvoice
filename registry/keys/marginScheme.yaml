@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.marginScheme
+tier: core
+status: provisional
+labelEn: Margin scheme (second-hand goods)
+labelDe: Differenzbesteuerung
+definition: The vehicle on this line is supplied under the margin scheme for second-hand goods (Art.
+  311-325 Directive 2006/112/EC; § 25a UStG). A hint for receivers (no input VAT deduction,
+  resaleable under the margin scheme) that the 2017 VAT model cannot express. It never replaces the
+  VAT category, BT-120 or the BG-1 mention.
+valueFormat: true (row absent otherwise)
+grammar: '^(true)$'
+unit: null
+codeList: none
+conditionality: MUST in 1.x on every margin-scheme vehicle line under the 2017 model (category E for
+  domestic and intra-EU margin supplies, G for exports, Art. 321 Directive / § 25a Abs. 5 S. 2
+  UStG); MAY with category F (2026 model); MUST NOT appear on a line with category K (Art. 313(2)
+  Directive; § 25a Abs. 7 Nr. 1 b and Nr. 3 UStG; V-07 error). Provisional until a written
+  tax-adviser sign-off of the encoding; that sign-off is a condition of the v1.0 freeze
+statutory: true
+repeatable: false
+signOff: tax adviser
+carrier: "BG-32: BT-160 'Differenzbesteuerung [vehicle.marginScheme]', BT-161 'true'. Always with
+  the BG-1 note 'Gebrauchtgegenstände/Sonderregelung' (§ 14a Abs. 6 UStG; Art. 226(14) mention
+  'Margin scheme — Second-hand goods' in other language versions), BT-151/BT-118 = E, G or F, and
+  the BT-120 text"
+anchors: Art. 226(14), 313, 321, 325 Directive 2006/112/EC (consolidated 14.04.2025); §§ 14a Abs. 6,
+  25a UStG; EN 16931-1:2026 category F; PL P_PMarzy_3_1; HU marginSchemeIndicator SECOND_HAND; IT
+  Natura N5 + RF14; ES Veri*Factu ClaveRegimen 03.

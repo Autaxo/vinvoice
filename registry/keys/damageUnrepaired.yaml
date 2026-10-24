@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.damageUnrepaired
+tier: optional
+status: provisional
+labelEn: Unrepaired damage declared
+labelDe: Unreparierter Schaden (Angabe Verkäufer)
+definition: Issuer's declaration that known damage is not repaired ('true') or that it knows of no
+  unrepaired damage ('false'). An absent row means no statement.
+valueFormat: true | false
+grammar: '^(true|false)$'
+unit: null
+codeList: none
+conditionality: MAY on used supply; provisional until a legal review (a stated value can become an
+  agreed quality, Beschaffenheitsvereinbarung)
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'Unreparierter Schaden (Angabe Verkäufer) [vehicle.damageUnrepaired]'"
+anchors: Own definition.

@@ -1,0 +1,16 @@
+---
+// A registry key, linked to its term page. Pass the term, never a spelled-out key name.
+// Rendered as one HTML string so that no template whitespace ends up next to punctuation.
+import { termUrl, escapeHtml, type Term } from '../lib/registry';
+
+interface Props {
+  t: Term;
+  value?: string;
+}
+const { t, value } = Astro.props;
+const html =
+  `<a href="${termUrl(t)}"><code>${t.key}</code></a>` +
+  (value === undefined ? '' : ` = <code>${escapeHtml(value)}</code>`);
+---
+
+<Fragment set:html={html} />

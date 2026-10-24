@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.odometerStatus
+tier: recommended
+status: draft
+labelEn: Odometer status
+labelDe: Kilometerstand-Status
+definition: Qualifies the odometer reading. displayed = the reading as shown by the instrument,
+  total distance not verified by the issuer (default meaning when the row is absent). replaced =
+  instrument or display replaced, the reading does not show the total distance. rolled-over = the
+  counter has wrapped. defective = no reading possible. unknown = no reading available to the
+  issuer. A 'verified' status is deliberately not offered in 1.0 (warranty exposure, pending legal
+  review).
+valueFormat: one token
+grammar: '^(displayed|replaced|rolled-over|defective|unknown)$'
+unit: null
+codeList: "VEH-ODOMETER-STATUS 1.0: displayed, replaced, rolled-over, defective, unknown"
+conditionality: SHOULD whenever the reading is not a plain displayed reading; MUST be defective or
+  unknown when an odometer key is required but no reading is given; MUST NOT be defective or unknown
+  together with an odometer value (V-17)
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'Kilometerstand-Status [vehicle.odometerStatus]', BT-161 'replaced'"
+anchors: Own definition; legal review pending (an odometer statement in the leading structured part
+  can become an agreed quality, § 434 BGB).

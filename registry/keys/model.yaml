@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.model
+tier: core
+status: draft
+labelEn: Model
+labelDe: Modell
+definition: Commercial name of the model as in registration field D.3 / CoC item 0.2.1 (e.g. Golf),
+  without make and trim. The full marketing name stays in BT-153.
+valueFormat: text, 1-60 characters (text rules as vehicle.make)
+grammar: '^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,60}$'
+unit: null
+codeList: none
+conditionality: MUST whenever known, all roles
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'Modell [vehicle.model]'. EXTENDED MAY also mirror it in ram:ModelName"
+anchors: EU registration code D.3; CoC item 0.2.1.

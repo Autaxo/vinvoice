@@ -1,0 +1,379 @@
+{
+  "source": "v1",
+  "validators": [
+    {
+      "id": "xsd-fx",
+      "name": "Factur-X 1.09.2 EN 16931 XSD",
+      "kind": "xsd"
+    },
+    {
+      "id": "xsd-d16b",
+      "name": "UN/CEFACT CII D16B XSD",
+      "kind": "xsd"
+    },
+    {
+      "id": "xsd-ext",
+      "name": "Factur-X 1.09.2 EXTENDED XSD",
+      "kind": "xsd"
+    },
+    {
+      "id": "xsd-ubl",
+      "name": "UBL 2.1 Invoice / CreditNote XSD",
+      "kind": "xsd"
+    },
+    {
+      "id": "cen",
+      "name": "CEN EN 16931 validation 1.3.17",
+      "kind": "svrl"
+    },
+    {
+      "id": "fx",
+      "name": "Factur-X 1.09.2 EN 16931 schematron",
+      "kind": "svrl"
+    },
+    {
+      "id": "fxext",
+      "name": "Factur-X 1.09.2 EXTENDED schematron",
+      "kind": "svrl"
+    },
+    {
+      "id": "xr",
+      "name": "KoSIT XRechnung 3.0.2 schematron 2.6.0",
+      "kind": "svrl"
+    },
+    {
+      "id": "peppol",
+      "name": "Peppol BIS Billing 3.0.20",
+      "kind": "svrl"
+    }
+  ],
+  "files": {
+    "credit-25a.fx.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 131,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fx": {
+        "firedRules": 139,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "credit-25a.peppol.ubl.xml": {
+      "xsd-ubl": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 88,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "peppol": {
+        "firedRules": 45,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "export-25a.fx.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 95,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fx": {
+        "firedRules": 102,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "level0.fx.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 73,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fx": {
+        "firedRules": 81,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "neg-margin-k.fx.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 95,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fx": {
+        "firedRules": 104,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "neg-profile.fx.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 125,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fx": {
+        "firedRules": 134,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "neg-profile2.fx.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 183,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fx": {
+        "firedRules": 195,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "new-intra-eu-unregistered.fx.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 103,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fx": {
+        "firedRules": 112,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "new-intra-eu.fx.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 107,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fx": {
+        "firedRules": 116,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "sale-25a-level1.fx.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 122,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fx": {
+        "firedRules": 131,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "sale-25a-xborder.peppol.ubl.xml": {
+      "xsd-ubl": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 86,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "peppol": {
+        "firedRules": 37,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "sale-25a.ext.cii.xml": {
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "xsd-ext": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 127,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fxext": {
+        "firedRules": 138,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "sale-25a.fx.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 127,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fx": {
+        "firedRules": 136,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "sale-25a.peppol.ubl.xml": {
+      "xsd-ubl": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 86,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "peppol": {
+        "firedRules": 45,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "sale-25a.xr.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 133,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "xr": {
+        "firedRules": 23,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "sale-25a.xr.ubl.xml": {
+      "xsd-ubl": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 86,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "xr": {
+        "firedRules": 16,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "sale-regular-odometer-defective.fx.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 101,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fx": {
+        "firedRules": 109,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "workshop.fx.cii.xml": {
+      "xsd-fx": {
+        "errors": 0
+      },
+      "xsd-d16b": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 141,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "fx": {
+        "firedRules": 151,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    },
+    "workshop.peppol.ubl.xml": {
+      "xsd-ubl": {
+        "errors": 0
+      },
+      "cen": {
+        "firedRules": 86,
+        "failedAsserts": 0,
+        "reports": 0
+      },
+      "peppol": {
+        "firedRules": 45,
+        "failedAsserts": 0,
+        "reports": 0
+      }
+    }
+  }
+}

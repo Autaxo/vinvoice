@@ -1,0 +1,79 @@
+name: Propose a key
+description: Propose a new VINvoice key for the registry.
+title: 'Key proposal: '
+labels: ['key proposal']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before you start, check the vocabulary (https://vinvoice.org/vocabulary/) for a key with the same meaning.
+        Proposals are decided by lazy consensus: 14 days, 28 days for the core tier.
+  - type: input
+    id: local-name
+    attributes:
+      label: Local name
+      description: Lower camel case, after the prefix. Put the unit at the end for quantities (e.g. odometerKm).
+      placeholder: e.g. towingCapacityKg
+    validations:
+      required: true
+  - type: input
+    id: label-en
+    attributes:
+      label: Label (English)
+    validations:
+      required: true
+  - type: input
+    id: label-de
+    attributes:
+      label: Label (German)
+    validations:
+      required: true
+  - type: textarea
+    id: definition
+    attributes:
+      label: Definition
+      description: What the value means, precisely enough that two systems write the same value.
+    validations:
+      required: true
+  - type: textarea
+    id: value
+    attributes:
+      label: Value format
+      description: Grammar (regular expression), unit (UN/ECE Rec. 20 code) or code list with its tokens, and one example value.
+    validations:
+      required: true
+  - type: textarea
+    id: conditions
+    attributes:
+      label: When is it written?
+      description: Required, recommended or optional, and for which roles (supply, service, ...).
+    validations:
+      required: true
+  - type: textarea
+    id: anchors
+    attributes:
+      label: Anchors
+      description: Sources that fix the meaning, e.g. a field of the EU registration certificate, an item of the certificate of conformity, a provision of law, or an existing standard.
+    validations:
+      required: true
+  - type: textarea
+    id: implementers
+    attributes:
+      label: Implementers
+      description: Two independent organisations that will write or read the key (three for the core tier).
+    validations:
+      required: true
+  - type: dropdown
+    id: tier
+    attributes:
+      label: Proposed tier
+      options: [optional, recommended, core]
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Licence
+      options:
+        - label: I contribute this proposal under CC0-1.0 (registry data) and CC-BY-4.0 (text).
+          required: true

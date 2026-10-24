@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.batteryPassport
+tier: optional
+status: provisional
+labelEn: Battery passport link
+labelDe: Batteriepass
+definition: HTTPS link to the battery passport of the traction battery, i.e. the content of the
+  passport QR code (Reg. (EU) 2023/1542 Art. 77, applicable from 2027-02-18 for EV batteries). A
+  link only; no passport content is copied into the invoice.
+valueFormat: ^https://[^\s]{1,240}$
+grammar: '^https://[^\s]{1,240}$'
+unit: null
+codeList: none
+conditionality: MAY for battery-electric and plug-in hybrid vehicles whose battery has a passport
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'Batteriepass [vehicle.batteryPassport]'"
+anchors: Reg. (EU) 2023/1542 Art. 77 (passport, QR code, ISO/IEC 15459 identifier).

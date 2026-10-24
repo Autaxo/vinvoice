@@ -1,0 +1,208 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Key from '../components/Key.astro';
+import KeyList from '../components/KeyList.astro';
+import {
+  terms,
+  codeLists,
+  codeListAnchor,
+  codeListKind,
+  unitInfo,
+  isListValue,
+  isBoolean,
+  linkKeys,
+  type CodeList,
+} from '../lib/registry';
+
+const external = terms.filter((t) => codeListKind(t) === 'external');
+
+const units = new Map<
+  string,
+  { name: string; code: string | null; note?: string; terms: typeof terms }
+>();
+for (const t of terms) {
+  const u = unitInfo(t);
+  if (!u) continue;
+  const id = u.code ?? u.name;
+  const seen = units.get(id);
+  if (seen) seen.terms.push(t);
+  else units.set(id, { ...u, terms: [t] });
+}
+const booleans = terms.filter(isBoolean);
+
+const usedBy = (cl: CodeList) =>
+  `Used by ${linkKeys(cl.terms.map((t) => t.key).join(', '))}.` +
+  (cl.terms.some(isListValue)
+    ? ` The value is a comma-separated list without blanks, for example <code>${cl.tokens.slice(0, 2).join(',')}</code>.`
+    : '');
+---
+
+<Base
+  title="Code lists"
+  description="Closed token lists defined by VINvoice, units of measure and the external code lists that VINvoice values refer to."
+>
+  <PageHead
+    title="Code lists"
+    lead="Values from a closed list are lower-case tokens. Tokens are never translated; a viewer may show its own wording next to them."
+  />
+
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">On this page</h2>
+    <ol>
+      {
+        codeLists.map((cl) => (
+          <li>
+            <a href={`#${codeListAnchor(cl.id)}`}>{cl.id}</a>
+          </li>
+        ))
+      }
+      <li><a href="#units">Units of measure</a></li>
+      <li><a href="#booleans">Flags</a></li>
+      <li><a href="#external">External code lists</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="lists">Lists defined by VINvoice</h2>
+  <div class="prose">
+    <p>
+      A minor release may add tokens to these lists; receivers treat a token they do not know like a
+      missing value. Tokens are never removed or redefined.
+    </p>
+  </div>
+
+  {
+    codeLists.map((cl) => (
+      <section aria-labelledby={codeListAnchor(cl.id)}>
+        <h3 id={codeListAnchor(cl.id)}>
+          <code>{cl.id}</code>
+          {cl.version && <span class="muted"> {cl.version}</span>}{' '}
+          {cl.provisional && <span class="tag provisional">provisional</span>}
+        </h3>
+        <p set:html={usedBy(cl)} />
+        <ul class="tokens" aria-label={`Tokens of ${cl.id}`}>
+          {cl.tokens.map((tok) => (
+            <li>
+              <code>{tok}</code>
+            </li>
+          ))}
+        </ul>
+        <details>
+          <summary class="small">Definition and source note</summary>
+          {cl.terms.map((t) => (
+            <p class="small" set:html={linkKeys(t.definition)} />
+          ))}
+          <p class="small muted" set:html={linkKeys(cl.source)} />
+        </details>
+      </section>
+    ))
+  }
+
+  <h2 id="units">Units of measure</h2>
+  <div class="prose">
+    <p>
+      Each quantity has exactly one unit, fixed by its key and named with its UN/ECE Recommendation
+      20 code. The value is a bare number. When EN 16931-1:2026 adds a unit to item attributes
+      (BT-212), the code below is the one to use.
+    </p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Rec. 20 code</th>
+          <th scope="col">Unit</th>
+          <th scope="col">Keys</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          [...units.values()].map((u) => (
+            <tr>
+              <td>{u.code ? <code>{u.code}</code> : <span class="muted">none</span>}</td>
+              <td>
+                {u.name}
+                {u.note && <span class="small muted"> ({u.note})</span>}
+              </td>
+              <td>
+                <KeyList terms={u.terms} />
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="booleans">Flags</h2>
+  <div class="prose">
+    <p>
+      Flags take the literal values <code>true</code> or <code>false</code>. Some flags only allow
+      <code>true</code>; the row is then omitted when the statement does not apply.
+    </p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Key</th>
+          <th scope="col">Allowed values</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          booleans.map((t) => (
+            <tr>
+              <td>
+                <Key t={t} />
+              </td>
+              <td>
+                {t.grammar.includes('false') ? (
+                  <>
+                    <code>true</code>, <code>false</code>
+                  </>
+                ) : (
+                  <code>true</code>
+                )}
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="external">External code lists</h2>
+  <div class="prose">
+    <p>
+      These keys take their values from lists that VINvoice does not maintain. VINvoice only fixes
+      the written form, given as a pattern.
+    </p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Key</th>
+          <th scope="col">List or source</th>
+          <th scope="col">Pattern</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          external.map((t) => (
+            <tr>
+              <td>
+                <Key t={t} />
+              </td>
+              <td set:html={linkKeys(t.codeList)} />
+              <td class="wrapcode">
+                <code>{t.grammar}</code>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</Base>

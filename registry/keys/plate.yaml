@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.plate
+tier: recommended
+status: draft
+labelEn: Registration plate
+labelDe: Kennzeichen
+definition: Registration number as in registration field A, without the country sign. It identifies
+  the registration, not the vehicle, and is personal data when it can be linked to a natural person.
+valueFormat: upper case ^[A-ZÄÖÜ0-9][A-ZÄÖÜ0-9 -]{0,14}$ as printed (e.g. XX-VE 1); receivers
+  compare after removing blanks and hyphens
+grammar: '^[A-ZÄÖÜ0-9][A-ZÄÖÜ0-9 -]{0,14}$'
+unit: null
+codeList: none
+conditionality: SHOULD on roles service, lease and rental when the vehicle is registered; on other
+  roles only when the receiver needs it (data minimisation); omit on invoices to natural persons
+  unless required
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'Kennzeichen [vehicle.plate]'. Only when no VIN is known, BT-128 MAY carry
+  the plate with scheme ABZ (as the CEN example huf_example_cii.xml does); the row then repeats it
+  (V-18)"
+anchors: EU registration code A; UNTDID 1153 ABZ; PL plate (optional).

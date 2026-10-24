@@ -1,0 +1,820 @@
+{
+ "credit-25a.fx.cii.xml": {
+  "file": "credit-25a.fx.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH016N0000001",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH016N0000001",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.variant": "2.0 TDI Life",
+     "vehicle.condition": "used",
+     "vehicle.firstRegistration": "2022-03-18",
+     "vehicle.odometerKm": "48200",
+     "vehicle.powerKw": "110",
+     "vehicle.displacementCm3": "1968",
+     "vehicle.fuel": "diesel",
+     "vehicle.colour": "grey",
+     "vehicle.inspectionDue": "2027-03",
+     "vehicle.marginScheme": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "credit-25a.peppol.ubl.xml": {
+  "file": "credit-25a.peppol.ubl.xml",
+  "syntax": "UBL",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH016N0000001",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH016N0000001",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.variant": "2.0 TDI Life",
+     "vehicle.condition": "used",
+     "vehicle.firstRegistration": "2022-03-18",
+     "vehicle.odometerKm": "48200",
+     "vehicle.powerKw": "110",
+     "vehicle.displacementCm3": "1968",
+     "vehicle.fuel": "diesel",
+     "vehicle.colour": "grey",
+     "vehicle.inspectionDue": "2027-03",
+     "vehicle.marginScheme": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "export-25a.fx.cii.xml": {
+  "file": "export-25a.fx.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH042M0000005",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH042M0000005",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Passat",
+     "vehicle.condition": "used",
+     "vehicle.firstRegistration": "2021-05-04",
+     "vehicle.odometerKm": "96410",
+     "vehicle.powerKw": "110",
+     "vehicle.fuel": "diesel",
+     "vehicle.marginScheme": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "level0.fx.cii.xml": {
+  "file": "level0.fx.cii.xml",
+  "syntax": "CII",
+  "vehicles": [],
+  "level0": [
+   {
+    "line": "1",
+    "vin": "TSTVEH065R0000007",
+    "plate": null
+   }
+  ],
+  "attached": [],
+  "ignored": [],
+  "findings": [
+   {
+    "severity": "info",
+    "rule": "V-19",
+    "line": "1",
+    "msg": "Level 0: vehicle identified by BT-128 only"
+   }
+  ]
+ },
+ "neg-margin-k.fx.cii.xml": {
+  "file": "neg-margin-k.fx.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH020T0000002",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH020T0000002",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Tiguan",
+     "vehicle.condition": "pre-registered",
+     "vehicle.firstRegistration": "2026-09-30",
+     "vehicle.newMeansOfTransport": "true",
+     "vehicle.marginScheme": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": [
+   {
+    "severity": "error",
+    "rule": "V-06",
+    "line": "1",
+    "msg": "role supply with quantity 2; one vehicle per line"
+   },
+   {
+    "severity": "error",
+    "rule": "V-07",
+    "line": "1",
+    "msg": "margin scheme on an intra-EU supply (category K): excluded by Art. 313(2) Directive, § 25a Abs. 7 Nr. 1 b and Nr. 3 UStG"
+   },
+   {
+    "severity": "warning",
+    "rule": "V-07",
+    "line": "1",
+    "msg": "margin line but no BG-1 note with 'Gebrauchtgegenstände/Sonderregelung' or the Art. 226(14) mention"
+   },
+   {
+    "severity": "error",
+    "rule": "V-08",
+    "line": "1",
+    "msg": "new means of transport without vehicle.powerKw or vehicle.displacementCm3"
+   },
+   {
+    "severity": "error",
+    "rule": "V-08",
+    "line": "1",
+    "msg": "new means of transport without any newness feature (no odometer value, no vehicle.firstUse)"
+   },
+   {
+    "severity": "warning",
+    "rule": "V-09",
+    "line": "1",
+    "msg": "used/demonstrator/pre-registered supply without odometer (or status) or first registration"
+   }
+  ]
+ },
+ "neg-profile.fx.cii.xml": {
+  "file": "neg-profile.fx.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH016N0000001",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH016N0000009",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.condition": "used",
+     "vehicle.firstRegistration": "2022-03-18",
+     "vehicle.odometerStatus": "defective",
+     "vehicle.powerKw": "110",
+     "vehicle.batterySohPct": "91",
+     "vehicle.marginScheme": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": [
+   {
+    "severity": "error",
+    "rule": "V-11",
+    "line": "1",
+    "msg": "statutory key vehicle.powerKw in bare form; the labelled form is mandatory"
+   },
+   {
+    "severity": "warning",
+    "rule": "V-03",
+    "line": "1",
+    "msg": "duplicate vehicle.make; first value kept"
+   },
+   {
+    "severity": "error",
+    "rule": "V-02",
+    "line": "1",
+    "msg": "vehicle.odometerKm='48.200 km' violates the registry grammar; value dropped by the reader"
+   },
+   {
+    "severity": "error",
+    "rule": "V-02",
+    "line": "1",
+    "msg": "vehicle.variant='=HYPERLINK(\"x\")' violates the registry grammar; value dropped by the reader"
+   },
+   {
+    "severity": "warning",
+    "rule": "V-04",
+    "line": "1",
+    "msg": "BT-128 TSTVEH016N0000001 differs from vehicle.vin TSTVEH016N0000009; BT-128 wins"
+   },
+   {
+    "severity": "warning",
+    "rule": "V-16",
+    "line": "1",
+    "msg": "vehicle.batterySohPct without vehicle.batterySohDate"
+   }
+  ]
+ },
+ "neg-profile2.fx.cii.xml": {
+  "file": "neg-profile2.fx.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH016N0000002",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH016N0000002",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.condition": "used",
+     "vehicle.odometerKm": "48200",
+     "vehicle.odometerMi": "30000",
+     "vehicle.odometerStatus": "defective"
+    }
+   },
+   {
+    "line": "2",
+    "level": 1,
+    "vin": null,
+    "plate": "XX-VE 1",
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "service",
+     "vehicle.plate": "XX-VE 1",
+     "vehicle.make": "Volkswagen"
+    }
+   },
+   {
+    "line": "5",
+    "level": 1,
+    "vin": null,
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.make": "Volkswagen"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": [
+   {
+    "severity": "error",
+    "rule": "V-02",
+    "line": "1",
+    "msg": "vehicle.firstRegistration='2022-02-30' violates the registry grammar; value dropped by the reader"
+   },
+   {
+    "severity": "warning",
+    "rule": "V-05",
+    "line": "1",
+    "msg": "VIN TSTVEH016N0000002 is not 17 ISO 3779 characters or its check digit fails"
+   },
+   {
+    "severity": "error",
+    "rule": "V-13",
+    "line": "1",
+    "msg": "vehicle.odometerKm and vehicle.odometerMi on the same line"
+   },
+   {
+    "severity": "error",
+    "rule": "V-17",
+    "line": "1",
+    "msg": "odometer value given although vehicle.odometerStatus = defective"
+   },
+   {
+    "severity": "warning",
+    "rule": "V-09",
+    "line": "1",
+    "msg": "used/demonstrator/pre-registered supply without odometer (or status) or first registration"
+   },
+   {
+    "severity": "warning",
+    "rule": "V-18",
+    "line": "2",
+    "msg": "BT-128 ABZ plate differs from vehicle.plate"
+   },
+   {
+    "severity": "warning",
+    "rule": "V-10",
+    "line": "2",
+    "msg": "service line without odometer reading or status"
+   },
+   {
+    "severity": "info",
+    "rule": "V-15",
+    "line": "3",
+    "msg": "vehicle rows on an unmarked line are ignored"
+   },
+   {
+    "severity": "warning",
+    "rule": "V-21",
+    "line": "4",
+    "msg": "unknown major version vehicle/2.0; vehicle rows skipped"
+   },
+   {
+    "severity": "info",
+    "rule": "V-11",
+    "line": "5",
+    "msg": "label 'Hersteller' not in the registry set for vehicle.make"
+   },
+   {
+    "severity": "info",
+    "rule": "V-22",
+    "line": "5",
+    "msg": "unknown key vehicle.foo ignored"
+   },
+   {
+    "severity": "error",
+    "rule": "V-01",
+    "line": "5",
+    "msg": "marker without vehicle.role"
+   }
+  ]
+ },
+ "new-intra-eu-unregistered.fx.cii.xml": {
+  "file": "new-intra-eu-unregistered.fx.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH022T0000003",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH022T0000003",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Tiguan",
+     "vehicle.variant": "2.0 TDI Elegance",
+     "vehicle.condition": "new",
+     "vehicle.odometerKm": "12",
+     "vehicle.powerKw": "110",
+     "vehicle.displacementCm3": "1968",
+     "vehicle.fuel": "diesel",
+     "vehicle.colour": "black",
+     "vehicle.newMeansOfTransport": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "new-intra-eu.fx.cii.xml": {
+  "file": "new-intra-eu.fx.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH020T0000002",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH020T0000002",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Tiguan",
+     "vehicle.variant": "2.0 TDI Elegance",
+     "vehicle.condition": "pre-registered",
+     "vehicle.firstRegistration": "2026-09-30",
+     "vehicle.odometerKm": "48",
+     "vehicle.powerKw": "110",
+     "vehicle.displacementCm3": "1968",
+     "vehicle.fuel": "diesel",
+     "vehicle.colour": "black",
+     "vehicle.newMeansOfTransport": "true",
+     "vehicle.firstUse": "2026-09-30"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "sale-25a-level1.fx.cii.xml": {
+  "file": "sale-25a-level1.fx.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 1,
+    "vin": "TSTVEH016N0000001",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH016N0000001",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.variant": "2.0 TDI Life",
+     "vehicle.condition": "used",
+     "vehicle.firstRegistration": "2022-03-18",
+     "vehicle.odometerKm": "48200",
+     "vehicle.powerKw": "110",
+     "vehicle.displacementCm3": "1968",
+     "vehicle.fuel": "diesel",
+     "vehicle.colour": "grey",
+     "vehicle.inspectionDue": "2027-03",
+     "vehicle.marginScheme": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "sale-25a-xborder.peppol.ubl.xml": {
+  "file": "sale-25a-xborder.peppol.ubl.xml",
+  "syntax": "UBL",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH016N0000001",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH016N0000001",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.variant": "2.0 TDI Life",
+     "vehicle.condition": "used",
+     "vehicle.firstRegistration": "2022-03-18",
+     "vehicle.odometerKm": "48200",
+     "vehicle.powerKw": "110",
+     "vehicle.displacementCm3": "1968",
+     "vehicle.fuel": "diesel",
+     "vehicle.colour": "grey",
+     "vehicle.inspectionDue": "2027-03",
+     "vehicle.marginScheme": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "sale-25a.ext.cii.xml": {
+  "file": "sale-25a.ext.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH016N0000001",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH016N0000001",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.variant": "2.0 TDI Life",
+     "vehicle.condition": "used",
+     "vehicle.firstRegistration": "2022-03-18",
+     "vehicle.odometerKm": "48200",
+     "vehicle.powerKw": "110",
+     "vehicle.displacementCm3": "1968",
+     "vehicle.fuel": "diesel",
+     "vehicle.colour": "grey",
+     "vehicle.inspectionDue": "2027-03",
+     "vehicle.marginScheme": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "sale-25a.fx.cii.xml": {
+  "file": "sale-25a.fx.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH016N0000001",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH016N0000001",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.variant": "2.0 TDI Life",
+     "vehicle.condition": "used",
+     "vehicle.firstRegistration": "2022-03-18",
+     "vehicle.odometerKm": "48200",
+     "vehicle.powerKw": "110",
+     "vehicle.displacementCm3": "1968",
+     "vehicle.fuel": "diesel",
+     "vehicle.colour": "grey",
+     "vehicle.inspectionDue": "2027-03",
+     "vehicle.marginScheme": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "sale-25a.peppol.ubl.xml": {
+  "file": "sale-25a.peppol.ubl.xml",
+  "syntax": "UBL",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH016N0000001",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH016N0000001",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.variant": "2.0 TDI Life",
+     "vehicle.condition": "used",
+     "vehicle.firstRegistration": "2022-03-18",
+     "vehicle.odometerKm": "48200",
+     "vehicle.powerKw": "110",
+     "vehicle.displacementCm3": "1968",
+     "vehicle.fuel": "diesel",
+     "vehicle.colour": "grey",
+     "vehicle.inspectionDue": "2027-03",
+     "vehicle.marginScheme": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "sale-25a.xr.cii.xml": {
+  "file": "sale-25a.xr.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH016N0000001",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH016N0000001",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.variant": "2.0 TDI Life",
+     "vehicle.condition": "used",
+     "vehicle.firstRegistration": "2022-03-18",
+     "vehicle.odometerKm": "48200",
+     "vehicle.powerKw": "110",
+     "vehicle.displacementCm3": "1968",
+     "vehicle.fuel": "diesel",
+     "vehicle.colour": "grey",
+     "vehicle.inspectionDue": "2027-03",
+     "vehicle.marginScheme": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "sale-25a.xr.ubl.xml": {
+  "file": "sale-25a.xr.ubl.xml",
+  "syntax": "UBL",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH016N0000001",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH016N0000001",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.variant": "2.0 TDI Life",
+     "vehicle.condition": "used",
+     "vehicle.firstRegistration": "2022-03-18",
+     "vehicle.odometerKm": "48200",
+     "vehicle.powerKw": "110",
+     "vehicle.displacementCm3": "1968",
+     "vehicle.fuel": "diesel",
+     "vehicle.colour": "grey",
+     "vehicle.inspectionDue": "2027-03",
+     "vehicle.marginScheme": "true"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "sale-regular-odometer-defective.fx.cii.xml": {
+  "file": "sale-regular-odometer-defective.fx.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH058P0000006",
+    "plate": null,
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "supply",
+     "vehicle.vin": "TSTVEH058P0000006",
+     "vehicle.make": "Skoda",
+     "vehicle.model": "Octavia",
+     "vehicle.condition": "used",
+     "vehicle.firstRegistration": "2023-02-01",
+     "vehicle.odometerStatus": "defective",
+     "vehicle.powerKw": "85",
+     "vehicle.fuel": "petrol",
+     "vehicle.colour": "white",
+     "vehicle.category": "M1",
+     "vehicle.hsn": "8004",
+     "vehicle.tsn": "BHR"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [],
+  "ignored": [],
+  "findings": []
+ },
+ "workshop.fx.cii.xml": {
+  "file": "workshop.fx.cii.xml",
+  "syntax": "CII",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH033L0000004",
+    "plate": "XX-VE 1",
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "service",
+     "vehicle.vin": "TSTVEH033L0000004",
+     "vehicle.plate": "XX-VE 1",
+     "vehicle.registrationCountry": "DE",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.firstRegistration": "2020-06-15",
+     "vehicle.odometerKm": "61230",
+     "vehicle.odometerDate": "2026-10-20",
+     "vehicle.inspectionDue": "2028-10"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [
+   {
+    "line": "2",
+    "vin": "TSTVEH033L0000004"
+   },
+   {
+    "line": "3",
+    "vin": "TSTVEH033L0000004"
+   }
+  ],
+  "ignored": [],
+  "findings": [
+   {
+    "severity": "info",
+    "rule": "V-20",
+    "line": "2",
+    "msg": "unmarked line attached to vehicle TSTVEH033L0000004 by BT-128"
+   },
+   {
+    "severity": "info",
+    "rule": "V-20",
+    "line": "3",
+    "msg": "unmarked line attached to vehicle TSTVEH033L0000004 by BT-128"
+   }
+  ]
+ },
+ "workshop.peppol.ubl.xml": {
+  "file": "workshop.peppol.ubl.xml",
+  "syntax": "UBL",
+  "vehicles": [
+   {
+    "line": "1",
+    "level": 2,
+    "vin": "TSTVEH033L0000004",
+    "plate": "XX-VE 1",
+    "version": "vehicle/1.0",
+    "facts": {
+     "vehicle.profile": "vehicle/1.0",
+     "vehicle.role": "service",
+     "vehicle.vin": "TSTVEH033L0000004",
+     "vehicle.plate": "XX-VE 1",
+     "vehicle.registrationCountry": "DE",
+     "vehicle.make": "Volkswagen",
+     "vehicle.model": "Golf",
+     "vehicle.firstRegistration": "2020-06-15",
+     "vehicle.odometerKm": "61230",
+     "vehicle.odometerDate": "2026-10-20",
+     "vehicle.inspectionDue": "2028-10"
+    }
+   }
+  ],
+  "level0": [],
+  "attached": [
+   {
+    "line": "2",
+    "vin": "TSTVEH033L0000004"
+   },
+   {
+    "line": "3",
+    "vin": "TSTVEH033L0000004"
+   }
+  ],
+  "ignored": [],
+  "findings": [
+   {
+    "severity": "info",
+    "rule": "V-20",
+    "line": "2",
+    "msg": "unmarked line attached to vehicle TSTVEH033L0000004 by BT-128"
+   },
+   {
+    "severity": "info",
+    "rule": "V-20",
+    "line": "3",
+    "msg": "unmarked line attached to vehicle TSTVEH033L0000004 by BT-128"
+   }
+  ]
+ }
+}

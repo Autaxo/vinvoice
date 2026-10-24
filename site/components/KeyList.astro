@@ -1,0 +1,11 @@
+---
+// Comma-separated list of registry keys, each linked to its term page.
+import { linkKeys, type Term } from '../lib/registry';
+
+interface Props {
+  terms: Term[];
+}
+const { terms } = Astro.props;
+---
+
+<Fragment set:html={linkKeys(terms.map((t) => t.key).join(', '))} />

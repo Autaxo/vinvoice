@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rsm:CrossIndustryInvoice xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
+  xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100"
+  xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100"
+  xmlns:qdt="urn:un:unece:uncefact:data:standard:QualifiedDataType:100">
+  <rsm:ExchangedDocumentContext>
+    <ram:GuidelineSpecifiedDocumentContextParameter>
+      <ram:ID>urn:cen.eu:en16931:2017</ram:ID>
+    </ram:GuidelineSpecifiedDocumentContextParameter>
+  </rsm:ExchangedDocumentContext>
+  <rsm:ExchangedDocument>
+    <ram:ID>WR-2026-008812</ram:ID>
+    <ram:TypeCode>380</ram:TypeCode>
+    <ram:IssueDateTime>
+      <udt:DateTimeString format="102">20261023</udt:DateTimeString>
+    </ram:IssueDateTime>
+  </rsm:ExchangedDocument>
+  <rsm:SupplyChainTradeTransaction>
+    <ram:IncludedSupplyChainTradeLineItem>
+      <ram:AssociatedDocumentLineDocument>
+        <ram:LineID>1</ram:LineID>
+      </ram:AssociatedDocumentLineDocument>
+      <ram:SpecifiedTradeProduct>
+        <ram:Name>Fahrzeug: Volkswagen Golf, XX-VE 1</ram:Name>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>Fahrzeugdaten-Standard [vehicle.profile]</ram:Description>
+          <ram:Value>vehicle/1.0</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>Fahrzeugbezug [vehicle.role]</ram:Description>
+          <ram:Value>service</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>FIN [vehicle.vin]</ram:Description>
+          <ram:Value>TSTVEH033L0000004</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>Kennzeichen [vehicle.plate]</ram:Description>
+          <ram:Value>XX-VE 1</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>Zulassungsland [vehicle.registrationCountry]</ram:Description>
+          <ram:Value>DE</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>Marke [vehicle.make]</ram:Description>
+          <ram:Value>Volkswagen</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>Modell [vehicle.model]</ram:Description>
+          <ram:Value>Golf</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>Erstzulassung [vehicle.firstRegistration]</ram:Description>
+          <ram:Value>2020-06-15</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>Kilometerstand (km) [vehicle.odometerKm]</ram:Description>
+          <ram:Value>61230</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>Kilometerstand am [vehicle.odometerDate]</ram:Description>
+          <ram:Value>2026-10-20</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>Nächste HU [vehicle.inspectionDue]</ram:Description>
+          <ram:Value>2028-10</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+      </ram:SpecifiedTradeProduct>
+      <ram:SpecifiedLineTradeAgreement>
+        <ram:NetPriceProductTradePrice>
+          <ram:ChargeAmount>0.00</ram:ChargeAmount>
+        </ram:NetPriceProductTradePrice>
+      </ram:SpecifiedLineTradeAgreement>
+      <ram:SpecifiedLineTradeDelivery>
+        <ram:BilledQuantity unitCode="C62">1</ram:BilledQuantity>
+      </ram:SpecifiedLineTradeDelivery>
+      <ram:SpecifiedLineTradeSettlement>
+        <ram:ApplicableTradeTax>
+          <ram:TypeCode>VAT</ram:TypeCode>
+          <ram:CategoryCode>S</ram:CategoryCode>
+          <ram:RateApplicablePercent>19</ram:RateApplicablePercent>
+        </ram:ApplicableTradeTax>
+        <ram:SpecifiedTradeSettlementLineMonetarySummation>
+          <ram:LineTotalAmount>0.00</ram:LineTotalAmount>
+        </ram:SpecifiedTradeSettlementLineMonetarySummation>
+        <ram:AdditionalReferencedDocument>
+          <ram:IssuerAssignedID>TSTVEH033L0000004</ram:IssuerAssignedID>
+          <ram:TypeCode>130</ram:TypeCode>
+          <ram:ReferenceTypeCode>AKG</ram:ReferenceTypeCode>
+        </ram:AdditionalReferencedDocument>
+      </ram:SpecifiedLineTradeSettlement>
+    </ram:IncludedSupplyChainTradeLineItem>
+    <ram:IncludedSupplyChainTradeLineItem>
+      <ram:AssociatedDocumentLineDocument>
+        <ram:LineID>2</ram:LineID>
+      </ram:AssociatedDocumentLineDocument>
+      <ram:SpecifiedTradeProduct>
+        <ram:Name>Inspektion nach Herstellervorgabe</ram:Name>
+      </ram:SpecifiedTradeProduct>
+      <ram:SpecifiedLineTradeAgreement>
+        <ram:NetPriceProductTradePrice>
+          <ram:ChargeAmount>96.00</ram:ChargeAmount>
+        </ram:NetPriceProductTradePrice>
+      </ram:SpecifiedLineTradeAgreement>
+      <ram:SpecifiedLineTradeDelivery>
+        <ram:BilledQuantity unitCode="HUR">2.5</ram:BilledQuantity>
+      </ram:SpecifiedLineTradeDelivery>
+      <ram:SpecifiedLineTradeSettlement>
+        <ram:ApplicableTradeTax>
+          <ram:TypeCode>VAT</ram:TypeCode>
+          <ram:CategoryCode>S</ram:CategoryCode>
+          <ram:RateApplicablePercent>19</ram:RateApplicablePercent>
+        </ram:ApplicableTradeTax>
+        <ram:SpecifiedTradeSettlementLineMonetarySummation>
+          <ram:LineTotalAmount>240.00</ram:LineTotalAmount>
+        </ram:SpecifiedTradeSettlementLineMonetarySummation>
+        <ram:AdditionalReferencedDocument>
+          <ram:IssuerAssignedID>TSTVEH033L0000004</ram:IssuerAssignedID>
+          <ram:TypeCode>130</ram:TypeCode>
+          <ram:ReferenceTypeCode>AKG</ram:ReferenceTypeCode>
+        </ram:AdditionalReferencedDocument>
+      </ram:SpecifiedLineTradeSettlement>
+    </ram:IncludedSupplyChainTradeLineItem>
+    <ram:IncludedSupplyChainTradeLineItem>
+      <ram:AssociatedDocumentLineDocument>
+        <ram:LineID>3</ram:LineID>
+      </ram:AssociatedDocumentLineDocument>
+      <ram:SpecifiedTradeProduct>
+        <ram:Name>Motoröl 5W-30</ram:Name>
+      </ram:SpecifiedTradeProduct>
+      <ram:SpecifiedLineTradeAgreement>
+        <ram:NetPriceProductTradePrice>
+          <ram:ChargeAmount>18.00</ram:ChargeAmount>
+        </ram:NetPriceProductTradePrice>
+      </ram:SpecifiedLineTradeAgreement>
+      <ram:SpecifiedLineTradeDelivery>
+        <ram:BilledQuantity unitCode="LTR">4.5</ram:BilledQuantity>
+      </ram:SpecifiedLineTradeDelivery>
+      <ram:SpecifiedLineTradeSettlement>
+        <ram:ApplicableTradeTax>
+          <ram:TypeCode>VAT</ram:TypeCode>
+          <ram:CategoryCode>S</ram:CategoryCode>
+          <ram:RateApplicablePercent>19</ram:RateApplicablePercent>
+        </ram:ApplicableTradeTax>
+        <ram:SpecifiedTradeSettlementLineMonetarySummation>
+          <ram:LineTotalAmount>81.00</ram:LineTotalAmount>
+        </ram:SpecifiedTradeSettlementLineMonetarySummation>
+        <ram:AdditionalReferencedDocument>
+          <ram:IssuerAssignedID>TSTVEH033L0000004</ram:IssuerAssignedID>
+          <ram:TypeCode>130</ram:TypeCode>
+          <ram:ReferenceTypeCode>AKG</ram:ReferenceTypeCode>
+        </ram:AdditionalReferencedDocument>
+      </ram:SpecifiedLineTradeSettlement>
+    </ram:IncludedSupplyChainTradeLineItem>
+    <ram:ApplicableHeaderTradeAgreement>
+      <ram:SellerTradeParty>
+        <ram:Name>Autohaus Beispiel GmbH</ram:Name>
+        <ram:SpecifiedLegalOrganization>
+          <ram:ID>HRB 123456</ram:ID>
+        </ram:SpecifiedLegalOrganization>
+        <ram:DefinedTradeContact>
+          <ram:PersonName>Max Mustermann</ram:PersonName>
+          <ram:TelephoneUniversalCommunication>
+            <ram:CompleteNumber>+49 30 1234567</ram:CompleteNumber>
+          </ram:TelephoneUniversalCommunication>
+          <ram:EmailURIUniversalCommunication>
+            <ram:URIID>verkauf@autohaus-beispiel.example</ram:URIID>
+          </ram:EmailURIUniversalCommunication>
+        </ram:DefinedTradeContact>
+        <ram:PostalTradeAddress>
+          <ram:PostcodeCode>10115</ram:PostcodeCode>
+          <ram:LineOne>Musterstraße 1</ram:LineOne>
+          <ram:CityName>Berlin</ram:CityName>
+          <ram:CountryID>DE</ram:CountryID>
+        </ram:PostalTradeAddress>
+        <ram:SpecifiedTaxRegistration>
+          <ram:ID schemeID="VA">DE123456789</ram:ID>
+        </ram:SpecifiedTaxRegistration>
+      </ram:SellerTradeParty>
+      <ram:BuyerTradeParty>
+        <ram:Name>Fuhrpark Muster GmbH</ram:Name>
+        <ram:PostalTradeAddress>
+          <ram:PostcodeCode>50667</ram:PostcodeCode>
+          <ram:LineOne>Beispielweg 2</ram:LineOne>
+          <ram:CityName>Köln</ram:CityName>
+          <ram:CountryID>DE</ram:CountryID>
+        </ram:PostalTradeAddress>
+        <ram:SpecifiedTaxRegistration>
+          <ram:ID schemeID="VA">DE111222333</ram:ID>
+        </ram:SpecifiedTaxRegistration>
+      </ram:BuyerTradeParty>
+      <ram:AdditionalReferencedDocument>
+        <ram:IssuerAssignedID>TSTVEH033L0000004</ram:IssuerAssignedID>
+        <ram:TypeCode>130</ram:TypeCode>
+        <ram:ReferenceTypeCode>AKG</ram:ReferenceTypeCode>
+      </ram:AdditionalReferencedDocument>
+    </ram:ApplicableHeaderTradeAgreement>
+    <ram:ApplicableHeaderTradeDelivery>
+      <ram:ActualDeliverySupplyChainEvent>
+        <ram:OccurrenceDateTime>
+          <udt:DateTimeString format="102">20261023</udt:DateTimeString>
+        </ram:OccurrenceDateTime>
+      </ram:ActualDeliverySupplyChainEvent>
+    </ram:ApplicableHeaderTradeDelivery>
+    <ram:ApplicableHeaderTradeSettlement>
+      <ram:InvoiceCurrencyCode>EUR</ram:InvoiceCurrencyCode>
+      <ram:SpecifiedTradeSettlementPaymentMeans>
+        <ram:TypeCode>58</ram:TypeCode>
+        <ram:PayeePartyCreditorFinancialAccount>
+          <ram:IBANID>DE89370400440532013000</ram:IBANID>
+        </ram:PayeePartyCreditorFinancialAccount>
+      </ram:SpecifiedTradeSettlementPaymentMeans>
+      <ram:ApplicableTradeTax>
+        <ram:CalculatedAmount>60.99</ram:CalculatedAmount>
+        <ram:TypeCode>VAT</ram:TypeCode>
+        <ram:BasisAmount>321.00</ram:BasisAmount>
+        <ram:CategoryCode>S</ram:CategoryCode>
+        <ram:RateApplicablePercent>19</ram:RateApplicablePercent>
+      </ram:ApplicableTradeTax>
+      <ram:SpecifiedTradePaymentTerms>
+        <ram:Description>Zahlbar innerhalb von 14 Tagen ohne Abzug.</ram:Description>
+        <ram:DueDateDateTime>
+          <udt:DateTimeString format="102">20261106</udt:DateTimeString>
+        </ram:DueDateDateTime>
+      </ram:SpecifiedTradePaymentTerms>
+      <ram:SpecifiedTradeSettlementHeaderMonetarySummation>
+        <ram:LineTotalAmount>321.00</ram:LineTotalAmount>
+        <ram:TaxBasisTotalAmount>321.00</ram:TaxBasisTotalAmount>
+        <ram:TaxTotalAmount currencyID="EUR">60.99</ram:TaxTotalAmount>
+        <ram:GrandTotalAmount>381.99</ram:GrandTotalAmount>
+        <ram:DuePayableAmount>381.99</ram:DuePayableAmount>
+      </ram:SpecifiedTradeSettlementHeaderMonetarySummation>
+    </ram:ApplicableHeaderTradeSettlement>
+  </rsm:SupplyChainTradeTransaction>
+</rsm:CrossIndustryInvoice>

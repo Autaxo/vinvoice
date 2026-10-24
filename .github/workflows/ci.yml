@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  registry-and-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run validate
+      - run: npm run generate
+      - name: generated/ is up to date
+        run: |
+          if [ -n "$(git status --porcelain -- generated/)" ]; then
+            git status --short -- generated/
+            echo "::error::generated/ is out of date. Run npm run generate and commit the result."
+            exit 1
+          fi
+      - run: node scripts/test-generated.mjs
+      - run: npm run check
+      - run: npm run build
+
+  checker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -I -m unittest discover -s checker -v
+
+  schematron:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: .cache/jars
+          key: schematron-jars-${{ hashFiles('scripts/fetch-jars.sh') }}
+      - run: sh scripts/schematron-test.sh

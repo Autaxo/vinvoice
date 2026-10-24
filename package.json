@@ -1,0 +1,36 @@
+{
+  "name": "vinvoice",
+  "private": true,
+  "type": "module",
+  "description": "VINvoice: an open convention for vehicle data in EN 16931 e-invoices. Registry, schemas, test corpus, reference checker and website.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/__GITHUB_ORG__/vinvoice.git"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "generate": "node scripts/generate.mjs",
+    "import:json": "node scripts/import-json.mjs",
+    "dev": "npm run generate && astro dev --root site",
+    "build": "npm run validate && npm run generate && astro build --root site",
+    "preview": "astro preview --root site",
+    "check": "prettier --check . && astro check --root site",
+    "format": "prettier --write .",
+    "test:checker": "python3 -I -m unittest discover -s checker -v",
+    "test:schematron": "sh scripts/schematron-test.sh",
+    "test": "npm run validate && node scripts/test-generated.mjs && npm run test:checker"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "ajv": "^8.17.1",
+    "astro": "^6.2.2",
+    "prettier": "^3.7.4",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.7.0",
+    "yaml": "^2.9.1"
+  }
+}

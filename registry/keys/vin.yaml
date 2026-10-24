@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.vin
+tier: core
+status: draft
+labelEn: VIN
+labelDe: FIN
+definition: "Identification number marked on the vehicle: normally the 17-character VIN of Reg. (EU)
+  2021/535 Annex II Part 2; for vehicles without one, the national identifier (StVZO § 59 allows
+  other identifiers of up to 14 characters). Same value as BT-128 when both are present. The BG-32
+  copy is shown by every viewer and lets stacks that cannot yet emit BT-128 conform at Level 1."
+valueFormat: "^[A-Z0-9]{1,17}$, upper case, no blanks or hyphens. Expected form
+  ^[A-HJ-NPR-Z0-9]{17}$ with a valid position-9 check digit (Reg. (EU) 2021/535 Annex II Part 2
+  Section C: weights 8,7,6,5,4,3,2,10,-,9..2, mod 11, 10 = X). Deviations are warnings only (V-05):
+  the check digit is a refusal ground only for types approved from 2022-07-06 (registration refusals
+  from 2026-07-07)"
+grammar: '^[A-Z0-9]{1,17}$'
+unit: null
+codeList: "BT-128-1 / BT-18-1: UNTDID 1153 'AKG' (Vehicle Identification Number (VIN)); 'VT' (Motor
+  vehicle identification number) accepted on input"
+conditionality: "MUST on every vehicle line whenever an identifier exists (all roles); may be absent
+  only on an order or prepayment invoice before a vehicle is assigned. Level 2: additionally BT-128
+  with AKG and the same value"
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'FIN [vehicle.vin]'. Level 2 also BT-128: CII
+  ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument {ram:IssuerAssignedID,
+  ram:TypeCode 130, ram:ReferenceTypeCode AKG}; UBL cac:InvoiceLine/cac:DocumentReference {cbc:ID
+  schemeID='AKG', cbc:DocumentTypeCode 130}. Optional header BT-18"
+anchors: EU registration code E; CoC item 0.10; Reg. (EU) 2021/535 Annex II Part 2 (structure and
+  check digit, verified in the regulation text); ISO 3779 by number; UNTDID 1153 AKG; PL KSeF
+  NowySrodekTransportu VIN; HU newTransportMean serialNum.

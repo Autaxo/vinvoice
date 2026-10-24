@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.powertrain
+tier: recommended
+status: draft
+labelEn: Powertrain
+labelDe: Antriebsart
+definition: Drive architecture. combustion; hybrid = not externally chargeable (NOVC-HEV, including
+  mild hybrids); plug-in-hybrid = externally chargeable (OVC-HEV); battery-electric; fuel-cell;
+  other.
+valueFormat: one token
+grammar: '^(combustion|hybrid|plug-in-hybrid|battery-electric|fuel-cell|other)$'
+unit: null
+codeList: "VEH-POWERTRAIN 1.0: combustion, hybrid, plug-in-hybrid, battery-electric, fuel-cell, other"
+conditionality: SHOULD for hybrid, electric and fuel-cell vehicles
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'Antriebsart [vehicle.powertrain]'"
+anchors: CoC items 23 (pure electric) and 23.1 (OVC-HEV, NOVC-HEV, OVC-FCHV, NOVC-FCHV).

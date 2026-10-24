@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.make
+tier: core
+status: draft
+labelEn: Make
+labelDe: Marke
+definition: Manufacturer brand as in registration field D.1 / CoC item 0.1, without model or trim,
+  spelled as in the source document.
+valueFormat: text, 1-60 characters, NFC, trimmed; no control or bidi characters; must not start with = + - @
+grammar: '^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,60}$'
+unit: null
+codeList: none in 1.0
+conditionality: MUST whenever known, all roles
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'Marke [vehicle.make]'. Factur-X EXTENDED MAY also mirror it in
+  ram:BrandName (the row stays)"
+anchors: EU registration code D.1; CoC item 0.1; HU newTransportMean brand (annotated 'Product / type').

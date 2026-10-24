@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.modelYear
+tier: optional
+status: provisional
+labelEn: Model year
+labelDe: Modelljahr
+definition: Model year designated by the manufacturer; may differ from the production year.
+valueFormat: ^(19|20)[0-9]{2}$
+grammar: '^(19|20)[0-9]{2}$'
+unit: null
+codeList: none
+conditionality: MAY
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'Modelljahr [vehicle.modelYear]'. UNTDID 7143 'RY' exists for BT-158 but is
+  not used"
+anchors: Own definition.

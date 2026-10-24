@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+  xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+  xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:CustomizationID>urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0</cbc:CustomizationID>
+  <cbc:ProfileID>urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</cbc:ProfileID>
+  <cbc:ID>RE-2026-004712</cbc:ID>
+  <cbc:IssueDate>2026-10-23</cbc:IssueDate>
+  <cbc:DueDate>2026-11-06</cbc:DueDate>
+  <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+  <cbc:Note>Gebrauchtgegenstände/Sonderregelung - Lieferung ab Lager Berlin, Abholung durch den Käufer.</cbc:Note>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+  <cbc:BuyerReference>PO-AT-7781</cbc:BuyerReference>
+  <cac:AccountingSupplierParty>
+    <cac:Party>
+      <cbc:EndpointID schemeID="9930">DE123456789</cbc:EndpointID>
+      <cac:PartyName>
+        <cbc:Name>Autohaus Beispiel GmbH</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:StreetName>Musterstraße 1</cbc:StreetName>
+        <cbc:CityName>Berlin</cbc:CityName>
+        <cbc:PostalZone>10115</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DE</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyTaxScheme>
+        <cbc:CompanyID>DE123456789</cbc:CompanyID>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Autohaus Beispiel GmbH</cbc:RegistrationName>
+        <cbc:CompanyID>HRB 123456</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:Name>Max Mustermann</cbc:Name>
+        <cbc:Telephone>+49 30 1234567</cbc:Telephone>
+        <cbc:ElectronicMail>verkauf@autohaus-beispiel.example</cbc:ElectronicMail>
+      </cac:Contact>
+    </cac:Party>
+  </cac:AccountingSupplierParty>
+  <cac:AccountingCustomerParty>
+    <cac:Party>
+      <cbc:EndpointID schemeID="9914">ATU12345678</cbc:EndpointID>
+      <cac:PartyName>
+        <cbc:Name>Autohaus Alpenland GmbH</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:StreetName>Getreidegasse 12</cbc:StreetName>
+        <cbc:CityName>Salzburg</cbc:CityName>
+        <cbc:PostalZone>5020</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>AT</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyTaxScheme>
+        <cbc:CompanyID>ATU12345678</cbc:CompanyID>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Autohaus Alpenland GmbH</cbc:RegistrationName>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:AccountingCustomerParty>
+  <cac:Delivery>
+    <cbc:ActualDeliveryDate>2026-10-23</cbc:ActualDeliveryDate>
+  </cac:Delivery>
+  <cac:PaymentMeans>
+    <cbc:PaymentMeansCode>58</cbc:PaymentMeansCode>
+    <cac:PayeeFinancialAccount>
+      <cbc:ID>DE89370400440532013000</cbc:ID>
+    </cac:PayeeFinancialAccount>
+  </cac:PaymentMeans>
+  <cac:PaymentTerms>
+    <cbc:Note>Zahlbar innerhalb von 14 Tagen ohne Abzug.</cbc:Note>
+  </cac:PaymentTerms>
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="EUR">15.01</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="EUR">15900.00</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="EUR">0.00</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cbc:ID>E</cbc:ID>
+        <cbc:Percent>0</cbc:Percent>
+        <cbc:TaxExemptionReason>Differenzbesteuerung nach § 25a UStG (Gebrauchtgegenstände/Sonderregelung)</cbc:TaxExemptionReason>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="EUR">79.00</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="EUR">15.01</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>19</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+  <cac:LegalMonetaryTotal>
+    <cbc:LineExtensionAmount currencyID="EUR">15979.00</cbc:LineExtensionAmount>
+    <cbc:TaxExclusiveAmount currencyID="EUR">15979.00</cbc:TaxExclusiveAmount>
+    <cbc:TaxInclusiveAmount currencyID="EUR">15994.01</cbc:TaxInclusiveAmount>
+    <cbc:PayableAmount currencyID="EUR">15994.01</cbc:PayableAmount>
+  </cac:LegalMonetaryTotal>
+  <cac:InvoiceLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="C62">1</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">15900.00</cbc:LineExtensionAmount>
+    <cac:DocumentReference>
+      <cbc:ID schemeID="AKG">TSTVEH016N0000001</cbc:ID>
+      <cbc:DocumentTypeCode>130</cbc:DocumentTypeCode>
+    </cac:DocumentReference>
+    <cac:Item>
+      <cbc:Description>FIN TSTVEH016N0000001 · Erstzulassung: 18.03.2022 · Kilometerstand: 48.200 km · Leistung: 110 kW (150 PS) · Farbe: Grau</cbc:Description>
+      <cbc:Name>Volkswagen Golf 2.0 TDI Life</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>STK-26-0042</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+        <cbc:ID>E</cbc:ID>
+        <cbc:Percent>0</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Fahrzeugdaten-Standard [vehicle.profile]</cbc:Name>
+        <cbc:Value>vehicle/1.0</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Fahrzeugbezug [vehicle.role]</cbc:Name>
+        <cbc:Value>supply</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>FIN [vehicle.vin]</cbc:Name>
+        <cbc:Value>TSTVEH016N0000001</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Marke [vehicle.make]</cbc:Name>
+        <cbc:Value>Volkswagen</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Modell [vehicle.model]</cbc:Name>
+        <cbc:Value>Golf</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Ausführung [vehicle.variant]</cbc:Name>
+        <cbc:Value>2.0 TDI Life</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Zustand [vehicle.condition]</cbc:Name>
+        <cbc:Value>used</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Erstzulassung [vehicle.firstRegistration]</cbc:Name>
+        <cbc:Value>2022-03-18</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Kilometerstand (km) [vehicle.odometerKm]</cbc:Name>
+        <cbc:Value>48200</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Leistung (kW) [vehicle.powerKw]</cbc:Name>
+        <cbc:Value>110</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Hubraum (cm³) [vehicle.displacementCm3]</cbc:Name>
+        <cbc:Value>1968</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Kraftstoff [vehicle.fuel]</cbc:Name>
+        <cbc:Value>diesel</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Farbe [vehicle.colour]</cbc:Name>
+        <cbc:Value>grey</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Nächste HU [vehicle.inspectionDue]</cbc:Name>
+        <cbc:Value>2027-03</cbc:Value>
+      </cac:AdditionalItemProperty>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>Differenzbesteuerung [vehicle.marginScheme]</cbc:Name>
+        <cbc:Value>true</cbc:Value>
+      </cac:AdditionalItemProperty>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="EUR">15900.00</cbc:PriceAmount>
+    </cac:Price>
+  </cac:InvoiceLine>
+  <cac:InvoiceLine>
+    <cbc:ID>2</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="C62">1</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">79.00</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Überführungs- und Zulassungspauschale</cbc:Name>
+      <cac:ClassifiedTaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>19</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="EUR">79.00</cbc:PriceAmount>
+    </cac:Price>
+  </cac:InvoiceLine>
+</Invoice>

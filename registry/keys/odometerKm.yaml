@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.odometerKm
+tier: core
+status: draft
+labelEn: Odometer (km)
+labelDe: Kilometerstand (km)
+definition: "Odometer reading in whole kilometres as displayed by an instrument that reads in
+  kilometres, at the reference date: vehicle.odometerDate if present, else BT-72 actual delivery
+  date, else BT-2 issue date. Not converted from miles and not estimated. It states the displayed
+  reading; whether it equals the distance actually travelled is qualified only by
+  vehicle.odometerStatus."
+valueFormat: "integer ^(0|[1-9][0-9]{0,6})$: no group separator, no decimals, no unit text; 0 is valid"
+grammar: '^(0|[1-9][0-9]{0,6})$'
+unit: KMT
+codeList: "unit fixed: kilometre (Rec 20 KMT)"
+conditionality: Exactly one of vehicle.odometerKm / vehicle.odometerMi MUST be present for supply
+  and trade-in of pre-registered, demonstrator and used vehicles and on service lines, unless
+  vehicle.odometerStatus is defective or unknown (then no reading is given). With
+  vehicle.newMeansOfTransport = true an odometer value or vehicle.firstUse MUST be present (V-08).
+  SHOULD for new vehicles
+statutory: true
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'Kilometerstand (km) [vehicle.odometerKm]', BT-161 '48200'. Labelled name
+  mandatory (statutory feature)"
+anchors: § 1b Abs. 3 Nr. 1 / § 14a Abs. 4 UStG and Art. 2(2)(b) Directive 2006/112/EC (6,000 km
+  test); KoSIT/FeRD Pflichtangaben row 'Laufleistung'; PL P_22B; HU kms; IT
+  DatiVeicoli/TotalePercorso; no EU registration code; COM(2025) 180 Art. 4a (proposal only).

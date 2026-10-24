@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vinvoice.org/schemas/key.schema.json",
+  "title": "VINvoice registry key",
+  "description": "One key of the VINvoice registry. The source is registry/keys/<local name>.yaml; generated/registry.json holds the same objects in its keys array.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "key",
+    "tier",
+    "status",
+    "labelEn",
+    "labelDe",
+    "definition",
+    "valueFormat",
+    "grammar",
+    "unit",
+    "codeList",
+    "conditionality",
+    "statutory",
+    "repeatable",
+    "signOff",
+    "carrier",
+    "anchors"
+  ],
+  "properties": {
+    "key": {
+      "description": "Full key: the registry prefix followed by a lower camel case local name.",
+      "type": "string",
+      "pattern": "^[a-z]+\\.[a-z][A-Za-z0-9]*$"
+    },
+    "tier": {
+      "description": "Tier of the key; the allowed tiers are listed in registry/registry.yaml.",
+      "type": "string",
+      "pattern": "^[a-z]+$"
+    },
+    "status": {
+      "description": "draft: part of the current draft. provisional: on probation for 12 months or awaiting a review. stable: frozen from 1.0 on. deprecated: kept for readers, not to be written.",
+      "enum": ["draft", "provisional", "stable", "deprecated"]
+    },
+    "labelEn": {
+      "description": "English label, used in BT-160 before the key in brackets.",
+      "type": "string",
+      "minLength": 1
+    },
+    "labelDe": {
+      "description": "German label, used in BT-160 before the key in brackets.",
+      "type": "string",
+      "minLength": 1
+    },
+    "definition": { "type": "string", "minLength": 1 },
+    "valueFormat": {
+      "description": "Human-readable value format.",
+      "type": "string",
+      "minLength": 1
+    },
+    "grammar": {
+      "description": "Regular expression for the BT-161 value, anchored with ^ and $. Written so that it means the same in ECMAScript and Python.",
+      "type": "string",
+      "pattern": "^\\^.*\\$$"
+    },
+    "unit": {
+      "description": "UN/ECE Recommendation 20 code of the unit fixed by the key, or null.",
+      "type": ["string", "null"],
+      "pattern": "^[A-Z0-9]{2,3}$"
+    },
+    "codeList": {
+      "description": "Code list or source of values. Lists defined by VINvoice start with their identifier and version, followed by a colon and the tokens.",
+      "type": "string",
+      "minLength": 1
+    },
+    "conditionality": {
+      "description": "When the key is required, recommended or allowed.",
+      "type": "string",
+      "minLength": 1
+    },
+    "statutory": {
+      "description": "True if the key carries a feature that VAT law requires on the invoice. Statutory keys are always written with their label.",
+      "type": "boolean"
+    },
+    "repeatable": {
+      "description": "True if the key may appear more than once on a line.",
+      "type": "boolean"
+    },
+    "signOff": {
+      "description": "Who has to sign the key off in writing before 1.0, or null.",
+      "type": ["string", "null"]
+    },
+    "carrier": {
+      "description": "How the key is written into the invoice (BG-32 row, and BT-128 or other terms where they apply).",
+      "type": "string",
+      "minLength": 1
+    },
+    "anchors": {
+      "description": "Sources that fix the meaning: registration certificate codes, certificate of conformity items, law, national schemas. Separated by semicolons.",
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

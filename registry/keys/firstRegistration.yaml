@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.firstRegistration
+tier: core
+status: draft
+labelEn: First registration
+labelDe: Erstzulassung
+definition: Date of the vehicle's first registration anywhere (registration field B), also for
+  imported vehicles. Absent means never registered or unknown.
+valueFormat: YYYY-MM-DD; YYYY-MM only if the day is genuinely unknown
+grammar: '^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2]))$'
+unit: null
+codeList: none
+conditionality: MUST for supply and trade-in of pre-registered, demonstrator and used vehicles;
+  SHOULD on service lines; never with condition = new
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'Erstzulassung [vehicle.firstRegistration]', BT-161 '2022-03-18'"
+anchors: EU registration code B.

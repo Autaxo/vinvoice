@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.hsn
+tier: recommended
+status: draft
+labelEn: Manufacturer key (HSN)
+labelDe: HSN
+definition: German KBA manufacturer key number from registration certificate Part I (national field
+  2.1; numbering from secondary sources).
+valueFormat: ^[0-9A-Z]{4}$ (provisional; deviations are warnings)
+grammar: '^[0-9A-Z]{4}$'
+unit: null
+codeList: KBA key directory (DE)
+conditionality: SHOULD for vehicles with a German registration document
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'HSN [vehicle.hsn]'"
+anchors: ZB I field 2.1 [secondary source].

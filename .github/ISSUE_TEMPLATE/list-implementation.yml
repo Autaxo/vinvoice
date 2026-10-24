@@ -1,0 +1,57 @@
+name: List an implementation
+description: Ask for your software to be listed on https://vinvoice.org/implementations/.
+title: 'Implementation: '
+labels: ['implementation']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Listing is free and based on self-declaration; a listing is not an endorsement.
+        Writers: your invoices must pass the official validators of your format and the reference checker without errors.
+        Readers: you must read the conforming test invoices and handle the negative controls as the reading rules describe.
+  - type: input
+    id: name
+    attributes:
+      label: Software
+    validations:
+      required: true
+  - type: input
+    id: organisation
+    attributes:
+      label: Organisation
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Public documentation (URL)
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Role
+      options: [writes, reads, writes and reads]
+    validations:
+      required: true
+  - type: dropdown
+    id: level
+    attributes:
+      label: Conformance level
+      options: ['0', '1', '2']
+    validations:
+      required: true
+  - type: checkboxes
+    id: syntaxes
+    attributes:
+      label: Syntaxes
+      options:
+        - label: CII (Factur-X, ZUGFeRD, XRechnung CII)
+        - label: UBL (Peppol, XRechnung UBL)
+  - type: input
+    id: registry
+    attributes:
+      label: Registry version implemented
+      placeholder: e.g. vehicle/1.0-draft
+    validations:
+      required: true

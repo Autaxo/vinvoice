@@ -1,0 +1,44 @@
+key,"crosswalk (informative; names and IRIs of third-party works, CC BY 4.0, sources stated; VDA 4938: reprint with source)"
+vehicle.profile,
+vehicle.role,"VDA 4938 BMW variant: process code VHS (vehicle settlement), context only"
+vehicle.vin,"schema.org vehicleIdentificationNumber; VDA 4938 P2 v3.1 seg. 77 GIN+VV; mobile.de vin; STAR VehicleInvoice: no VIN-typed element found in the invoice tables (VINType exists in the type catalogue, ChassisSerial is OpenIDType); Odette FVL FV14a by name only; BR NF-e veicProd chassi; MX VentaVehiculos Niv"
+vehicle.make,schema.org brand; mobile.de make; STAR Make (NCIC make code)
+vehicle.model,schema.org model; mobile.de model; STAR Model
+vehicle.condition,"schema.org itemCondition (NewCondition/UsedCondition, coarser); mobile.de condition + usageType; ADF status new|used"
+vehicle.firstRegistration,"schema.org dateVehicleFirstRegistered; VDA 4938 P2 v3.1 seg. 76 DTM+375 (CCYYMMDD, format 102; a YYYY-MM value has no VDA equivalent); mobile.de firstRegistration (yyyyMM)"
+vehicle.odometerKm,schema.org mileageFromOdometer (unitCode KMT); VDA 4938 P2 v3.1 seg. 66 QTY+372:<n>:KMT (no reading date); STAR OdometerReading; ADF odometer; mobile.de mileage
+vehicle.odometerMi,VDA 4938 P2 v3.1 seg. 66 QTY+372:<n>:SMI; schema.org mileageFromOdometer (SMI)
+vehicle.powerKw,"schema.org enginePower (auto extension, KWT); mobile.de power (kW)"
+vehicle.newMeansOfTransport,
+vehicle.firstUse,
+vehicle.marginScheme,
+vehicle.plate,VDA 4938 P2 v3.1 seg. 77 GIN+BL; COVESA VSS LicensePlate; schema.org has no plate property; Odette FVL by name only
+vehicle.registrationCountry,STAR VehicleDetails RegistrationCountry; no VDA 4938 equivalent
+vehicle.odometerStatus,ADF odometer status unknown|rolledover|replaced|original
+vehicle.odometerDate,STAR OdometerReading Date; ADF odometer; VDA 4938 QTY+372 has no date
+vehicle.variant,schema.org vehicleConfiguration; STAR Series/Trim; mobile.de modelDescription
+vehicle.displacementCm3,"schema.org engineDisplacement (auto extension, CMQ); mobile.de cubicCapacity"
+vehicle.fuel,"schema.org fuelType; mobile.de fuel; IVI 2.0 EnergySource (10 petrol, 20 diesel, 30 LPG, 40 CNG, 44 biomethane, 50 hydrogen, 60 LNG, 95 electricity, 90 other)"
+vehicle.powertrain,KBA Kraftstoffcode (mixes energy source and hybridisation)
+vehicle.category,
+vehicle.colour,schema.org color (inherited from Product); mobile.de exteriorColor
+vehicle.hsn,mobile.de kba.hsn
+vehicle.tsn,mobile.de kba.tsn
+vehicle.inspectionDue,mobile.de generalInspection (yyyyMM)
+vehicle.batteryCapacityKwh,schema.org has no kWh property (fuelCapacity uses Ah for EVs)
+vehicle.typeApprovalNumber,
+vehicle.emissionClass,mobile.de emissionClass
+vehicle.co2GPerKm,schema.org emissionsCO2 (auto extension)
+vehicle.bodyType,schema.org bodyType (auto extension)
+vehicle.seats,schema.org vehicleSeatingCapacity
+vehicle.modelYear,schema.org vehicleModelDate; STAR ModelYear
+vehicle.productionDate,schema.org productionDate
+vehicle.electricRangeKm,
+vehicle.batterySohPct,
+vehicle.batterySohDate,
+vehicle.batteryPassport,schema.org hasDigitalProductPassport (inherited from Product); GS1 Digital Link / ISO/IEC 18975 resolvers
+vehicle.maxMassKg,
+vehicle.catalogId,mobile.de schwackeCode
+vehicle.registeredKeepers,schema.org numberOfPreviousOwners (counts the current owner); mobile.de numberOfPreviousOwners
+vehicle.accidentDamaged,mobile.de accidentDamaged; schema.org knownVehicleDamages (text only)
+vehicle.damageUnrepaired,mobile.de damageUnrepaired

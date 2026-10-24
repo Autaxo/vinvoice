@@ -1,0 +1,33 @@
+name: Change or correct a key
+description: Report an error or propose a change to an existing key.
+labels: ['key change']
+body:
+  - type: input
+    id: key
+    attributes:
+      label: Key
+      placeholder: e.g. vehicle.odometerKm
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of change
+      options:
+        - Correction (label, definition wording, anchors, examples)
+        - New token for a code list
+        - Change of meaning or grammar (only before 1.0; afterwards deprecate and propose a new key)
+        - Rename (only before 1.0)
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: What should change, and why?
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Law, standards or documents that support the change.

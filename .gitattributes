@@ -1,0 +1,3 @@
+generated/** linguist-generated=true
+corpus/checker-expected.json linguist-generated=true
+*.xml text eol=lf

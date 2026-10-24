@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.newMeansOfTransport
+tier: core
+status: draft
+labelEn: New means of transport (VAT)
+labelDe: Neues Fahrzeug (§ 1b UStG)
+definition: "Issuer's statement that at the date of supply the vehicle is a 'new means of transport'
+  for VAT: a motorised land vehicle of more than 48 cm3 or more than 7.2 kW that has covered no more
+  than 6,000 km OR was first put into service no more than 6 months earlier (Art. 2(2)(b) Directive
+  2006/112/EC; § 1b Abs. 2 Nr. 1, Abs. 3 Nr. 1 UStG). A statement of fact; the VAT treatment stays
+  in the VAT terms. Land vehicles only: vessels and aircraft (§ 1b Abs. 2 Nr. 2/3) are out of scope
+  of 1.0. Not the same as condition = new."
+valueFormat: true | false
+grammar: '^(true|false)$'
+unit: null
+codeList: none
+conditionality: MUST be true on every line that supplies a new means of transport intra-EU under
+  Art. 138(1) or (2)(a) (§§ 6a, 14a Abs. 4 UStG, also § 2a sellers); V-08 then applies. MAY as a
+  factual statement on other supplies. 'false' only as an active statement. Art. 138(2)(a) supplies
+  to buyers without a VAT id are outside 1.0 because category K fails BR-IC-02 (fatal)
+statutory: true
+repeatable: false
+signOff: tax adviser
+carrier: "BG-32: BT-160 'Neues Fahrzeug (§ 1b UStG) [vehicle.newMeansOfTransport]', BT-161 'true'.
+  Labelled name mandatory"
+anchors: Art. 2(2)(b), 138, 226(12) Directive 2006/112/EC; §§ 1b, 14a Abs. 4 UStG; FzgLiefgMeldV §
+  2; PL Adnotacje/NoweSrodkiTransportu; HU newTransportMean; IT DatiVeicoli.

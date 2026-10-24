@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.productionDate
+tier: optional
+status: provisional
+labelEn: Date of manufacture
+labelDe: Herstellungsdatum
+definition: Date of manufacture as stated in the CoC (item 0.11).
+valueFormat: YYYY-MM-DD or YYYY-MM
+grammar: '^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2]))$'
+unit: null
+codeList: none
+conditionality: MAY; useful for new vehicles
+statutory: false
+repeatable: false
+signOff: null
+carrier: "BG-32: BT-160 'Herstellungsdatum [vehicle.productionDate]'"
+anchors: CoC item 0.11.

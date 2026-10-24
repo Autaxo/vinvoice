@@ -1,0 +1,78 @@
+# VINvoice registry: release metadata and the order of keys.
+# refs name the keys that the specification text and the tools refer to by role.
+# SPDX-License-Identifier: CC0-1.0
+
+version: vehicle/1.0-draft
+date: '2026-10-24'
+licence: CC0-1.0
+prefix: vehicle.
+jsonld:
+  prefix: veh
+  namespace: https://w3id.org/veh/ns#
+tiers:
+  - core
+  - recommended
+  - optional
+refs:
+  marker: profile
+  role: role
+  vin: vin
+  make: make
+  model: model
+  condition: condition
+  firstRegistration: firstRegistration
+  odometerKm: odometerKm
+  odometerMi: odometerMi
+  odometerStatus: odometerStatus
+  power: powerKw
+  displacement: displacementCm3
+  newMeansOfTransport: newMeansOfTransport
+  firstUse: firstUse
+  marginScheme: marginScheme
+  plate: plate
+  batterySoh: batterySohPct
+  batterySohDate: batterySohDate
+keys:
+  - profile
+  - role
+  - vin
+  - make
+  - model
+  - condition
+  - firstRegistration
+  - odometerKm
+  - odometerMi
+  - powerKw
+  - newMeansOfTransport
+  - firstUse
+  - marginScheme
+  - plate
+  - registrationCountry
+  - odometerStatus
+  - odometerDate
+  - variant
+  - displacementCm3
+  - fuel
+  - powertrain
+  - category
+  - colour
+  - hsn
+  - tsn
+  - inspectionDue
+  - batteryCapacityKwh
+  - typeApprovalNumber
+  - emissionClass
+  - co2GPerKm
+  - bodyType
+  - seats
+  - modelYear
+  - productionDate
+  - electricRangeKm
+  - batterySohPct
+  - batterySohDate
+  - batteryPassport
+  - maxMassKg
+  - catalogId
+  - registeredKeepers
+  - accidentDamaged
+  - damageUnrepaired

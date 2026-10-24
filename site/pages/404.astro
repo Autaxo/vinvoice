@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+---
+
+<Base title="Page not found" description="This page does not exist." noindex>
+  <PageHead
+    title="Page not found"
+    lead="This page does not exist. Key names can change while VINvoice is a draft, so an older link to a term may no longer work."
+  />
+  <ul class="prose">
+    <li><a href="/vocabulary/">Vocabulary: all keys</a></li>
+    <li><a href="/specification/">Specification</a></li>
+    <li><a href="/">Home</a></li>
+  </ul>
+</Base>
