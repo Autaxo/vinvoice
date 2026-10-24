@@ -8,9 +8,8 @@ import {
   tierLabel,
   rowName,
   unitInfo,
-  ownCodeList,
-  codeListKind,
-  codeListAnchor,
+  tokenListsFor,
+  countryScope,
   linkKeys,
   splitList,
   crosswalkFor,
@@ -35,8 +34,8 @@ interface Props {
 }
 const { t, prev, next } = Astro.props;
 const unit = unitInfo(t);
-const kind = codeListKind(t);
-const own = ownCodeList(t);
+const lists = tokenListsFor(t);
+const scope = countryScope(t);
 const anchors = splitList(t.anchors);
 const examples = corpusValues(t.key).slice(0, 5);
 const crosswalk = crosswalkFor(t);
@@ -46,6 +45,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'DefinedTerm',
   '@id': SITE.url + termUrl(t),
+  identifier: registry.iriBase + t.key.slice(registry.root.length + 1),
   termCode: t.key,
   name: t.labelEn,
   alternateName: { '@language': 'de', '@value': t.labelDe },
@@ -105,14 +105,22 @@ const jsonLd = {
     <dd><a href={`/vocabulary/#tier-${t.tier}`}>{tierLabel(t.tier)}</a></dd>
 
     <dt>Status</dt>
-    <dd>
-      {t.status}
-      {
-        t.signOff && (
-          <span class="muted"> · needs written sign-off by a {t.signOff} before 1.0</span>
-        )
-      }
-    </dd>
+    <dd>{t.status}</dd>
+
+    {
+      scope && (
+        <>
+          <dt>Country scope</dt>
+          <dd>
+            <code>{scope}</code>: a national key, used only for facts that the law or an authority
+            of that state defines. See the <a href="/naming-rules/#national">naming rules</a>.
+          </dd>
+        </>
+      )
+    }
+
+    <dt>Representation term</dt>
+    <dd>{t.representationTerm}</dd>
 
     <dt>Value format</dt>
     <dd set:html={linkKeys(t.valueFormat)} />
@@ -147,24 +155,27 @@ const jsonLd = {
     <dt>Code list</dt>
     <dd>
       {
-        kind === 'own' && own && (
-          <>
-            <a href={`/code-lists/#${codeListAnchor(own.id)}`}>
-              <code>{own.id}</code>
-              {own.version && ` ${own.version}`}
-            </a>
-            <ul class="tokens dd-note">
-              {own.tokens.map((tok) => (
-                <li>
-                  <code>{tok}</code>
-                </li>
-              ))}
-            </ul>
-          </>
+        lists.length > 0 ? (
+          lists.map((l) => (
+            <p class="flush">
+              <a href={`/code-lists/#${l.anchor}`}>{l.title}</a>
+            </p>
+          ))
+        ) : (
+          <span set:html={linkKeys(t.codeList)} />
         )
       }
-      {kind === 'external' && <span set:html={linkKeys(t.codeList)} />}
-      {(kind === 'none' || kind === 'unit') && <span class="muted">none</span>}
+      {
+        t.tokens.length > 0 && (
+          <ul class="tokens dd-note">
+            {t.tokens.map((tok) => (
+              <li>
+                <code>{tok}</code>
+              </li>
+            ))}
+          </ul>
+        )
+      }
     </dd>
 
     <dt>Required when</dt>

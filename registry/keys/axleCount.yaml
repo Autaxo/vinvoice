@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.axleCount
+tier: optional
+status: draft
+labelEn: Number of axles
+labelDe: Anzahl der Achsen
+definition: Number of axles as in registration field L or CoC item 1.
+representationTerm: Count
+valueFormat: integer ^[1-9]$
+grammar: '^[1-9]$'
+unit: null
+tokens: []
+codeList: none
+conditionality: MAY; SHOULD for categories M2, M3, N, O, T and R
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Anzahl der Achsen [vehicle.axleCount]', BT-161 '2'"
+anchors: Directive 1999/37/EC code L 'number of axles'; CoC item 1 'Number of axles'

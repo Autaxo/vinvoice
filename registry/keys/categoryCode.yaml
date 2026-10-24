@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.categoryCode
+tier: recommended
+status: draft
+labelEn: Vehicle category
+labelDe: Fahrzeugklasse
+definition: EU vehicle category as in registration field J or CoC item 0.4, with the official
+  suffixes G (off-road, M and N only) and S (special purpose, incomplete). Not a body style or
+  listing class, and not the VAT category (BT-151). Omitted when the vehicle has no EU category or
+  the document does not print J.
+representationTerm: Code
+valueFormat: "^((M[1-3]|N[1-3])G?S?|O[1-4]S?|L(1e(-[AB])?|2e(-[PU])?|3e(-A[123][ET]?)?|4e|5e(-[AB])\
+  ?|6e(-A|-B[PU]?)?|7e(-(A[12]?|B[12]?|C[PU]?))?)|[TC]([1-4](\\.[1-3])?[ab]?)?|T5|R([1-4][ab]?)?|S(\
+  [12][ab]?)?)$ (T5: legacy category of Directive 2003/37/EC)"
+grammar: '^((M[1-3]|N[1-3])G?S?|O[1-4]S?|L(1e(-[AB])?|2e(-[PU])?|3e(-A[123][ET]?)?|4e|5e(-[AB])?|6e(-A|-B[PU]?)?|7e(-(A[12]?|B[12]?|C[PU]?))?)|[TC]([1-4](\.[1-3])?[ab]?)?|T5|R([1-4][ab]?)?|S([12][ab]?)?)$'
+unit: null
+tokens: []
+codeList: "EU vehicle categories: Reg. (EU) 2018/858 Art. 4; Reg. (EU) 168/2013 Art. 4; Reg. (EU)
+  167/2013 Art. 4"
+conditionality: SHOULD; especially on invoices to public buyers (Clean Vehicles Directive reporting)
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Fahrzeugklasse [vehicle.categoryCode]', BT-161 'M1'. In a CIUS XRechnung
+  CVD invoice the CVD BT-158 'CVD' and the 'cva' row stay; vehicle.categoryCode then repeats the CVD
+  class"
+anchors: Directive 1999/37/EC code J 'vehicle category' (DE 'Fahrzeugklasse'); CoC item 0.4; Reg.
+  (EU) 2018/858 Art. 4 and Annex I Part A 2.1-2.3 (G and S); Reg. (EU) 168/2013 Art. 4 (L); Reg.
+  (EU) 167/2013 Art. 4 (T, C, R, S); KoSIT CIUS XRechnung CVD v0.9

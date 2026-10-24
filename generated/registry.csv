@@ -1,44 +1,49 @@
-key,tier,status,statutory,unit,labelDe,labelEn,grammar,codeList
-vehicle.profile,core,draft,false,,Fahrzeugdaten-Standard,Vehicle data standard,^vehicle/[1-9][0-9]*[.](0|[1-9][0-9]*)$,none (version token)
-vehicle.role,core,draft,false,,Fahrzeugbezug,Vehicle role,^(supply|trade-in|service|lease|rental|agency|transport|other)$,"VEH-ROLE 1.0: supply, trade-in, service, lease, rental, agency, transport, other"
-vehicle.vin,core,draft,false,,FIN,VIN,"^[A-Z0-9]{1,17}$",BT-128-1 / BT-18-1: UNTDID 1153 'AKG' (Vehicle Identification Number (VIN)); 'VT' (Motor vehicle identification number) accepted on input
-vehicle.make,core,draft,false,,Marke,Make,"^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,60}$",none in 1.0
-vehicle.model,core,draft,false,,Modell,Model,"^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,60}$",none
-vehicle.condition,core,draft,false,,Zustand,Condition,^(new|pre-registered|demonstrator|used)$,"VEH-CONDITION 1.0: new, pre-registered, demonstrator, used"
-vehicle.firstRegistration,core,draft,false,,Erstzulassung,First registration,^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2]))$,none
-vehicle.odometerKm,core,draft,true,KMT,Kilometerstand (km),Odometer (km),"^(0|[1-9][0-9]{0,6})$",unit fixed: kilometre (Rec 20 KMT)
-vehicle.odometerMi,core,draft,true,SMI,Kilometerstand (Meilen),Odometer (miles),"^(0|[1-9][0-9]{0,6})$",unit fixed: statute mile (Rec 20 SMI)
-vehicle.powerKw,core,draft,true,KWT,Leistung (kW),Power (kW),"^(0|[1-9][0-9]{0,3})([.][0-9])?$",unit fixed: kilowatt (Rec 20 KWT)
-vehicle.newMeansOfTransport,core,draft,true,,Neues Fahrzeug (§ 1b UStG),New means of transport (VAT),^(true|false)$,none
-vehicle.firstUse,core,draft,true,,Erste Inbetriebnahme,First entry into service,^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$,none
-vehicle.marginScheme,core,provisional,true,,Differenzbesteuerung,Margin scheme (second-hand goods),^(true)$,none
-vehicle.plate,recommended,draft,false,,Kennzeichen,Registration plate,"^[A-ZÄÖÜ0-9][A-ZÄÖÜ0-9 -]{0,14}$",none
-vehicle.registrationCountry,recommended,draft,false,,Zulassungsland,Country of registration,^[A-Z]{2}$,ISO 3166-1 alpha-2
-vehicle.odometerStatus,recommended,draft,false,,Kilometerstand-Status,Odometer status,^(displayed|replaced|rolled-over|defective|unknown)$,"VEH-ODOMETER-STATUS 1.0: displayed, replaced, rolled-over, defective, unknown"
-vehicle.odometerDate,recommended,draft,false,,Kilometerstand am,Odometer reading date,^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$,none
-vehicle.variant,recommended,draft,false,,Ausführung,Variant / trim,"^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,100}$",none
-vehicle.displacementCm3,recommended,draft,true,CMQ,Hubraum (cm³),Displacement (cm³),"^[1-9][0-9]{0,5}$",unit fixed: cubic centimetre (Rec 20 CMQ)
-vehicle.fuel,recommended,draft,false,,Kraftstoff,Fuel / energy source,"^(petrol|diesel|electric|lpg|cng|lng|hydrogen|ethanol|biodiesel|biomethane|other)(,(petrol|diesel|electric|lpg|cng|lng|hydrogen|ethanol|biodiesel|biomethane|other))*$","VEH-FUEL 1.0: petrol, diesel, electric, lpg, cng, lng, hydrogen, ethanol, biodiesel, biomethane, other (own tokens; IVI 2.0 EnergySource and KBA Kraftstoffcode only as informative mappings, licence of the IVI list unverified)"
-vehicle.powertrain,recommended,draft,false,,Antriebsart,Powertrain,^(combustion|hybrid|plug-in-hybrid|battery-electric|fuel-cell|other)$,"VEH-POWERTRAIN 1.0: combustion, hybrid, plug-in-hybrid, battery-electric, fuel-cell, other"
-vehicle.category,recommended,draft,false,,EU-Fahrzeugklasse,EU vehicle category,^((M[1-3]|N[1-3]|O[1-4])G?|L[1-7]e(-[A-Z][0-9]?)?)$,Reg. (EU) 2018/858 Art. 4; Reg. (EU) 168/2013
-vehicle.colour,recommended,draft,false,,Farbe,Basic colour,^(white|yellow|orange|red|violet|blue|green|grey|brown|black|beige|gold|silver|other)$,"VEH-COLOUR 1.0: white, yellow, orange, red, violet, blue, green, grey, brown, black (CoC item 40, Reg. (EU) 2020/683 Annex VIII) + beige, gold, silver, other"
-vehicle.hsn,recommended,draft,false,,HSN,Manufacturer key (HSN),^[0-9A-Z]{4}$,KBA key directory (DE)
-vehicle.tsn,recommended,draft,false,,TSN,Type key (TSN),^[0-9A-Z]{3}$,KBA key directory (DE)
-vehicle.inspectionDue,recommended,draft,false,,Nächste HU,Next roadworthiness test,^[0-9]{4}-(0[1-9]|1[0-2])$,none
-vehicle.batteryCapacityKwh,recommended,draft,false,KWH,Batteriekapazität (kWh),Battery capacity (kWh),"^[0-9]{1,3}([.][0-9]{1,2})?$",unit fixed: kilowatt hour (Rec 20 KWH)
-vehicle.typeApprovalNumber,optional,provisional,false,,Typgenehmigungsnummer,Type-approval number,"^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,60}$",none
-vehicle.emissionClass,optional,provisional,false,,Schadstoffklasse,Emission class,^(euro-1|euro-2|euro-3|euro-4|euro-5|euro-6|euro-6b|euro-6c|euro-6d-temp|euro-6d|euro-6e|euro-7|euro-iv|euro-v|euro-vi|other)$,"VEH-EMISSION 1.0 (provisional): euro-1, euro-2, euro-3, euro-4, euro-5, euro-6, euro-6b, euro-6c, euro-6d-temp, euro-6d, euro-6e, euro-7, euro-iv, euro-v, euro-vi, other (to be checked against CoC item 47 values before freezing)"
-vehicle.co2GPerKm,optional,provisional,false,,CO2-Emissionen (g/km),CO2 emissions (g/km),"^(0|[1-9][0-9]{0,3})$","unit fixed: g/km (no Rec 20 code, so never BT-212)"
-vehicle.bodyType,optional,provisional,false,,Aufbau,Bodywork code,^[A-Z]{2}$,"Reg. (EU) 2018/858 Annex I Part C (AA-AG checked; BA-BX, CA-CX, DA-DG, SA-SH to be checked before freezing)"
-vehicle.seats,optional,provisional,false,,Sitzplätze,Seats,^[1-9][0-9]?$,none
-vehicle.modelYear,optional,provisional,false,,Modelljahr,Model year,^(19|20)[0-9]{2}$,none
-vehicle.productionDate,optional,provisional,false,,Herstellungsdatum,Date of manufacture,^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2]))$,none
-vehicle.electricRangeKm,optional,provisional,false,KMT,Elektrische Reichweite (km),Electric range (km),"^[1-9][0-9]{0,3}$",unit fixed: kilometre (Rec 20 KMT)
-vehicle.batterySohPct,optional,provisional,false,P1,Batteriezustand SoH (%),Battery state of health (%),^(100([.]0)?|[1-9]?[0-9]([.][0-9])?)$,unit fixed: percent (Rec 20 P1)
-vehicle.batterySohDate,optional,provisional,false,,Batteriezustand ermittelt am,Battery SoH date,^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$,none
-vehicle.batteryPassport,optional,provisional,false,,Batteriepass,Battery passport link,"^https://[^\s]{1,240}$",none
-vehicle.maxMassKg,optional,provisional,false,KGM,Techn. zul. Gesamtmasse (kg),Maximum laden mass (kg),"^[1-9][0-9]{0,5}$",unit fixed: kilogram (Rec 20 KGM)
-vehicle.catalogId,optional,provisional,false,,Katalog-ID,Catalogue reference,"^[a-z][a-z0-9-]{1,19}:[A-Za-z0-9._][A-Za-z0-9._-]{0,39}$","VEH-CATALOG-SCHEME (registry, with a licence note per scheme): dat, schwacke, jato, ktype"
-vehicle.registeredKeepers,optional,provisional,false,,Anzahl Halter,Registered keepers,^(0|[1-9][0-9]?)$,none
-vehicle.accidentDamaged,optional,provisional,false,,Unfallschaden (Angabe Verkäufer),Accident damage declared,^(true|false)$,none
-vehicle.damageUnrepaired,optional,provisional,false,,Unreparierter Schaden (Angabe Verkäufer),Unrepaired damage declared,^(true|false)$,none
+key,tier,status,statutory,unit,labelDe,labelEn,grammar,codeList,representationTerm,repeatable
+vehicle.specificationId,core,draft,false,,VINvoice-Spezifikation,VINvoice specification,^vehicle/[1-9][0-9]*[.](0|[1-9][0-9]*)$,none (version token),Id,false
+vehicle.roleCode,core,draft,false,,Fahrzeugrolle,Vehicle role,^(supply|trade-in|service|rental|lease|agency|transport|other)$,"VEHICLE-ROLE 1.0: supply, trade-in, service, rental, lease, agency, transport, other",Code,false
+vehicle.vin,core,draft,false,,Fahrzeug-Identifizierungsnummer (FIN),Vehicle identification number (VIN),"^[A-Z0-9]{1,17}$",none,Number (implicit in the listed abbreviation vin),false
+vehicle.make,core,draft,false,,Marke,Make,"^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,60}$",none,Name (implicit),false
+vehicle.model,core,draft,false,,Modell,Model,"^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,60}$",none,Name (implicit),false
+vehicle.conditionCode,core,draft,false,,Fahrzeugzustand,Vehicle condition,^(new|used)$,"VEHICLE-CONDITION 1.0: new, used",Code,false
+vehicle.firstRegistrationDate,core,draft,false,,Datum der Erstzulassung,Date of first registration,^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2]))$,none,Date,false
+vehicle.odometerReadingKm,core,draft,true,KMT,Kilometerstand (km),Odometer reading (km),"^(0|[1-9][0-9]{0,6})$",unit fixed: kilometre (Rec 20 KMT),"Measure, unit km (Rec 20 KMT)",false
+vehicle.odometerReadingMi,core,draft,true,SMI,Meilenstand (mi),Odometer reading (mi),"^(0|[1-9][0-9]{0,6})$",unit fixed: statute mile (Rec 20 SMI),"Measure, unit mi (Rec 20 SMI)",false
+vehicle.maximumNetPowerKw,core,draft,false,KWT,Höchste Nutzleistung (kW),Maximum net power (kW),"^(0|[1-9][0-9]{0,3})([.][0-9])?$",unit fixed: kilowatt (Rec 20 KWT),"Measure, unit kW (Rec 20 KWT)",false
+vehicle.newMeansOfTransportIndicator,core,draft,true,,Neues Fahrzeug (USt),New means of transport,^(true|false)$,"Indicator values: true, false",Indicator,false
+vehicle.firstEntryIntoServiceDate,core,draft,true,,Erste Inbetriebnahme,First entry into service,^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$,none,Date,false
+vehicle.marginSchemeIndicator,core,draft,true,,Differenzbesteuerung,Margin scheme,^(true|false)$,"Indicator values: true, false",Indicator,false
+vehicle.registrationNumber,recommended,draft,false,,Amtliches Kennzeichen,Registration number,"^[\p{Lu}0-9][\p{Lu}0-9 -]{0,14}$",none,Number,false
+vehicle.registrationCountryCode,recommended,draft,false,,Zulassungsland,Country of registration,^([A-Z]{2}|1A)$,"EN 16931 country code list (ISO 3166-1 alpha-2, plus XI and 1A)",Code,false
+vehicle.odometerReadingStatusCode,recommended,draft,false,,Status des Zählerstands,Odometer reading status,^(displayed|replaced|rolled-over|inoperative|unknown|other)$,"VEHICLE-ODOMETER-STATUS 1.0: displayed, replaced, rolled-over, inoperative, unknown, other",Code,false
+vehicle.odometerReadingDate,recommended,draft,false,,Datum des Zählerstands,Date of odometer reading,^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$,none,Date,false
+vehicle.configuration,recommended,draft,false,,Modellausführung,Vehicle configuration,"^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,100}$",none,Text (implicit),false
+vehicle.engineCapacityCm3,recommended,draft,false,CMQ,Hubraum (cm3),Engine capacity (cm3),"^[1-9][0-9]{0,5}$",unit fixed: cubic centimetre (Rec 20 CMQ),"Measure, unit cm3 (Rec 20 CMQ)",false
+vehicle.energySourceCode,recommended,draft,false,,Kraftstoffart oder Energiequelle,Fuel or power source,^(petrol|diesel|lpg|cng|lng|ethanol|biodiesel|hydrogen|electricity|other)$,"VEHICLE-ENERGY-SOURCE 1.0: petrol, diesel, lpg, cng, lng, ethanol, biodiesel, hydrogen, electricity, other",Code,true
+vehicle.powertrainTypeCode,recommended,draft,false,,Antriebsart,Powertrain type,^(internal-combustion|hybrid-electric|plug-in-hybrid-electric|pure-electric|fuel-cell|other)$,"VEHICLE-POWERTRAIN 1.0: internal-combustion, hybrid-electric, plug-in-hybrid-electric, pure-electric, fuel-cell, other",Code,false
+vehicle.categoryCode,recommended,draft,false,,Fahrzeugklasse,Vehicle category,^((M[1-3]|N[1-3])G?S?|O[1-4]S?|L(1e(-[AB])?|2e(-[PU])?|3e(-A[123][ET]?)?|4e|5e(-[AB])?|6e(-A|-B[PU]?)?|7e(-(A[12]?|B[12]?|C[PU]?))?)|[TC]([1-4](\.[1-3])?[ab]?)?|T5|R([1-4][ab]?)?|S([12][ab]?)?)$,EU vehicle categories: Reg. (EU) 2018/858 Art. 4; Reg. (EU) 168/2013 Art. 4; Reg. (EU) 167/2013 Art. 4,Code,false
+vehicle.basicColourCode,recommended,draft,false,,Grundfarbe,Basic colour,^(white|yellow|orange|red|violet|blue|green|grey|brown|black|other)$,"VEHICLE-COLOUR 1.0: white, yellow, orange, red, violet, blue, green, grey, brown, black, other",Code,true
+vehicle.nextRoadworthinessTestDate,recommended,draft,false,,Nächste technische Prüfung,Next roadworthiness test,^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2]))$,none,Date,false
+vehicle.usableBatteryEnergyKwh,recommended,draft,false,KWH,Nutzbare Batterieenergie (kWh),Usable battery energy (kWh),"^[0-9]{1,3}([.][0-9]{1,2})?$",unit fixed: kilowatt hour (Rec 20 KWH),"Measure, unit kWh (Rec 20 KWH)",false
+vehicle.typeApprovalNumber,recommended,draft,false,,Typgenehmigungsnummer,Type-approval number,"^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,60}$",none,Number,false
+vehicle.de.hsn,optional,provisional,false,,Herstellerschlüsselnummer (HSN),German manufacturer key number (HSN),^[0-9A-Z]{4}$,none,Number (implicit in the national abbreviation hsn),false
+vehicle.de.tsn,optional,provisional,false,,Typschlüsselnummer (TSN),German type key number (TSN),^[0-9A-Z]{3}$,none,Number (implicit in the national abbreviation tsn),false
+vehicle.exhaustEmissionLevelCode,optional,draft,false,,Abgasnorm,Exhaust emission level,^(euro-([1-7][a-z0-9]*(-[a-z0-9]+)*|(i|ii|iii|iv|v|vi)(-[a-e])?)|stage-(i|ii|iiia|iiib|iv|v)|other)$,"VEHICLE-EMISSION-LEVEL 1.0 (grammar over the Reg. (EU) 2017/1151 Annex I Appendix 6 names, not an enumeration)",Code,false
+vehicle.wltpCo2EmissionsGPerKm,optional,draft,false,,CO2-Emissionen WLTP (g/km),WLTP CO2 emissions (g/km),"^(0|[1-9][0-9]{0,3})$","unit fixed: g/km (no Rec 20 code, so never BT-212); test procedure fixed: WLTP","Measure, unit g/km (no Rec 20 code)",false
+vehicle.nedcCo2EmissionsGPerKm,optional,draft,false,,CO2-Emissionen NEFZ (g/km),NEDC CO2 emissions (g/km),"^(0|[1-9][0-9]{0,3})$","unit fixed: g/km (no Rec 20 code, so never BT-212); test procedure fixed: NEDC","Measure, unit g/km (no Rec 20 code)",false
+vehicle.bodyworkCode,optional,draft,false,,Code des Aufbaus,Code for bodywork,^(A[A-G]|B[A-E]|BX|C[A-J]|CX|D[ABCE]|S[A-HJ])([0-9]{2})?$,EU bodywork codes: Reg. (EU) 2018/858 Annex I Part C and Appendix 2,Code,false
+vehicle.seatingPositionCount,optional,draft,false,,Anzahl der Sitzplätze,Number of seating positions,"^[1-9][0-9]{0,2}$",none,Count,false
+vehicle.modelYear,optional,draft,false,,Modelljahr,Model year,^(19|20)[0-9]{2}$,none,Year,false
+vehicle.manufactureDate,optional,draft,false,,Herstellungsdatum,Date of manufacture,^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2])|[0-9]{4})$,none,Date,false
+vehicle.wltpElectricRangeKm,optional,draft,false,KMT,Elektrische Reichweite WLTP (km),WLTP electric range (km),"^[1-9][0-9]{0,3}$",unit fixed: kilometre (Rec 20 KMT),"Measure, unit km (Rec 20 KMT)",false
+vehicle.batteryStateOfHealthPercent,optional,draft,false,P1,Alterungszustand (%),State of health (%),^(100([.]0)?|[1-9]?[0-9]([.][0-9])?)$,unit fixed: percent (Rec 20 P1),Percent,false
+vehicle.batteryStateOfHealthDate,optional,draft,false,,Alterungszustand ermittelt am,State of health date,^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$,none,Date,false
+vehicle.batteryStateOfHealthMethodCode,optional,draft,false,,Ermittlungsmethode,State of health method,^(on-board|manufacturer-test|independent-test|other)$,"VEHICLE-STATE-OF-HEALTH-METHOD 1.0: on-board, manufacturer-test, independent-test, other",Code,false
+vehicle.batteryPassportUrl,optional,draft,false,,Batteriepass-Link,Battery passport link,"^https://[^\s]{1,240}$",none,Url,false
+vehicle.maximumMassKg,optional,draft,false,KGM,Technisch zulässige Gesamtmasse (kg),Maximum mass (kg),"^[1-9][0-9]{0,5}$",unit fixed: kilogram (Rec 20 KGM),"Measure, unit kg (Rec 20 KGM)",false
+vehicle.registeredMaximumMassKg,optional,draft,false,KGM,Zulässige Gesamtmasse (kg),Registered maximum mass (kg),"^[1-9][0-9]{0,5}$",unit fixed: kilogram (Rec 20 KGM),"Measure, unit kg (Rec 20 KGM)",false
+vehicle.catalogueId,optional,draft,false,,Katalogkennung,Catalogue identifier,"^[a-z][a-z0-9-]{1,19}:[A-Za-z0-9._][A-Za-z0-9._-]{0,39}$",VEHICLE-CATALOGUE-SCHEME 1.0 (open register): manufacturer,Id,true
+vehicle.approvedType,optional,draft,false,,Typ (Typgenehmigung),Type (type-approval),"^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,25}$",none,Name (implicit),false
+vehicle.approvedVariant,optional,draft,false,,Variante (Typgenehmigung),Variant (type-approval),"^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,25}$",none,Name (implicit),false
+vehicle.approvedVersion,optional,draft,false,,Version (Typgenehmigung),Version (type-approval),"^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,35}$",none,Name (implicit),false
+vehicle.axleCount,optional,draft,false,,Anzahl der Achsen,Number of axles,^[1-9]$,none,Count,false
+vehicle.cumulativeOperatingHours,optional,draft,false,HUR,Betriebsstundenstand,Cumulative operating hours,"^(0|[1-9][0-9]{0,6})$",unit fixed: hour (Rec 20 HUR),"Measure, unit h (Rec 20 HUR)",false

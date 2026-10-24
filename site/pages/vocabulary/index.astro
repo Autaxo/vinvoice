@@ -10,6 +10,7 @@ import {
   termUrl,
   unitInfo,
   valueSummary,
+  reserved,
   REF,
 } from '../../lib/registry';
 import { SITE } from '../../lib/site';
@@ -86,7 +87,7 @@ const tierText: Record<string, string> = {
                 <th scope="col">Key</th>
                 <th scope="col">Label (EN)</th>
                 <th scope="col">Label (DE)</th>
-                <th scope="col">Value</th>
+                <th scope="col">Representation</th>
                 <th scope="col">Unit</th>
                 <th scope="col">Status</th>
               </tr>
@@ -121,6 +122,44 @@ const tierText: Record<string, string> = {
         </div>
       </section>
     ))
+  }
+
+  {
+    reserved.length > 0 && (
+      <section aria-labelledby="reserved">
+        <h2 id="reserved">
+          Reserved names <span class="muted">({reserved.length})</span>
+        </h2>
+        <p class="prose">
+          These names are reserved and are <strong>not keys</strong>. Do not write them; readers
+          ignore them. They may not be used for any other meaning.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Reserved name</th>
+                <th scope="col">Label (EN)</th>
+                <th scope="col">Label (DE)</th>
+                <th scope="col">Formerly</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reserved.map((r) => (
+                <tr>
+                  <td>
+                    <code>{r.key}</code> <span class="tag provisional">reserved</span>
+                  </td>
+                  <td>{r.labelEn}</td>
+                  <td lang="de">{r.labelDe}</td>
+                  <td>{r.was && <code>{r.was}</code>}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )
   }
 
   <p class="small muted prose">

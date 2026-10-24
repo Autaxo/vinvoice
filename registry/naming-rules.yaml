@@ -1,0 +1,408 @@
+# SPDX-License-Identifier: CC0-1.0
+
+rules:
+  - id: NR-01
+    rule: "Key grammar. A registry key is the root 'vehicle' plus one or more dot-separated
+      lowerCamelCase ASCII segments: ^vehicle([.][a-z][a-z0-9]*([A-Z][a-z0-9]*)*)+$. Initialisms and
+      unit symbols are cased as words (vin, co2, wltp, Kw, Kwh, Cm3); two capitals stand next to
+      each other only inside the unit token GPerKm. Digits appear only in the registered symbols co2
+      and Cm3. No hyphen, underscore or space. Keys are case-sensitive and at most 40 characters
+      including the root. The root word is never repeated inside a key (vehicle.categoryCode, not
+      vehicle.vehicleCategoryCode). The adjacency and digit limits are registry checks, because no
+      portable regular expression states them."
+    rationale: The UN/CEFACT JSON Schema NDR prescribes lowerCamel ASCII names with acronyms cased as
+      words, and schema.org and vocabulary.uncefact.org use the same casing. ISO/IEC 11179-5 and the
+      NDR drop the object-class word from property names. The 40-character limit leaves at least 21
+      characters for a label under the 64-character cap; the longest key has 38.
+    source: UN/CEFACT JSON Schema NDR 1.0 R13-R16; ISO/IEC 11179-5 (committee draft read); Microsoft
+      Azure/Graph REST guidelines; vocabulary.uncefact.org
+  - id: NR-02
+    rule: "Reserved segments. A middle segment of exactly two lower-case letters is a country scope: the
+      ISO 3166-1 alpha-2 code in lower case (gr for Greece, gb for the United Kingdom; never the
+      EU-internal forms el and uk). It is never a language code: vehicle.de.hsn means Germany, not
+      German. Registry property names have at least three characters. There is no 'x', 'ext' or
+      'experimental' segment."
+    rationale: Keeps country scopes unambiguous and aligned with the EN 16931 country code list. RFC
+      6648 deprecates X-style markers because unstandardised names leak into the standard namespace
+      and force renames.
+    source: RFC 6648 (BCP 178); RFC 6838 s3.4; ISO 3166-1; EN 16931 country code list; EU
+      Interinstitutional Style Guide (EL and UK as EU-internal codes)
+  - id: NR-03
+    rule: Composition. A key is [qualifiers] + property term + representation term (+ unit). Qualifiers
+      precede what they qualify (firstRegistrationDate, maximumNetPowerKw, registeredMaximumMassKg,
+      wltpCo2EmissionsGPerKm). No word appears twice. Only nouns, adjectives and participles are
+      used; a preposition appears only inside an official legal term (firstEntryIntoServiceDate) or
+      inside a unit token (GPerKm).
+    rationale: This is the ISO/IEC 11179-5 naming structure (object class, qualifiers, property,
+      representation term), which CCTS also uses.
+    source: ISO/IEC 11179-5; UN/CEFACT CCTS 3.0 [C6], [C9], [B7]
+  - id: NR-04
+    rule: "Controlling term. The property term comes from the highest source that names the fact: (1)
+      the EU legal text that defines or prints it (Directive 1999/37/EC Annex I codes, Reg. (EU)
+      2018/858, the CoC of Reg. (EU) 2020/683, Reg. (EU) 2017/1151, Directive 2006/112/EC, Directive
+      2014/45/EU, Reg. (EU) 2023/1542, Reg. (EU) 2023/1804); (2) EN 16931, UN/CEFACT, UNECE and ISO;
+      (3) the open vocabularies schema.org, COVESA VSS and IVI 2.0; (4) sector standards (STAR, VDA
+      4938). A vendor's or marketplace's field name is never a source. A key may coincide with a
+      vendor name only when a source from (1)-(3) independently gives the same word. Each key
+      records its anchor."
+    rationale: "The legal term is the least contestable name and gives the reader a citation. Requiring
+      independent attestation guards against a vendor-shaped schema: 18 of the 43 draft names were
+      verbatim field names of one vendor's data model. After this revision 7 active names still
+      coincide exactly (vin, make, model, modelYear, batteryStateOfHealthPercent, de.hsn, de.tsn),
+      and each has its own legal or standards anchor. Near-coincidences (firstRegistrationDate,
+      conditionCode, cumulativeOperatingHours) follow from NR-03 to NR-07. Token coincidences
+      (petrol, diesel, lpg, cng, electricity, ethanol, other; nine of the ten CoC colours; new,
+      used) arise because the vendor and the registry use the same legal or common wording, which is
+      allowed."
+    source: EReg IVI 2.0 Guideline s2.2 (tag names follow the regulation); Directive 1999/37/EC; Reg.
+      (EU) 2018/858; Reg. (EU) 2020/683; mechanical comparison of the catalogue with the vendor
+      model (check.py)
+  - id: NR-05
+    rule: "Collision and generic-word test. The test reads the property term together with the root
+      ('vehicle category', 'vehicle role'). A key is rejected if that term is a defined term with a
+      different meaning in EU vehicle or VAT law or in the host e-invoice formats, or if a bare
+      generic noun (power, status, date, capacity, mass, type, description) forms the whole property
+      term. A legal term used in its own legal meaning passes: approvedType, approvedVariant and
+      approvedVersion use the words as Reg. (EU) 2018/858 defines them. Avoided: profile (Factur-X
+      profile, BT-23), description (BT-154 Item description, hence model), variant and trim for the
+      configuration (D.2; a seat is a structure 'with trim'), colour code and powertrain code
+      (manufacturer codes), capacity (ampere-hours in Reg. (EU) 2023/1542), inspection (workshop
+      service), keeper (absent from EU texts). Checked and kept with a glossary line (NR-25):
+      category, role, registration."
+    rationale: A homonym in a statutory or legal field invites wrong data and blocks adding the legal
+      concept later; for example, the D.2 type-variant-version is mandatory in the EU eCoC (IVI
+      2.0). Testing single words instead of terms would reject every key, since date, code and
+      number all occur in EN 16931 terms.
+    source: Reg. (EU) 2018/858 Art. 3 and Annex I; Directive 1999/37/EC code D.2; Factur-X 1.09
+      profiles; EN 16931 BT-23, BT-24, BT-30, BT-118, BT-151, BT-154; CII D16B RoleCode;
+      OpenTelemetry naming guidance on generic names
+  - id: NR-06
+    rule: "Representation terms (closed list). Every key ends in a term from a closed VINvoice list
+      derived from the CCTS Data Type Catalogue: Date, Code, Indicator, Number, Id (for Identifier),
+      Percent, a unit token for Measure (NR-10), and three terms CCTS does not have: Year, Count and
+      Url. Number is an identifier that an authority or manufacturer assigns and prints on the
+      vehicle or its documents (vin, registrationNumber, typeApprovalNumber). Id is an identifier in
+      a registry-defined scheme or the specification marker (specificationId, catalogueId). Two
+      implicit classes carry no suffix: names and designations, whose CCTS term is Name or Text
+      (make, model, configuration, approvedType, approvedVariant, approvedVersion), and listed
+      abbreviations whose expansion ends in a representation term (vin, de.hsn, de.tsn). Primitive
+      type names (Bool, String) are never appended."
+    rationale: "A checker reads the value type from the last word of the key, and EN 16931 business
+      terms also end in such terms ('Invoice issue date', 'Seller country code'). The list does not
+      claim CCTS conformance: it adds Year, Count and Url, writes Id for Identifier, puts units into
+      the key and allows digits in unit symbols, where CCTS [C8] allows letters only."
+    source: UN/CEFACT CCTS Data Type Catalogue 3.1 s4.4 (Amount ... Video); CCTS 3.0 [C8], [C10];
+      UN/CEFACT JSON Schema NDR Table 4; EN 16931-1 business term names
+  - id: NR-07
+    rule: "Dates. A key whose value is a calendar date ends in Date, including reduced-precision values
+      (YYYY-MM, or YYYY where the key allows it). 'Due', 'On' and 'At' are not date terms. Year is
+      reserved for a year designation that is not a calendar date (modelYear only). No DateTime: the
+      vocabulary carries no time of day."
+    rationale: Every EN 16931 date term ends in 'date' (BT-2, BT-7, BT-72), and the EU texts say 'date
+      of first registration', 'date of manufacture', 'date of first entry into service' and 'date of
+      next roadworthiness test'. CCTS Date allows reduced precision. Microsoft Graph, Google AIP-142
+      and Zalando also require a date term. This is why the key is vehicle.firstRegistrationDate,
+      not vehicle.firstRegistration, which names the event and not its date.
+    source: EN 16931-1 BT-2/BT-72; Directive 1999/37/EC codes B and X; Reg. (EU) 2018/858 Art. 3(58);
+      Directive 2006/112/EC Art. 2(2)(b); UN/EDIFACT 2005 code 375; CCTS DTC 3.1 s5.4
+  - id: NR-08
+    rule: Booleans. A boolean key is a positive statement ending in Indicator
+      (newMeansOfTransportIndicator, marginSchemeIndicator), with no is/has prefix and no negative
+      name. Values are 'true' or 'false' in lower case; 'false' is always an active statement; an
+      absent row means no statement and never false. There are no true-only indicators.
+    rationale: "Indicator is the CCTS representation term for booleans and the word the e-invoice
+      syntaxes use (CII/UBL ChargeIndicator), as do the UN/CEFACT vocabulary (126 ...Indicator
+      terms), the Hungarian NAV e-invoice (marginSchemeIndicator) and the EU eCoC (IVI 2.0
+      PureElectricVehicleIndicator). As a suffix it keeps the last word as the type. Dissent: the
+      UN/CEFACT JSON NDR, schema.org and COVESA VSS use an is-prefix."
+    source: UN/CEFACT CCTS DTC 3.1 s5.9; CII/UBL ChargeIndicator; vocabulary.uncefact.org; HU NAV
+      invoiceData.xsd; IVI 2.0 change overview
+  - id: NR-09
+    rule: Codes. A key whose value comes from a closed list, from a grammar defined by an instrument, or
+      from an external code list (EN 16931 country codes, EU vehicle categories, EU bodywork codes)
+      ends in Code (roleCode, energySourceCode, registrationCountryCode, exhaustEmissionLevelCode).
+    rationale: "EN 16931 coded terms end in 'code' (BT-3, BT-5, BT-40), and the UN/CEFACT vocabulary has
+      455 ...Code terms. The suffix tells implementers the value is from a closed list. Accepted
+      cost: schema.org, COVESA VSS and marketplaces use no suffix."
+    source: EN 16931-1 BT-3/BT-5/BT-40; CCTS DTC 3.1 s5.3; vocabulary.uncefact.org
+  - id: NR-10
+    rule: "Measures. A quantity key ends in the token of its fixed unit: Km, Mi, Kw, Kwh, Cm3, Kg,
+      GPerKm; Hours and Percent are spelled out, because the Rec 20 symbols h and % cannot be cased
+      as words. Where tokens overlap, the longest wins (GPerKm before Km). The unit never changes,
+      and a new unit means a new key. The same holds for the test procedure that determines a
+      type-approval value (wltp, nedc): a new procedure means a new key. Values never contain unit
+      text and are never converted. Unit tokens map to UN/ECE Rec 20: KMT, SMI, KWT, KWH, CMQ, KGM,
+      HUR, P1 (g/km has no Rec 20 code)."
+    rationale: The EN 16931:2017 BG-32 group has no unit slot (BT-160 and BT-161 are Text), so the unit
+      must live in the name. Google AIP-141, Azure (ttlSeconds) and IVI 2.0 s2.10 do the same. CO2
+      and range values differ by test procedure in the documents (CoC item 49 has NEDC and WLTP
+      blocks), so the procedure is fixed in the key for the same reason as the unit.
+    source: EN 16931:2017 BG-32; XRechnung 3.0.2; Google AIP-141; EReg IVI 2.0 Guideline s2.10; UN/ECE
+      Rec 20 (EN 16931 code list v18); Reg. (EU) 2020/683 Annex VIII item 49
+  - id: NR-11
+    rule: Counts. A dimensionless count ends in Count, after a singular noun (seatingPositionCount,
+      axleCount). Its English label reads 'Number of ...'.
+    rationale: A bare plural ('seats', 'registeredKeepers') reads as a list, in one case a list of
+      persons. The schema.org style guide and Google AIP-141 prefer <thing>Count; the EU texts say
+      'number of', which is why the label uses it.
+    source: schema.org style guide; Google AIP-141; CCTS [C7]; Directive 1999/37/EC codes L, S.1
+  - id: NR-12
+    rule: "Singular names; multi-valued facts. Names are singular nouns, except a plural-only legal term
+      (co2Emissions) and the unit word Hours (NR-10). A multi-valued fact repeats the singular key,
+      one value per row: energySourceCode (in source-document order), basicColourCode and
+      catalogueId (one row per scheme). Only these keys repeat; comma lists are not used."
+    rationale: CCTS [C7] and ISO/IEC 11179-5 call for singular terms. Repeated rows reuse a mechanism
+      BG-32 already allows (BR-54 requires only name and value) and avoid splitting values on a
+      delimiter.
+    source: UN/CEFACT CCTS 3.0 [C7]; XML NDR R 8D9F; EN 16931 BR-54
+  - id: NR-13
+    rule: "Abbreviations (closed list). Allowed: vin; co2; Id; Url; the unit tokens of NR-10; the
+      test-procedure acronyms wltp and nedc; acronyms and designators defined inside a token list or
+      grammar (lpg, cng, lng; the Euro-level designators temp, evap, isc, fcm, bis and plus); and an
+      authority's official abbreviation only inside its country scope (de.hsn, de.tsn). Every
+      allowed abbreviation is expanded in the definition that uses it. Everything else is spelled
+      out: maximum not max, stateOfHealth not soh, Percent not Pct. Adding to the list needs a
+      registry release."
+    rationale: ISO/IEC 11179-5, CCTS [C10] and XML NDR R 9009 allow abbreviations only from an approved
+      list that expands them. VIN is the defined term of ISO 3779, Reg. (EU) 2021/535 and UNTDID
+      1153 AKG; WLTP and NEDC are the labels printed in CoC item 49; the Euro-level designators are
+      the 'Emission standard' names of Reg. (EU) 2017/1151 Annex I Appendix 6.
+    source: ISO/IEC 11179-5; UN/CEFACT CCTS 3.0 [C10]; XML NDR 3.0 R 9009 and Appendix C; JSON NDR Table
+      4; Reg. (EU) 2020/683 Annex VIII item 49; Reg. (EU) 2017/1151 Annex I Appendix 6
+  - id: NR-14
+    rule: Spelling. Keys, English labels and registry tokens use the English of the Official Journal as
+      the EU Interinstitutional Style Guide prescribes it (colour, catalogue, licence, petrol,
+      -ise), consistently across the registry; a legal text's own spelling wins. American forms
+      (color, catalog) appear only in informative crosswalks, and no alias keys are issued.
+    rationale: The concept names come from EU law (NR-04), whose English is British. CCTS [C1] (primary
+      British spelling of the Oxford English Dictionary) agrees for colour and catalogue but prefers
+      -ize; the registry follows the EU style guide. EN 16931 writes 'Colour', and the UN/CEFACT
+      vocabulary has colourCode. The draft mixed the two spellings (catalogId with the label
+      'Catalogue').
+    source: EU Interinstitutional Style Guide; UN/CEFACT CCTS 3.0 [C1]; EN 16931-1 BT-160 usage note
+  - id: NR-15
+    rule: "Namespaces and vendor rows. The root 'vehicle.' is reserved for registry keys and registered
+      country keys. A vendor's private rows use the reverse-DNS name of a domain the vendor
+      controls, never 'vehicle.':
+      ^[a-z0-9]+(-[a-z0-9]+)*([.][a-z0-9]+(-[a-z0-9]+)*)+[.][a-z][A-Za-z0-9]*$ (for example
+      com.example.stockNumber), at most 64 characters, with a lowerCamel last segment; the full
+      BT-160 name SHOULD stay within 64 characters. There is no x segment and no vendor token
+      registry. Receivers ignore any BT-160 whose bracketed key does not start with 'vehicle.'. A
+      vendor concept is promoted by defining a new registry key, never by aliasing or renaming the
+      vendor key."
+    rationale: RFC 6648 and RFC 6838 recommend that vendor names carry the organisation's own name or
+      domain and discourage x-trees. Domain names are already unique, so no first-come registry or
+      governance is needed, and a stated grammar keeps vendor names inside the same budgets as
+      registry names.
+    source: RFC 6648 s3 and Appendix B; RFC 6838 s3.2-3.4; OpenTelemetry (reverse-domain vendor
+      attributes); Azure guidelines (no x- prefixes)
+  - id: NR-16
+    rule: Neutrality. Normative content (keys, labels, tokens, definitions, anchors, examples, JSON-LD,
+      catalogue, token-list sources) names no vendor, product, marketplace or commercial data
+      provider. Implementer mappings and candidate third-party catalogue schemes go in a
+      non-normative, multi-vendor implementation notes page. The brand VINvoice appears only in the
+      human label of the marker row, in the specification title and on the website.
+    rationale: A standard 'that works for everyone' cannot carry one implementer's field mapping in
+      every row. The draft registry had an implementer column, implementer anchor suffixes, an
+      implementer vendor-key example and named commercial catalogue candidates in a normative list.
+    source: Owner brief; RFC 6648 rationale
+  - id: NR-17
+    rule: Label form. A label is the human-readable term in the invoice language, in sentence case, with
+      no trailing punctuation, no '[' or ']', no control characters and no slash except in the unit
+      g/km. Parentheses hold only a unit symbol in ASCII (km, mi, kW, kWh, cm3, kg, g/km, %), an
+      official abbreviation of the term (VIN, FIN, HSN, TSN, USt) or a legal context that
+      disambiguates it (type-approval). An 'or' alternative appears only where the legal term itself
+      has it (Fuel or power source, code P.3). The label body contains no abbreviation except the
+      official designations CO2, WLTP, NEDC (DE NEFZ) and the brand. A label never cites a national
+      statute section, and is never a bare generic noun (Vehicle role, Vehicle condition, Vehicle
+      category).
+    rationale: Brackets delimit the key inside BT-160. Invented alternatives ('Variant / trim') signal
+      an under-defined key. Superscripts and '§' risk being mangled by intermediaries. A statute
+      section would put German law onto Austrian or Luxembourg invoices written in German. A bare
+      'Role' or 'Condition' in an item-attribute table does not say whose.
+    source: EN 16931-1 business-term style; CCTS [C10]; Directive 1999/37/EC code P.3; draft risk register
+  - id: NR-18
+    rule: Label wording. The English label is the official English term of the key's anchor (without 'of
+      the vehicle' and '(if available)'), or its shortened form under NR-19, or else the key's own
+      words. The German label is the official German term of the same instrument (registration
+      certificate, CoC or Directive in German), shortened the same way. Where the official term
+      names a unit that contradicts the key's unit, the unit word is replaced (Meilenstand for
+      odometerReadingMi). Statutory keys follow the same rule; national guidance labels (such as the
+      KoSIT/FeRD row titles) are not normative, because receivers ignore labels. Further languages
+      may register a short form of the official term (FR 'Première mise en service').
+    rationale: For statutory particulars the structured part must be unambiguous to a tax reader, and
+      the official term of the same instrument gives that in each language. Labels that use another
+      stem than the key split the vocabulary, because people search the label and machines the key.
+      Official terms of FR, IT and PL often exceed the label budget, so a registered short form is
+      needed.
+    source: UN/CEFACT CCTS [C5]; Directive 1999/37/EC Annex I (EN/DE); Reg. (EU) 2020/683 Annex VIII
+      (EN/DE); Directive 2006/112/EC (EN/DE); Directive 2014/45/EU Annex II (EN/DE)
+  - id: NR-19
+    rule: Length. The full BT-160 name '<label> [<key>]' is at most 64 Unicode characters (after NFC) in
+      every registry language, and the key at most 40 characters. If a name is too long, the label
+      is shortened by dropping words the key already carries ('Date of', the object word, a unit the
+      label already names), never by shortening the key. Receivers MUST NOT truncate, reject or
+      reroute an invoice for length.
+    rationale: No normative limit exists, so the cap is a registry authoring budget (see nameLengthCap).
+      The longest names of the catalogue have 64 characters.
+    source: EN 16931-1, XRechnung 3.0.2, Peppol BIS 3.0 and Factur-X 1.09.2 XSDs (BT-160 Text, no length
+      facet); owner's earlier request to shorten the one label that exceeded 64
+  - id: NR-20
+    rule: Token form. Registry-owned tokens are lower-case ASCII kebab-case ^[a-z0-9]+(-[a-z0-9]+)*$, at
+      most 32 characters. Values from an external code list keep that list's own form (DE, 1A, M1,
+      L3e-A1, AB). Emitters write the exact form. Receivers match ASCII case-insensitively.
+    rationale: These tokens are invoice text that people read in viewers. The closest BT-161 precedent
+      (KoSIT CIUS XRechnung CVD) uses lower-case hyphenated values. Case-insensitive matching
+      protects against ERP systems that upper-case text.
+    source: KoSIT CIUS XRechnung CVD v0.9; Zalando rule 240 (external values keep their form)
+  - id: NR-21
+    rule: Token wording. Registry tokens are in EU English and singular. Tokens of an energy-source list
+      name the source (electricity, not electric). Tokens of other lists use the legal wording where
+      one exists (pure-electric, hybrid-electric, the ten CoC basic colours) and otherwise a plain
+      adjective, participle or noun (new, used, displayed, on-board). A token never repeats the key
+      stem.
+    rationale: The controlling-term logic of NR-04 applies to tokens as to keys. Reg. (EU) 2023/1804
+      lists electricity as an alternative fuel; Reg. (EU) 2017/1151 Annex XXI defines PEV, NOVC-HEV
+      and OVC-HEV.
+    source: Reg. (EU) 2023/1804 Art. 2(4); Reg. (EU) 2017/1151 Annex XXI 3.3; Reg. (EU) 2020/683 CoC
+      items 23, 26, 40; IVI 2.0 EnergySource
+  - id: NR-22
+    rule: "Token governance. Each open list has exactly one catch-all 'other'. A list that partitions a
+      defined test into all its outcomes is complete and has none (VEHICLE-CONDITION: new, used); a
+      receiver treats an unknown token in such a list as no statement. 'unknown' appears only where
+      'no information available' is an observed state (VEHICLE-ODOMETER-STATUS). 'none' and 'n/a'
+      are never tokens. From 1.0, tokens are added only in minor releases and are never removed,
+      renamed or re-purposed. A receiver keeps an unknown token raw and treats it as 'other'. List
+      identifiers follow the root: VEHICLE-<NAME> <major.minor>. Mappings to official numeric or
+      class codes are published in the registry and never written into BT-161."
+    rationale: Extensible lists cannot break old receivers. The draft list identifiers (VEH-*) carried
+      the abandoned prefix, and two draft lists lacked a catch-all.
+    source: Microsoft Azure guidelines (extensible enums); Zalando rule 240
+  - id: NR-23
+    rule: "Stability and reservation. Frozen keys and tokens are never renamed, reused or redefined; a
+      correction adds a new key and deprecates the old one. Before 1.0 names may still change.
+      Reserved forever: the names of removed keys (previousHolderCount,
+      knownAccidentDamageIndicator, knownUnrepairedDamageIndicator), the deferred name
+      vehicle.priorUseCode, and every draft name that appeared in a published version (website,
+      public example, a page shared beyond the editors). The editor lists those draft names in a
+      retired-name register before the 1.0 freeze."
+    rationale: Name migrations create interoperability problems when old and new software disagree, and
+      IVI 2.0 forbids re-using outdated element names. Reserving names that were never published
+      would only remove good names; reserving published ones protects receivers that already saw
+      them.
+    source: RFC 6648 s1; EReg IVI 2.0 Guideline s2.12
+  - id: NR-24
+    rule: Invoice-fact test. A key belongs in the registry only if the fact is required or defined by EU
+      or national tax or registration law, or is needed by at least three participant classes
+      (retail dealer, OEM/importer, leasing/fleet/rental, truck/bus/trailer, L-category,
+      agricultural/construction machinery, EV, workshop/test centre). Listing, marketing and
+      warranty-relevant seller declarations fail the test. A key that passes on participant classes
+      names them in its change reason.
+    rationale: An e-invoice is a tax document. A declaration such as accident-free can become an agreed
+      quality, and its legal effect differs by jurisdiction without any EU harmonised definition.
+    source: Coverage audit; Directive 2006/112/EC Art. 226; schema.org knownVehicleDamages note on
+      differing national rules
+  - id: NR-25
+    rule: Glossary words. Within the vehicle. namespace, 'battery' means the electric vehicle battery of
+      Reg. (EU) 2023/1542 Art. 3(14) (the traction battery), never a starter battery; 'registration'
+      means vehicle registration under Directive 1999/37/EC Art. 2(b), never a party's legal
+      registration (BT-30); 'category' means the EU vehicle category, never the VAT category
+      (BT-118, BT-151); 'role' means the vehicle's role on the invoice line, never a party role.
+    rationale: One fixed meaning per word keeps keys short (no 'traction' qualifier, which would push
+      battery keys over 40 characters) and settles the collisions NR-05 found without renaming legal
+      terms.
+    source: Reg. (EU) 2023/1542 Art. 3(14); Directive 1999/37/EC Art. 2(b); EN 16931-1 BT-30, BT-118,
+      BT-151
+  - id: NR-26
+    rule: "Definitions and legal effect. Every definition names the fact, its source field and its unit
+      or list. A row is the issuer's statement of a fact as its source shows it: not a warranty, an
+      agreed quality, a guarantee or a tax determination. The sale or service contract governs the
+      condition of the vehicle, and the invoice's VAT terms (BG-23, BT-118, BT-120, BT-151) prevail
+      over any row. An absent row makes no statement; no key has a default value. Definitions of
+      liability-sensitive keys (odometer reading and status, conditionCode, state of health, CO2,
+      electric range, firstRegistrationDate, modelYear) state what the figure is not."
+    rationale: On consumer sales, public statements and descriptions can shape conformity, so a
+      structured row without a stated legal effect invites disputes. The draft hardened some keys
+      (odometer status) and not others, and two of its definitions turned an absent row into a
+      statement.
+    source: Directive (EU) 2019/771 Art. 6 and 7; Directive 2006/112/EC Art. 226; legal review of the draft
+  - id: NR-27
+    rule: "Statutory flag. statutory is true only where Directive 2006/112/EC Art. 226 makes the fact an
+      invoice particular in the line's case: the Art. 226(12) characteristics of a new means of
+      transport (odometerReadingKm, odometerReadingMi, firstEntryIntoServiceDate), the condition
+      that triggers them (newMeansOfTransportIndicator), and the Art. 226(14) fact
+      (marginSchemeIndicator). A particular required only by national law (for example power and
+      capacity under DE UStG §14a(4)) is false and is named in anchors as 'national invoice
+      particular'. Spec R3 then requires the labelled name for statutory keys and, in the issuer's
+      state, for that state's national particulars."
+    rationale: The draft flagged the seven particulars of one national guidance table as statutory,
+      which told implementers in other states that a duty exists where it does not. Power and
+      capacity are thresholds of the definition in Art. 2(2)(a), not Art. 226(12) characteristics.
+    source: Directive 2006/112/EC Art. 2(2), 226(12), 226(14); DE UStG §14a(4) with §1b(2) and (3)
+nameLengthCap: "The cap is 64 Unicode characters (after NFC) for the complete BT-160 name '<label>
+  [<key>]' in every registry language, and 40 characters for the key including the 'vehicle.' root,
+  so that every key leaves at least 21 characters for its label; the longest key has 38 characters
+  and leaves 23. It is an authoring rule for the registry, not a receiver limit: receivers MUST NOT
+  truncate, reject or reroute an invoice for length. Why 64. No normative maximum exists: BT-160 is
+  Text without a length facet in EN 16931, XRechnung 3.0.2, Peppol BIS 3.0 and the Factur-X 1.09.2
+  XSDs. The cap is therefore a readability budget for viewer table columns and a margin against
+  undocumented receiver field limits, and it keeps the owner's earlier decision to shorten the one
+  label that went over 64. All 51 catalogue names fit in EN and DE (recomputed by check.py): the
+  longest are 64 ('Alterungszustand ermittelt am [vehicle.batteryStateOfHealthDate]' and 'Known
+  unrepaired damage [vehicle.knownUnrepairedDamageIndicator]'), then 63 (two DE names and 'State of
+  health method [vehicle.batteryStateOfHealthMethodCode]'). Fitting meant shortening labels, never
+  keys. Review fixes were checked against the cap: a 'traction' qualifier on the battery keys (43
+  characters) and technicallyPermissibleMaximumLadenMassKg (48 with the root) break the key cap and
+  were not adopted; 'Bekannter unreparierter Schaden' would make that name 72; the full EN form of
+  F.1 would make 71. The open risk is further languages: the smallest label budgets are 23
+  (batteryStateOfHealthMethodCode), 25 (newMeansOfTransportIndicator), 26
+  (batteryStateOfHealthPercent) and 27 to 29 (nextRoadworthinessTestDate, firstEntryIntoServiceDate,
+  odometerReadingStatusCode, batteryStateOfHealthDate, cumulativeOperatingHours); FR, IT and PL
+  labels must use registered short forms there (NR-18). Italy's SdI maps BT-160 to a 10-character
+  TipoDato, which no descriptive name can meet; the mapping is non-fatal, so it is not a design
+  input. Rejected alternatives: 48 local / 100 total and 80 (no source, and they would admit long
+  legal keys); 72 (revisit only if registered short forms fail for FR, IT or PL); raising the key
+  cap to 44 (no key needs it)."
+nationalKeysPattern: "Pattern: vehicle.<cc>.<name>. <cc> is the ISO 3166-1 alpha-2 code, in lower
+  case, of the state whose law or authority defines the concept (gr, not el; gb, not uk); it is a
+  country, never a language. <name> follows NR-01 to NR-14 with one exception: it may be that
+  authority's official abbreviation, in lower case, when the expansion already ends in a
+  representation term. Examples are hsn (Herstellerschlüsselnummer) and tsn (Typschlüsselnummer) for
+  the German KBA keys in registration certificate Part I fields 2.1 and 2.2, both provisional until
+  checked against the KBA key directory. The pattern is used only when no EU-harmonised fact exists.
+  A national particular with an EU equivalent uses the EU key: the German HU becomes
+  nextRoadworthinessTestDate, a Tageszulassung is conditionCode used with firstRegistrationDate, and
+  national approval numbers go into typeApprovalNumber. Country keys enter the CC0 registry with
+  their national anchor and labels in every registry language, proposed by that state's authority or
+  by a national industry body citing the authority's document. They are always tier optional and
+  never statutory at EU level, and receivers that do not know them ignore them. A national
+  abbreviation is legal only inside its country scope. Candidates listed in the implementation
+  notes, not yet defined: FR field D.2.1 (CNIT) and FR field P.6 (administrative power). Vendors
+  never use a country scope; their private rows use their own reverse-DNS root outside 'vehicle.'
+  (NR-15). Rejected alternative: a single scheme-qualified key such as vehicle.nationalTypeCode with
+  values like de-kba:0603-BDE. It would mean two mechanisms for one problem and values a person
+  cannot read on the invoice."
+tokenPolicy: "There are two kinds of value, with one rule each. (1) Where an EU or international
+  instrument itself publishes the identifier as a code, the value is that code, verbatim and in its
+  own form: the EN 16931 country code list (ISO 3166-1 alpha-2 plus XI and 1A), EU vehicle
+  categories (M1, N1G, M1S, L3e-A1, T1b) and EU bodywork codes (AB, BA03). (2) Otherwise the
+  registry owns the tokens: lower-case ASCII kebab-case (^[a-z0-9]+(-[a-z0-9]+)*$, at most 32
+  characters), in EU English and singular, taken from the legal wording where one exists
+  (electricity, pure-electric, hybrid-electric, the ten CoC basic colours). Designations that follow
+  a legislative sequence, such as Euro levels, are defined by a grammar over the instrument's own
+  names (the 'Emission standard' names of Reg. (EU) 2017/1151 Annex I Appendix 6, e.g.
+  euro-6d-isc-fcm), not by a closed enumeration. Official numeric or class codes are never written
+  into BT-161; this covers IVI 2.0 EnergySource (10, 20, 95), CoC 23.1 classes (OVC-HEV, NOVC-HEV),
+  the Appendix 6 character codes and KBA codes. The registry publishes versioned, machine-readable
+  mappings to them instead, plus a mapping from national register colours (e.g. beige, cream) to the
+  ten basic colours; the IVI mapping only after its licence is checked. Every open list has exactly
+  one 'other'. VEHICLE-CONDITION partitions its test (new, used) and has none; a receiver treats an
+  unknown token there as no statement. 'unknown' appears only in VEHICLE-ODOMETER-STATUS. Emitters
+  write the exact form. Receivers match ASCII case-insensitively, keep an unknown token raw and
+  treat it as 'other'. From 1.0, tokens are only added (in minor releases) and never removed,
+  renamed or re-purposed. Booleans are 'true' or 'false' in lower case, 'false' is an active
+  statement, and an absent row means no statement. Multi-valued facts repeat the key, one token per
+  row; energySourceCode rows follow the order of the source document. List identifiers follow the
+  root: VEHICLE-<NAME> <major.minor>. No list copies a vendor or marketplace enumeration: the draft
+  colour, fuel, emission and condition lists were mapped 1:1 from such enumerations and have been
+  rebuilt from the legal lists."

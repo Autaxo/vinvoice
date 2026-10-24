@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.exhaustEmissionLevelCode
+tier: optional
+status: draft
+labelEn: Exhaust emission level
+labelDe: Abgasnorm
+definition: "Exhaust emission level of the type approval as printed in CoC item 47 or registration
+  field V.9: the emission standard designation, for light-duty vehicles the 'Emission standard'
+  names of Reg. (EU) 2017/1151 Annex I Appendix 6 (for example Euro 6d-ISC-FCM), lower-cased and
+  joined with hyphens. Light-duty and L-category levels use Arabic numerals (euro-6d), heavy-duty
+  levels Roman numerals (euro-vi-e), as their instruments do; receivers compare strings and do not
+  equate euro-6 with euro-vi. The Appendix 6 character code (for example AX) is not sent.
+  Designators: temp (temporary), evap (evaporative emissions), isc (in-service conformity), fcm
+  (fuel consumption monitoring), bis (second step), plus (Euro 5+ of L-category)."
+representationTerm: Code
+valueFormat: ^(euro-([1-7][a-z0-9]*(-[a-z0-9]+)*|(i|ii|iii|iv|v|vi)(-[a-e])?)|stage-(i|ii|iiia|iiib|iv|v)|other)$
+grammar: '^(euro-([1-7][a-z0-9]*(-[a-z0-9]+)*|(i|ii|iii|iv|v|vi)(-[a-e])?)|stage-(i|ii|iiia|iiib|iv|v)|other)$'
+unit: null
+tokens: []
+codeList: VEHICLE-EMISSION-LEVEL 1.0 (grammar over the Reg. (EU) 2017/1151 Annex I Appendix 6 names,
+  not an enumeration)
+conditionality: MAY; useful for used vehicles and fleets
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Abgasnorm [vehicle.exhaustEmissionLevelCode]', BT-161 'euro-4'"
+anchors: Reg. (EU) 2020/683 Annex VIII CoC item 47 and footnote 116 (DE 'Abgasnorm'); Directive
+  1999/37/EC code V.9; Reg. (EU) 2017/1151 Annex I Appendix 6 Table 1 ('Emission standard'); Reg.
+  (EC) 715/2007; Reg. (EC) 595/2009 (heavy duty); Reg. (EU) 168/2013 (L-category); Reg. (EU)
+  2024/1257 (Euro 7); Reg. (EU) 2016/1628 (stages); IVI 2.0 ExhaustEmissionLevel

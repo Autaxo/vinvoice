@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.registrationCountryCode
+tier: recommended
+status: draft
+labelEn: Country of registration
+labelDe: Zulassungsland
+definition: State that issued vehicle.registrationNumber, as a code from the EN 16931 country code
+  list (ISO 3166-1 alpha-2, plus XI and 1A). Greece is GR, not the VAT prefix EL. Not the
+  distinguishing sign on plates (D, A, F).
+representationTerm: Code
+valueFormat: ^([A-Z]{2}|1A)$, value in the EN 16931 country code list
+grammar: '^([A-Z]{2}|1A)$'
+unit: null
+tokens: []
+codeList: EN 16931 country code list (ISO 3166-1 alpha-2, plus XI and 1A)
+conditionality: SHOULD whenever vehicle.registrationNumber is present
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Zulassungsland [vehicle.registrationCountryCode]', BT-161 'DE'"
+anchors: "Directive 1999/37/EC Annex I II.4 (Member State issuing); ISO 3166-1; EN 16931 country
+  code list (BT-40, BR-CL-14); informative: STAR RegistrationCountry"

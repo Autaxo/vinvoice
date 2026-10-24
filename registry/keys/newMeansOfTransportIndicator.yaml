@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.newMeansOfTransportIndicator
+tier: core
+status: draft
+labelEn: New means of transport
+labelDe: Neues Fahrzeug (USt)
+definition: "Issuer's statement that at the time of supply the vehicle is a 'new means of transport'
+  for VAT: a motorised land vehicle intended for the transport of persons or goods, of more than 48
+  cm3 or more than 7.2 kW (Art. 2(2)(a)(i)), supplied within six months of the date of first entry
+  into service or having travelled no more than 6 000 km (Art. 2(2)(b)(i)), with the facts
+  established under the rules of the Member State (Art. 2(2)(c)). A statement of fact, not a VAT
+  determination; the VAT treatment stays in the VAT terms. 'Neues Fahrzeug' is the VAT term, not the
+  commercial condition (vehicle.conditionCode). Land vehicles only in 1.0."
+representationTerm: Indicator
+valueFormat: true | false
+grammar: '^(true|false)$'
+unit: null
+tokens:
+  - "true"
+  - "false"
+codeList: "Indicator values: true, false"
+conditionality: MUST be true on every line whose supply is exempt under Art. 138(1) and (2)(a) as a
+  supply of a new means of transport, and that line MUST then carry firstEntryIntoServiceDate or an
+  odometer reading (Art. 226(12)); MAY as a factual statement on other supplies; false only as an
+  active statement
+statutory: true
+repeatable: false
+carrier: "BG-32: BT-160 'Neues Fahrzeug (USt) [vehicle.newMeansOfTransportIndicator]', BT-161
+  'true'. Labelled name mandatory (statutory feature)"
+anchors: Directive 2006/112/EC Art. 2(1)(b)(ii), 2(2)(a)-(c), 138(1) and (2)(a), 226(12) (DE 'neue
+  Fahrzeuge'); national transposition e.g. DE UStG §1b and §14a(4); PL KSeF NowySrodekTransportu; HU
+  NAV newTransportMean

@@ -10,7 +10,8 @@ In short:
 - At least three editors from at least two organisations; no organisation holds more than a third
   of the votes; the sponsor holds at most one seat and no veto.
 - Free to implement, no fees, no certification; funding is disclosed.
-- No vendor-specific keys; vendor data uses the reserved `x.<vendor>.` segment after the prefix.
+- No vendor-specific keys; vendor rows use the reverse-DNS name of a domain the vendor controls
+  (e.g. `com.example.stockNumber`), never the registry root.
 - A key needs two independent organisations that will write or read it; the core tier needs three
   implementers per key and holds at most 15 keys (`npm run validate` enforces the cap).
 - Lazy consensus on public issues: 14 days, 28 days for the core tier.

@@ -5,33 +5,183 @@
   "description": "Schema of generated/registry.json, the machine-readable VINvoice registry (served at https://vinvoice.org/downloads/registry.json).",
   "type": "object",
   "additionalProperties": false,
-  "required": ["version", "date", "licence", "prefix", "counts", "refs", "keys"],
+  "required": [
+    "version",
+    "date",
+    "licence",
+    "root",
+    "markerKey",
+    "markerGrammar",
+    "keyGrammar",
+    "keyGrammarAuthoring",
+    "vendorKeyGrammar",
+    "keyCap",
+    "nameCap",
+    "iriBase",
+    "counts",
+    "keys",
+    "reserved",
+    "tokenLists",
+    "namingRules",
+    "nameLengthCap",
+    "nationalKeysPattern",
+    "tokenPolicy",
+    "refs"
+  ],
   "properties": {
     "version": {
       "description": "Release, e.g. vehicle/1.0-draft.",
       "type": "string",
       "pattern": "^[a-z]+/[0-9]+\\.[0-9]+(-[a-z0-9.]+)?$"
     },
-    "date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
-    "licence": { "const": "CC0-1.0" },
-    "prefix": {
-      "description": "Prefix of every key, including the dot.",
+    "date": {
       "type": "string",
-      "pattern": "^[a-z]+\\.$"
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "licence": {
+      "const": "CC0-1.0"
+    },
+    "root": {
+      "description": "Root of every registry key, e.g. vehicle.",
+      "type": "string",
+      "pattern": "^[a-z]+$"
+    },
+    "markerKey": {
+      "description": "Key of the marker row that makes a line a vehicle line.",
+      "type": "string"
+    },
+    "markerGrammar": {
+      "description": "Grammar of the marker value, e.g. vehicle/1.0.",
+      "type": "string"
+    },
+    "keyGrammar": {
+      "description": "Grammar a reader uses to recognise registry keys.",
+      "type": "string"
+    },
+    "keyGrammarAuthoring": {
+      "description": "Stricter grammar for new registry keys (naming rule NR-01).",
+      "type": "string"
+    },
+    "vendorKeyGrammar": {
+      "description": "Grammar of vendor keys: reverse-DNS names outside the registry root, ignored by readers.",
+      "type": "string"
+    },
+    "keyCap": {
+      "description": "Maximum length of a key, root included.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "nameCap": {
+      "description": "Maximum length of a BT-160 name '<label> [<key>]'.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "iriBase": {
+      "description": "Base IRI of the terms (JSON-LD).",
+      "type": "string",
+      "pattern": "^https?://"
     },
     "counts": {
       "description": "Number of keys per tier.",
       "type": "object",
-      "additionalProperties": { "type": "integer", "minimum": 0 }
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "keys": {
+      "type": "array",
+      "items": {
+        "$ref": "key.schema.json"
+      }
+    },
+    "reserved": {
+      "description": "Reserved names: not usable as keys; readers ignore them.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["key", "labelEn", "labelDe"],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "labelEn": {
+            "type": "string"
+          },
+          "labelDe": {
+            "type": "string"
+          },
+          "was": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "tokenLists": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["list", "tokens", "source"],
+        "properties": {
+          "list": {
+            "type": "string"
+          },
+          "tokens": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "namingRules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "rule"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^NR-[0-9]{2}$"
+          },
+          "rule": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "nameLengthCap": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nationalKeysPattern": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tokenPolicy": {
+      "type": "string",
+      "minLength": 1
     },
     "refs": {
       "description": "Keys that the specification and the tools refer to by role, e.g. marker or marginScheme.",
       "type": "object",
-      "additionalProperties": { "type": "string" }
-    },
-    "keys": {
-      "type": "array",
-      "items": { "$ref": "key.schema.json" }
+      "additionalProperties": {
+        "type": "string"
+      }
     }
   }
 }

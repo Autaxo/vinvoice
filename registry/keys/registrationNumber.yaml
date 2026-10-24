@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.registrationNumber
+tier: recommended
+status: draft
+labelEn: Registration number
+labelDe: Amtliches Kennzeichen
+definition: Registration number as printed in registration field A, without the country sign,
+  including temporary, export and trade (dealer) registration numbers. It identifies the
+  registration, not the vehicle, and is personal data when it can be linked to a natural person.
+representationTerm: Number
+valueFormat: "1-15 characters as printed, NFC, upper case: letters (Unicode category Lu), digits
+  0-9, blank and hyphen, first character a letter or digit; XSD or ECMAScript (u flag):
+  ^[\\p{Lu}0-9][\\p{Lu}0-9 -]{0,14}$; engines without \\p{Lu} (Python re) test unicodedata.category
+  per character; e.g. XX-VE 1, AB-123-CD; receivers compare after removing blanks and hyphens"
+grammar: '^[\p{Lu}0-9][\p{Lu}0-9 -]{0,14}$'
+unit: null
+tokens: []
+codeList: none
+conditionality: SHOULD on service, lease and rental lines when the vehicle is registered; otherwise
+  only when the receiver needs it (data minimisation)
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Amtliches Kennzeichen [vehicle.registrationNumber]', BT-161 'XX-VE 1'. Only
+  when no VIN is known, BT-128 MAY carry the registration number with scheme ABZ; the row then
+  repeats it (V-18)"
+anchors: Directive 1999/37/EC Art. 2(b) and code A 'registration number' (DE 'Zulassungsnummer
+  (amtliches Kennzeichen)'); Reg. (EU) 2018/858 Art. 3(53) (registration on a permanent or temporary
+  basis); Directive 2014/45/EU Annex II item 2; UN/EDIFACT 7405 BL 'Vehicle registration number';
+  UNTDID 1153 ABZ 'Vehicle licence number' (BT-128); PL KSeF P_22BNR

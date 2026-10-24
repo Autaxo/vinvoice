@@ -1,10 +1,12 @@
 // Generates generated/vinvoice.sch, an ISO Schematron (queryBinding xslt2) version of the reference
-// checker's rules, so that VINvoice checks can run in the same validators as EN 16931, XRechnung and
-// Peppol. Rule ids follow the reference checker (V-01 ... V-22). Checker only: V-05 (VIN check
-// digit), the 6,000 km / six months test of V-08, V-18 (plate comparison), V-19 and V-20.
+// checker's rules (checker/vehicle_check.py), so that VINvoice checks can run in the same
+// validators as EN 16931, XRechnung and Peppol. Rule ids follow the checker (V-01 ... V-22).
+// Checker only: V-05 (VIN check digit), the 6,000 km / six months test of V-08, V-18
+// (registration number in BT-128 vs row), V-19 and V-20 (reader notes).
 //
 // Like the reference reader, the rules first drop values that fail their grammar and then judge the
-// remaining facts: vv:fact() returns a key's first value only if it is valid.
+// remaining facts: vv:fact() returns a key's first value only if it is valid. Keys the rules need by
+// role come from the registry's refs.
 
 const xml = (s) =>
   String(s)
@@ -67,23 +69,26 @@ export function grammarTest(k) {
         ` and not(matches($value, ${cls}))`;
     }
   }
-  if (test && /^\^\(?\[0-9\]\{4\}-/.test(g)) {
+  if (test && k.representationTerm === 'Date') {
     test += ` and (if (string-length($value) = 7) then concat($value, '-01') castable as xs:date else $value castable as xs:date)`;
   }
   return test;
 }
 
-export function schematron({ meta, keys, refs }) {
-  const p = meta.prefix;
+// Art. 226(14) wording in the main language versions, as in the reference checker.
+const MARGIN_NOTE =
+  'Gebrauchtgegenst(ä|ae)nde\\s*/\\s*Sonderregelung|Differenzbesteuerung|Margin scheme|R[ée]gime (particulier|de la marge)|Regime del margine|R[ée]gimen especial|Margeregeling|Procedura mar[żz]y';
+
+export function schematron({ meta, keys, refs, reserved }) {
   const K = refs; // role -> full key
-  const keyRe = `${reEscape(p)}[a-z][A-Za-z0-9]*(\\.[a-z][A-Za-z0-9]*)*`;
+  const keyRe = meta.keyGrammar.replace(/^\^/, '').replace(/\$$/, '');
   const statutory = keys.filter((k) => k.statutory).map((k) => k.key);
   const repeatable = keys.filter((k) => k.repeatable).map((k) => k.key);
   const known = keys.map((k) => k.key);
+  const reservedKeys = reserved.map((r) => r.key);
   const labels = keys.flatMap((k) => [`${k.key}|${k.labelDe}`, `${k.key}|${k.labelEn}`]);
-  const marker = keys.find((k) => k.key === K.marker);
-  const markerRe = grammarTest(marker).match(/^matches\(\$value, ('.*')\)$/)[1];
-  const markerMajor = `${marker.grammar.match(/^\^([a-z]+\/)/)[1]}${meta.version.match(/\/([0-9]+)\./)[1]}.`;
+  const markerRe = meta.markerGrammar;
+  const markerMajor = `${markerRe.match(/^\^([a-z]+\/)/)[1]}${meta.version.match(/\/([0-9]+)\./)[1]}.`;
 
   const tests = keys.map((k) => [k, grammarTest(k)]);
   const skipped = tests.filter(([, t]) => !t).map(([k]) => k.key);
@@ -96,178 +101,44 @@ export function schematron({ meta, keys, refs }) {
   const has = (role) => `vv:fact(., ${str(K[role])}) != ''`;
   const val = (role) => `vv:fact(., ${str(K[role])})`;
 
+  // prettier-ignore
   const lineAsserts = [
-    [
-      'V-02-marker',
-      'error',
-      `not($marked) or $valid`,
-      `The marker ${K.marker} has the malformed value '<value-of select="$markerValue"/>'; the line is treated as unmarked.`,
-    ],
-    [
-      'V-21',
-      'warning',
-      `not($valid) or $current`,
-      `Unknown major version '<value-of select="$markerValue"/>'; the rows of this line are skipped.`,
-    ],
-    [
-      'V-15',
-      'information',
-      `$marked or not($keys != '')`,
-      `Rows with VINvoice keys on a line without the marker ${K.marker} are ignored.`,
-    ],
-    [
-      'V-01',
-      'error',
-      `not($current) or $keys = ${str(K.role)}`,
-      `A vehicle line needs the role row ${K.role}.`,
-    ],
-    [
-      'V-03',
-      'warning',
-      `not($current) or count($single) = count(distinct-values($single))`,
-      `A key that is not repeatable appears more than once; readers keep the first value.`,
-    ],
-    [
-      'V-12',
-      'error',
-      `not($current) or count($bt128) le 1`,
-      `More than one line object identifier (BT-128) on a vehicle line.`,
-    ],
-    [
-      'V-04',
-      'warning',
-      `not($current and $vin128 != '' and ${has('vin')}) or $vin128 = ${val('vin')}`,
-      `BT-128 (<value-of select="$vin128"/>) differs from ${K.vin}; BT-128 wins.`,
-    ],
-    [
-      'V-13',
-      'error',
-      `not($current and ${has('odometerKm')} and ${has('odometerMi')})`,
-      `${K.odometerKm} and ${K.odometerMi} on the same line.`,
-    ],
-    [
-      'V-17',
-      'error',
-      `not($current and $odometer and $noReading)`,
-      `An odometer reading is given although ${K.odometerStatus} says no reading is available.`,
-    ],
-    [
-      'V-06',
-      'error',
-      `not($current and $role = ('supply', 'trade-in') and $qty != '') or number($qty) = 1`,
-      `A line with role '<value-of select="$role"/>' has quantity <value-of select="$qty"/>; one vehicle per line.`,
-    ],
-    [
-      'V-07-K',
-      'error',
-      `not($current and $margin) or $category != 'K'`,
-      `${K.marginScheme} on a line with VAT category K: the margin scheme excludes the intra-community exemption.`,
-    ],
-    [
-      'V-07-category',
-      'warning',
-      `not($current and $margin) or $category = ('E', 'F', 'G', 'K')`,
-      `${K.marginScheme} with VAT category '<value-of select="$category"/>'; expected E (2017 model), F (2026 model) or G (export).`,
-    ],
-    [
-      'V-07-note',
-      'warning',
-      `not($current and $margin) or $marginNote`,
-      `Margin-scheme line, but no invoice note (BG-1) with 'Gebrauchtgegenstände/Sonderregelung' or the Art. 226(14) wording.`,
-    ],
-    [
-      'V-07-new',
-      'warning',
-      `not($current and $margin) or ${val('condition')} != 'new'`,
-      `${K.marginScheme} together with ${K.condition} = new is unusual.`,
-    ],
-    [
-      'V-08-power',
-      'error',
-      `not($current and $newMeans) or ${has('power')} or ${has('displacement')}`,
-      `A new means of transport needs ${K.power} or ${K.displacement}.`,
-    ],
-    [
-      'V-08-newness',
-      'error',
-      `not($current and $newMeans) or $odometer or ${has('firstUse')}`,
-      `A new means of transport needs an odometer reading or ${K.firstUse}.`,
-    ],
-    [
-      'V-08-odometer',
-      'warning',
-      `not($current and $newMeans and ${has('firstUse')}) or $odometer`,
-      `A new means of transport without an odometer reading.`,
-    ],
-    [
-      'V-08-first-use',
-      'warning',
-      `not($current and $newMeans and ($odometer or ${has('firstUse')}) and ${has('firstRegistration')}) or ${has('firstUse')}`,
-      `A registered new means of transport without ${K.firstUse}.`,
-    ],
-    [
-      'V-09',
-      'warning',
-      `not($current and $role = ('supply', 'trade-in') and ${val('condition')} = ('used', 'demonstrator', 'pre-registered')) or (($odometer or $noReading) and ${has('firstRegistration')})`,
-      `A used, demonstrator or pre-registered vehicle without an odometer reading (or status) or without ${K.firstRegistration}.`,
-    ],
-    [
-      'V-10-id',
-      'warning',
-      `not($current and $role = 'service') or $vin128 != '' or ${has('vin')} or ${has('plate')} or $abz or $vin18`,
-      `A service line without VIN or plate.`,
-    ],
-    [
-      'V-10-odometer',
-      'warning',
-      `not($current and $role = 'service') or $odometer or $noReading`,
-      `A service line without an odometer reading or status.`,
-    ],
-    [
-      'V-16',
-      'warning',
-      `not($current and ${has('batterySoh')}) or ${has('batterySohDate')}`,
-      `${K.batterySoh} without ${K.batterySohDate}.`,
-    ],
+    ['V-02-marker', 'error', `not($marked) or $valid`, `The marker ${K.marker} has the malformed value '<value-of select="$markerValue"/>'; the line is treated as unmarked.`],
+    ['V-21', 'warning', `not($valid) or $current`, `Unknown major version '<value-of select="$markerValue"/>'; the rows of this line are skipped.`],
+    ['V-15', 'information', `$marked or not($keys != '')`, `Rows with registry keys on a line without the marker ${K.marker} are ignored.`],
+    ['V-01', 'error', `not($current) or $keys = ${str(K.role)}`, `A vehicle line needs the role row ${K.role}.`],
+    ['V-03', 'warning', `not($current) or count($single) = count(distinct-values($single))`, `A key that is not repeatable appears more than once; readers keep the first value.`],
+    ['V-12', 'error', `not($current) or count($bt128) le 1`, `More than one line object identifier (BT-128) on a vehicle line.`],
+    ['V-04', 'warning', `not($current and $vin128 != '' and ${has('vin')}) or $vin128 = ${val('vin')}`, `BT-128 (<value-of select="$vin128"/>) differs from ${K.vin}; BT-128 wins.`],
+    ['V-13', 'error', `not($current and ${has('odometerKm')} and ${has('odometerMi')})`, `${K.odometerKm} and ${K.odometerMi} on the same line.`],
+    ['V-17', 'error', `not($current and $odometer and $noReading)`, `An odometer reading is given although ${K.odometerStatus} says no reading is available.`],
+    ['V-06', 'error', `not($current and $role = ('supply', 'trade-in') and $qty != '') or number($qty) = 1`, `A line with role '<value-of select="$role"/>' has quantity <value-of select="$qty"/>; one vehicle per line.`],
+    ['V-07-K', 'error', `not($current and $margin) or $category != 'K'`, `${K.marginScheme} on a line with VAT category K: Art. 139(3) and 313(2) of Directive 2006/112/EC exclude the intra-community exemption.`],
+    ['V-07-category', 'warning', `not($current and $margin) or $category = ('E', 'F', 'G', 'K')`, `${K.marginScheme} with VAT category '<value-of select="$category"/>'; expected E (2017 model), F (2026 model) or G (export).`],
+    ['V-07-note', 'warning', `not($current and $margin) or $marginNote`, `Margin-scheme line, but no invoice note (BG-1) with the Art. 226(14) wording.`],
+    ['V-07-new', 'warning', `not($current and $margin) or ${val('condition')} != 'new'`, `${K.marginScheme} together with ${K.condition} = new is unusual.`],
+    ['V-08-power', 'error', `not($current and $newMeans) or ${has('power')} or ${has('engineCapacity')}`, `A new means of transport needs ${K.power} or ${K.engineCapacity}.`],
+    ['V-08-newness', 'error', `not($current and $newMeans) or $odometer or ${has('firstEntryIntoService')}`, `A new means of transport needs an odometer reading or ${K.firstEntryIntoService}.`],
+    ['V-08-odometer', 'warning', `not($current and $newMeans and ${has('firstEntryIntoService')}) or $odometer`, `A new means of transport without an odometer reading.`],
+    ['V-08-first-entry', 'warning', `not($current and $newMeans and ($odometer or ${has('firstEntryIntoService')}) and ${has('firstRegistrationDate')}) or ${has('firstEntryIntoService')}`, `A registered new means of transport without ${K.firstEntryIntoService}.`],
+    ['V-09-odometer', 'warning', `not($current and $role = ('supply', 'trade-in') and ${val('condition')} = 'used' and $odometerExpected) or $odometer or $noReading`, `A used vehicle supplied without an odometer reading (or a status saying none is available).`],
+    ['V-09-first-registration', 'information', `not($current and $role = ('supply', 'trade-in') and ${val('condition')} = 'used') or ${has('firstRegistrationDate')}`, `A used vehicle supplied without ${K.firstRegistrationDate}; correct only if it was never registered.`],
+    ['V-10-id', 'warning', `not($current and $role = 'service') or $vin128 != '' or ${has('vin')} or ${has('registrationNumber')} or $abz or $vin18`, `A service line without VIN or registration number.`],
+    ['V-10-odometer', 'warning', `not($current and $role = 'service' and $odometerExpected) or $odometer or $noReading`, `A service line without an odometer reading or status.`],
+    ['V-16-date', 'warning', `not($current and ${has('stateOfHealth')}) or ${has('stateOfHealthDate')}`, `${K.stateOfHealth} without ${K.stateOfHealthDate}.`],
+    ['V-16-method', 'warning', `not($current and ${has('stateOfHealth')}) or ${has('stateOfHealthMethod')}`, `${K.stateOfHealth} without ${K.stateOfHealthMethod}.`],
   ];
 
+  // prettier-ignore
   const rowAsserts = [
-    [
-      'V-02',
-      'error',
-      `not($current) or $key = '' or vv:valid($key, $value)`,
-      `<value-of select="$key"/> = '<value-of select="$value"/>' does not match its grammar; readers drop the value.`,
-    ],
-    [
-      'V-14',
-      'error',
-      `$key = '' or not(ram:ValueMeasure or cbc:ValueQuantity)`,
-      `Row '<value-of select="$name"/>' uses a measure or quantity element; BT-161 stays in the text value.`,
-    ],
-    [
-      'V-11-statutory',
-      'error',
-      `not($current and $bare and $key = ${seq(statutory)})`,
-      `The statutory key <value-of select="$key"/> must be written with its label.`,
-    ],
-    [
-      'V-11-length',
-      'information',
-      `not($current) or $key = '' or string-length($name) le 64`,
-      `Row name '<value-of select="$name"/>' is longer than 64 characters.`,
-    ],
-    [
-      'V-11-label',
-      'information',
-      `not($current) or $bare or $key = '' or not($key = ${seq(known)}) or concat($key, '|', $label) = ${seq(labels)}`,
-      `Label '<value-of select="$label"/>' is not a registry label of <value-of select="$key"/>.`,
-    ],
-    [
-      'V-22',
-      'information',
-      `not($current) or $key = '' or $key = ${seq(known)} or starts-with($key, ${str(p + 'x.')})`,
-      `Unknown key <value-of select="$key"/>, ignored.`,
-    ],
+    ['V-02', 'error', `not($current) or $key = '' or not($key = ${seq(known)}) or vv:valid($key, $value)`, `<value-of select="$key"/> = '<value-of select="$value"/>' does not match its grammar; readers drop the value.`],
+    ['V-14', 'error', `$key = '' or not(ram:ValueMeasure or cbc:ValueQuantity)`, `Row '<value-of select="$name"/>' uses a measure or quantity element; BT-161 stays in the text value.`],
+    ['V-11-statutory', 'error', `not($current and $bare and $key = ${seq(statutory)})`, `The statutory key <value-of select="$key"/> must be written with its label.`],
+    ['V-11-key-length', 'information', `not($current) or string-length($key) le ${meta.keyCap}`, `Key <value-of select="$key"/> is longer than ${meta.keyCap} characters.`],
+    ['V-11-name-length', 'information', `not($current) or $key = '' or string-length($name) le ${meta.nameCap}`, `Row name '<value-of select="$name"/>' is longer than ${meta.nameCap} characters.`],
+    ['V-11-label', 'information', `not($current) or $bare or $key = '' or not($key = ${seq(known)}) or concat($key, '|', $label) = ${seq(labels)}`, `Label '<value-of select="$label"/>' is not a registry label of <value-of select="$key"/>.`],
+    ['V-22-reserved', 'information', `not($current) or not($key = ${seq(reservedKeys.length ? reservedKeys : [''])})`, `<value-of select="$key"/> is a reserved name, not a key; ignored.`],
+    ['V-22-unknown', 'information', `not($current) or $key = '' or $key = (${seq(known)}, ${seq(reservedKeys.length ? reservedKeys : [''])})`, `Unknown key <value-of select="$key"/>, ignored.`],
   ];
 
   const assert = ([id, role, test, msg]) =>
@@ -279,7 +150,8 @@ export function schematron({ meta, keys, refs }) {
   Registry ${meta.version} (${meta.date}). SPDX-License-Identifier: Apache-2.0
 
   Works on CII (Factur-X, ZUGFeRD, XRechnung) and UBL (Peppol, XRechnung) invoices. Findings say
-  whether a line conforms to VINvoice; they never make an EN 16931 invoice invalid.
+  whether a line conforms to VINvoice; they never make an EN 16931 invoice invalid. Rows whose key
+  is not under '${meta.root}.' (vendor rows with reverse-DNS names) are ignored.
   Grammars that XPath regular expressions cannot express are left to the reference checker:
   ${skipped.join(', ') || 'none'}.
 -->
@@ -334,7 +206,7 @@ export function schematron({ meta, keys, refs }) {
   <xsl:function name="vv:current" as="xs:boolean">
     <xsl:param name="line" as="element()"/>
     <xsl:variable name="m" select="vv:first($line, ${str(K.marker)})"/>
-    <xsl:sequence select="matches($m, ${xml(markerRe)}) and starts-with($m, ${str(markerMajor)})"/>
+    <xsl:sequence select="matches($m, ${xml(str(markerRe))}) and starts-with($m, ${str(markerMajor)})"/>
   </xsl:function>
 
   <pattern id="vehicle-lines">
@@ -342,21 +214,22 @@ export function schematron({ meta, keys, refs }) {
       <let name="keys" value="for $r in vv:rows(.) return vv:key($r)"/>
       <let name="marked" value="$keys = ${str(K.marker)}"/>
       <let name="markerValue" value="vv:first(., ${str(K.marker)})"/>
-      <let name="valid" value="$marked and matches($markerValue, ${xml(markerRe)})"/>
+      <let name="valid" value="$marked and matches($markerValue, ${xml(str(markerRe))})"/>
       <let name="current" value="vv:current(.)"/>
       <let name="single" value="$keys[. != '' and not(. = ${seq(repeatable.length ? repeatable : [''])})]"/>
-      <let name="bt128" value="ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:TypeCode = '130'] | cac:DocumentReference[cbc:DocumentTypeCode = '130']"/>
+      <let name="bt128" value="ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument | ram:AdditionalReferencedDocument | cac:DocumentReference"/>
       <let name="vin128" value="string((ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = ('AKG', 'VT')]/ram:IssuerAssignedID, cac:DocumentReference/cbc:ID[@schemeID = ('AKG', 'VT')])[1])"/>
       <let name="abz" value="exists(ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = 'ABZ'] | cac:DocumentReference/cbc:ID[@schemeID = 'ABZ'])"/>
       <let name="vin18" value="exists(/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:AdditionalReferencedDocument[ram:TypeCode = '130'][ram:ReferenceTypeCode = ('AKG', 'VT')] | /*/cac:AdditionalDocumentReference[cbc:DocumentTypeCode = '130']/cbc:ID[@schemeID = ('AKG', 'VT')])"/>
       <let name="role" value="${val('role')}"/>
       <let name="odometer" value="${has('odometerKm')} or ${has('odometerMi')}"/>
-      <let name="noReading" value="${val('odometerStatus')} = ('defective', 'unknown')"/>
+      <let name="noReading" value="${val('odometerStatus')} = ('inoperative', 'unknown')"/>
+      <let name="odometerExpected" value="${val('category')} = '' or substring(${val('category')}, 1, 1) = ('M', 'N', 'L')"/>
       <let name="margin" value="${val('marginScheme')} = 'true'"/>
       <let name="newMeans" value="${val('newMeansOfTransport')} = 'true'"/>
       <let name="qty" value="string((ram:SpecifiedLineTradeDelivery/ram:BilledQuantity, cbc:InvoicedQuantity, cbc:CreditedQuantity)[1])"/>
       <let name="category" value="string((ram:SpecifiedLineTradeSettlement/ram:ApplicableTradeTax/ram:CategoryCode, cac:Item/cac:ClassifiedTaxCategory/cbc:ID)[1])"/>
-      <let name="marginNote" value="some $n in (/rsm:CrossIndustryInvoice/rsm:ExchangedDocument/ram:IncludedNote/ram:Content, /*/cbc:Note) satisfies matches($n, 'Gebrauchtgegenst(ä|ae)nde\\s*/\\s*Sonderregelung|Margin scheme', 'i')"/>
+      <let name="marginNote" value="some $n in (/rsm:CrossIndustryInvoice/rsm:ExchangedDocument/ram:IncludedNote/ram:Content, /*/cbc:Note) satisfies matches($n, ${xml(str(MARGIN_NOTE))}, 'i')"/>
 ${lineAsserts.map(assert).join('\n')}
     </rule>
   </pattern>

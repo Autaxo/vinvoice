@@ -28,15 +28,15 @@
         <ram:Name>Volkswagen Golf 2.0 TDI Life</ram:Name>
         <ram:Description>FIN TSTVEH016N0000001 · Erstzulassung: 18.03.2022 · Kilometerstand: 48.200 km · Leistung: 110 kW (150 PS) · Farbe: Grau</ram:Description>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugdaten-Standard [vehicle.profile]</ram:Description>
+          <ram:Description>VINvoice-Spezifikation [vehicle.specificationId]</ram:Description>
           <ram:Value>vehicle/1.0</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugbezug [vehicle.role]</ram:Description>
+          <ram:Description>Fahrzeugrolle [vehicle.roleCode]</ram:Description>
           <ram:Value>supply</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>FIN [vehicle.vin]</ram:Description>
+          <ram:Description>Fahrzeug-Identifizierungsnummer (FIN) [vehicle.vin]</ram:Description>
           <ram:Value>TSTVEH016N0000001</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
@@ -48,44 +48,48 @@
           <ram:Value>Golf</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Ausführung [vehicle.variant]</ram:Description>
+          <ram:Description>Modellausführung [vehicle.configuration]</ram:Description>
           <ram:Value>2.0 TDI Life</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Zustand [vehicle.condition]</ram:Description>
+          <ram:Description>Fahrzeugzustand [vehicle.conditionCode]</ram:Description>
           <ram:Value>used</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Erstzulassung [vehicle.firstRegistration]</ram:Description>
+          <ram:Description>Datum der Erstzulassung [vehicle.firstRegistrationDate]</ram:Description>
           <ram:Value>2022-03-18</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kilometerstand (km) [vehicle.odometerKm]</ram:Description>
+          <ram:Description>Kilometerstand (km) [vehicle.odometerReadingKm]</ram:Description>
           <ram:Value>48200</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Leistung (kW) [vehicle.powerKw]</ram:Description>
+          <ram:Description>Höchste Nutzleistung (kW) [vehicle.maximumNetPowerKw]</ram:Description>
           <ram:Value>110</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Hubraum (cm³) [vehicle.displacementCm3]</ram:Description>
+          <ram:Description>Hubraum (cm3) [vehicle.engineCapacityCm3]</ram:Description>
           <ram:Value>1968</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kraftstoff [vehicle.fuel]</ram:Description>
+          <ram:Description>Kraftstoffart oder Energiequelle [vehicle.energySourceCode]</ram:Description>
           <ram:Value>diesel</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Farbe [vehicle.colour]</ram:Description>
+          <ram:Description>Grundfarbe [vehicle.basicColourCode]</ram:Description>
           <ram:Value>grey</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Nächste HU [vehicle.inspectionDue]</ram:Description>
+          <ram:Description>Nächste technische Prüfung [vehicle.nextRoadworthinessTestDate]</ram:Description>
           <ram:Value>2027-03</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Differenzbesteuerung [vehicle.marginScheme]</ram:Description>
+          <ram:Description>Differenzbesteuerung [vehicle.marginSchemeIndicator]</ram:Description>
           <ram:Value>true</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>Lagernummer [com.example.stockNumber]</ram:Description>
+          <ram:Value>STK-26-0042</ram:Value>
         </ram:ApplicableProductCharacteristic>
       </ram:SpecifiedTradeProduct>
       <ram:SpecifiedLineTradeAgreement>

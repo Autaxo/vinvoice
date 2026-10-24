@@ -1,21 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import Key from '../components/Key.astro';
 import KeyList from '../components/KeyList.astro';
-import {
-  terms,
-  codeLists,
-  codeListAnchor,
-  codeListKind,
-  unitInfo,
-  isListValue,
-  isBoolean,
-  linkKeys,
-  type CodeList,
-} from '../lib/registry';
+import { terms, tokenLists, unitInfo, linkKeys, registry, type TokenList } from '../lib/registry';
 
-const external = terms.filter((t) => codeListKind(t) === 'external');
+const own = tokenLists.filter((l) => !l.external);
+const usedBy = (l: TokenList) =>
+  `Used by ${linkKeys(l.terms.map((t) => t.key).join(', '))}${l.note ? `; ${linkKeys(l.note)}` : ''}.`;
+const external = tokenLists.filter((l) => l.external);
 
 const units = new Map<
   string,
@@ -29,71 +21,84 @@ for (const t of terms) {
   if (seen) seen.terms.push(t);
   else units.set(id, { ...u, terms: [t] });
 }
-const booleans = terms.filter(isBoolean);
-
-const usedBy = (cl: CodeList) =>
-  `Used by ${linkKeys(cl.terms.map((t) => t.key).join(', '))}.` +
-  (cl.terms.some(isListValue)
-    ? ` The value is a comma-separated list without blanks, for example <code>${cl.tokens.slice(0, 2).join(',')}</code>.`
-    : '');
 ---
 
 <Base
   title="Code lists"
-  description="Closed token lists defined by VINvoice, units of measure and the external code lists that VINvoice values refer to."
+  description="Token lists defined by VINvoice, the EU and international code lists its values follow, and the units of measure fixed by its keys."
 >
   <PageHead
     title="Code lists"
-    lead="Values from a closed list are lower-case tokens. Tokens are never translated; a viewer may show its own wording next to them."
+    lead="Two kinds of value: codes that an EU or international instrument publishes are used verbatim; everything else is a registry-owned lower-case token."
   />
 
   <nav class="toc" aria-labelledby="toc-title">
     <h2 id="toc-title">On this page</h2>
     <ol>
+      <li><a href="#policy">Token policy</a></li>
       {
-        codeLists.map((cl) => (
+        own.map((l) => (
           <li>
-            <a href={`#${codeListAnchor(cl.id)}`}>{cl.id}</a>
+            <a href={`#${l.anchor}`}>{l.title}</a>
           </li>
         ))
       }
-      <li><a href="#units">Units of measure</a></li>
-      <li><a href="#booleans">Flags</a></li>
       <li><a href="#external">External code lists</a></li>
+      <li><a href="#units">Units of measure</a></li>
     </ol>
   </nav>
 
-  <h2 id="lists">Lists defined by VINvoice</h2>
   <div class="prose">
+    <h2 id="policy">Token policy</h2>
+    <p set:html={linkKeys(registry.tokenPolicy)} />
     <p>
-      A minor release may add tokens to these lists; receivers treat a token they do not know like a
-      missing value. Tokens are never removed or redefined.
+      A minor release may add tokens; receivers treat a token they do not know like a missing value.
+      Tokens are never removed or redefined. The naming of tokens follows the <a
+        href="/naming-rules/">naming rules</a
+      >.
     </p>
   </div>
 
+  <h2 id="lists">Lists owned by the registry</h2>
   {
-    codeLists.map((cl) => (
-      <section aria-labelledby={codeListAnchor(cl.id)}>
-        <h3 id={codeListAnchor(cl.id)}>
-          <code>{cl.id}</code>
-          {cl.version && <span class="muted"> {cl.version}</span>}{' '}
-          {cl.provisional && <span class="tag provisional">provisional</span>}
+    own.map((l) => (
+      <section aria-labelledby={l.anchor}>
+        <h3 id={l.anchor}>
+          <code>{l.title}</code>
         </h3>
-        <p set:html={usedBy(cl)} />
-        <ul class="tokens" aria-label={`Tokens of ${cl.id}`}>
-          {cl.tokens.map((tok) => (
+        {l.terms.length > 0 && <p set:html={usedBy(l)} />}
+        <ul class="tokens" aria-label={`Tokens of ${l.title}`}>
+          {l.tokens.map((tok) => (
             <li>
               <code>{tok}</code>
             </li>
           ))}
         </ul>
-        <details>
-          <summary class="small">Definition and source note</summary>
-          {cl.terms.map((t) => (
-            <p class="small" set:html={linkKeys(t.definition)} />
+        <p class="small muted" set:html={linkKeys(l.source)} />
+      </section>
+    ))
+  }
+
+  <h2 id="external">External code lists</h2>
+  <div class="prose">
+    <p>
+      These values come from lists that VINvoice does not maintain. They are written exactly as the
+      instrument publishes them; the key's grammar fixes the written form.
+    </p>
+  </div>
+  {
+    external.map((l) => (
+      <section aria-labelledby={l.anchor}>
+        <h3 id={l.anchor}>{l.title}</h3>
+        {l.terms.length > 0 && <p set:html={usedBy(l)} />}
+        <ul class="tokens" aria-label={`Codes of ${l.title}`}>
+          {l.tokens.map((tok) => (
+            <li>
+              <code>{tok}</code>
+            </li>
           ))}
-          <p class="small muted" set:html={linkKeys(cl.source)} />
-        </details>
+        </ul>
+        <p class="small muted" set:html={linkKeys(l.source)} />
       </section>
     ))
   }
@@ -126,78 +131,6 @@ const usedBy = (cl: CodeList) =>
               </td>
               <td>
                 <KeyList terms={u.terms} />
-              </td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
-  </div>
-
-  <h2 id="booleans">Flags</h2>
-  <div class="prose">
-    <p>
-      Flags take the literal values <code>true</code> or <code>false</code>. Some flags only allow
-      <code>true</code>; the row is then omitted when the statement does not apply.
-    </p>
-  </div>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">Key</th>
-          <th scope="col">Allowed values</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          booleans.map((t) => (
-            <tr>
-              <td>
-                <Key t={t} />
-              </td>
-              <td>
-                {t.grammar.includes('false') ? (
-                  <>
-                    <code>true</code>, <code>false</code>
-                  </>
-                ) : (
-                  <code>true</code>
-                )}
-              </td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
-  </div>
-
-  <h2 id="external">External code lists</h2>
-  <div class="prose">
-    <p>
-      These keys take their values from lists that VINvoice does not maintain. VINvoice only fixes
-      the written form, given as a pattern.
-    </p>
-  </div>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">Key</th>
-          <th scope="col">List or source</th>
-          <th scope="col">Pattern</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          external.map((t) => (
-            <tr>
-              <td>
-                <Key t={t} />
-              </td>
-              <td set:html={linkKeys(t.codeList)} />
-              <td class="wrapcode">
-                <code>{t.grammar}</code>
               </td>
             </tr>
           ))

@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.cumulativeOperatingHours
+tier: optional
+status: draft
+labelEn: Cumulative operating hours
+labelDe: Betriebsstundenstand
+definition: Hour-meter reading in whole hours (lifetime operating time) of a vehicle or non-road
+  mobile machine whose use is measured in hours, at the reference date (BT-72, else BT-2), or on
+  vehicle.odometerReadingDate when the line also carries an odometer reading.
+representationTerm: Measure, unit h (Rec 20 HUR)
+valueFormat: integer ^(0|[1-9][0-9]{0,6})$
+grammar: '^(0|[1-9][0-9]{0,6})$'
+unit: HUR
+tokens: []
+codeList: "unit fixed: hour (Rec 20 HUR)"
+conditionality: MAY; SHOULD on supply and service of categories T, C, R and S and of non-road mobile machinery
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Betriebsstundenstand [vehicle.cumulativeOperatingHours]', BT-161 '4210'"
+anchors: ISO 15143-3 (AEMP 2.0) element CumulativeOperatingHours (name seen in implementer
+  documentation only); Reg. (EU) 2016/1628 Art. 3 'non-road mobile machinery'; UN/ECE Rec 20 HUR

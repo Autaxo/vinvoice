@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.specificationId
+tier: core
+status: draft
+labelEn: VINvoice specification
+labelDe: VINvoice-Spezifikation
+definition: Marker row. Identifies the vehicle data specification and the major.minor version that
+  the vehicle rows of this line follow, and so makes the line a vehicle line. Analogous to EN 16931
+  BT-24 (Specification identifier) at line level; it is not a BT-24 value and never appears in
+  BT-24.
+representationTerm: Id
+valueFormat: ^vehicle/[1-9][0-9]*[.](0|[1-9][0-9]*)$, e.g. vehicle/1.0 (no patch number, never a URL)
+grammar: '^vehicle/[1-9][0-9]*[.](0|[1-9][0-9]*)$'
+unit: null
+tokens: []
+codeList: none (version token)
+conditionality: MUST appear exactly once on every vehicle line and SHOULD be the first row; MUST NOT
+  appear on any other line
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'VINvoice-Spezifikation [vehicle.specificationId]', BT-161 'vehicle/1.0'"
+anchors: EN 16931-1 BT-24 'Specification identifier' (UBL cbc:CustomizationID, CII
+  GuidelineSpecifiedDocumentContextParameter/ID), as an analogy only; KoSIT CIUS XRechnung CVD v0.9
+  BT-160 'cva' as precedent for a machine token in BT-160

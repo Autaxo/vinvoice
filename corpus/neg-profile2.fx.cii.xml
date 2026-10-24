@@ -23,15 +23,15 @@
       <ram:SpecifiedTradeProduct>
         <ram:Name>Volkswagen Golf</ram:Name>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugdaten-Standard [vehicle.profile]</ram:Description>
+          <ram:Description>VINvoice-Spezifikation [vehicle.specificationId]</ram:Description>
           <ram:Value>vehicle/1.0</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugbezug [vehicle.role]</ram:Description>
+          <ram:Description>Fahrzeugrolle [vehicle.roleCode]</ram:Description>
           <ram:Value>supply</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>FIN [vehicle.vin]</ram:Description>
+          <ram:Description>Fahrzeug-Identifizierungsnummer (FIN) [vehicle.vin]</ram:Description>
           <ram:Value>TSTVEH016N0000002</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
@@ -43,24 +43,24 @@
           <ram:Value>Golf</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Zustand [vehicle.condition]</ram:Description>
+          <ram:Description>Fahrzeugzustand [vehicle.conditionCode]</ram:Description>
           <ram:Value>used</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Erstzulassung [vehicle.firstRegistration]</ram:Description>
+          <ram:Description>Datum der Erstzulassung [vehicle.firstRegistrationDate]</ram:Description>
           <ram:Value>2022-02-30</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kilometerstand (km) [vehicle.odometerKm]</ram:Description>
+          <ram:Description>Kilometerstand (km) [vehicle.odometerReadingKm]</ram:Description>
           <ram:Value>48200</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kilometerstand (Meilen) [vehicle.odometerMi]</ram:Description>
+          <ram:Description>Meilenstand (mi) [vehicle.odometerReadingMi]</ram:Description>
           <ram:Value>30000</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kilometerstand-Status [vehicle.odometerStatus]</ram:Description>
-          <ram:Value>defective</ram:Value>
+          <ram:Description>Status des Zählerstands [vehicle.odometerReadingStatusCode]</ram:Description>
+          <ram:Value>inoperative</ram:Value>
         </ram:ApplicableProductCharacteristic>
       </ram:SpecifiedTradeProduct>
       <ram:SpecifiedLineTradeAgreement>
@@ -94,15 +94,15 @@
       <ram:SpecifiedTradeProduct>
         <ram:Name>Inspektion</ram:Name>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugdaten-Standard [vehicle.profile]</ram:Description>
+          <ram:Description>VINvoice-Spezifikation [vehicle.specificationId]</ram:Description>
           <ram:Value>vehicle/1.0</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugbezug [vehicle.role]</ram:Description>
+          <ram:Description>Fahrzeugrolle [vehicle.roleCode]</ram:Description>
           <ram:Value>service</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kennzeichen [vehicle.plate]</ram:Description>
+          <ram:Description>Amtliches Kennzeichen [vehicle.registrationNumber]</ram:Description>
           <ram:Value>XX-VE 1</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
@@ -171,11 +171,11 @@
       <ram:SpecifiedTradeProduct>
         <ram:Name>Dachträger</ram:Name>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugdaten-Standard [vehicle.profile]</ram:Description>
+          <ram:Description>VINvoice-Spezifikation [vehicle.specificationId]</ram:Description>
           <ram:Value>vehicle/2.0</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugbezug [vehicle.role]</ram:Description>
+          <ram:Description>Fahrzeugrolle [vehicle.roleCode]</ram:Description>
           <ram:Value>supply</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
@@ -209,7 +209,7 @@
       <ram:SpecifiedTradeProduct>
         <ram:Name>Winterräder</ram:Name>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugdaten-Standard [vehicle.profile]</ram:Description>
+          <ram:Description>VINvoice-Spezifikation [vehicle.specificationId]</ram:Description>
           <ram:Value>vehicle/1.0</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
@@ -219,6 +219,10 @@
         <ram:ApplicableProductCharacteristic>
           <ram:Description>vehicle.foo</ram:Description>
           <ram:Value>x</ram:Value>
+        </ram:ApplicableProductCharacteristic>
+        <ram:ApplicableProductCharacteristic>
+          <ram:Description>Lagernummer [com.example.stockNumber]</ram:Description>
+          <ram:Value>STK-26-0042</ram:Value>
         </ram:ApplicableProductCharacteristic>
       </ram:SpecifiedTradeProduct>
       <ram:SpecifiedLineTradeAgreement>

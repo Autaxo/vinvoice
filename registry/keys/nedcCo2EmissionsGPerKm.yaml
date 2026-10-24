@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.nedcCo2EmissionsGPerKm
+tier: optional
+status: draft
+labelEn: NEDC CO2 emissions (g/km)
+labelDe: CO2-Emissionen NEFZ (g/km)
+definition: "CO2 emissions in g/km determined under the NEDC (UN Regulation No 101), including NEDC
+  values obtained by correlation from WLTP results, as printed in CoC item 49 or registration field
+  V.7: the combined value, or the weighted combined value for OVC-HEV. A type-approval value, not
+  real-world emissions."
+representationTerm: Measure, unit g/km (no Rec 20 code)
+valueFormat: integer ^(0|[1-9][0-9]{0,3})$
+grammar: '^(0|[1-9][0-9]{0,3})$'
+unit: null
+tokens: []
+codeList: "unit fixed: g/km (no Rec 20 code, so never BT-212); test procedure fixed: NEDC"
+conditionality: MAY; only for vehicles whose CoC or registration document gives an NEDC value
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'CO2-Emissionen NEFZ (g/km) [vehicle.nedcCo2EmissionsGPerKm]', BT-161 '128'"
+anchors: Directive 1999/37/EC code V.7; Reg. (EU) 2020/683 Annex VIII CoC item 49 (NEDC block; DE
+  'NEFZ'); UN Regulation No 101; Reg. (EU) 2017/1152 and 2017/1153 (correlated NEDC values)

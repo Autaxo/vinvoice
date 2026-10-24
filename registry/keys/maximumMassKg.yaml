@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.maximumMassKg
+tier: optional
+status: draft
+labelEn: Maximum mass (kg)
+labelDe: Technisch zulässige Gesamtmasse (kg)
+definition: Technically permissible maximum laden mass in kg ('maximum mass', Reg. (EU) 2018/858
+  Annex I Part A 1.4), as in registration field F.1 or CoC item 16.1; for motorcycles, where F.1 is
+  not printed, the CoC value. Not the permissible maximum laden mass in the state of registration
+  (F.2, vehicle.registeredMaximumMassKg), the mass of the whole combination (F.3) or the mass in
+  service (G).
+representationTerm: Measure, unit kg (Rec 20 KGM)
+valueFormat: integer ^[1-9][0-9]{0,5}$
+grammar: '^[1-9][0-9]{0,5}$'
+unit: KGM
+tokens: []
+codeList: "unit fixed: kilogram (Rec 20 KGM)"
+conditionality: MAY; SHOULD for categories N, O, M2, M3 and T
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Technisch zulässige Gesamtmasse (kg) [vehicle.maximumMassKg]', BT-161 '2100'"
+anchors: Reg. (EU) 2018/858 Annex I Part A 1.4 ('Maximum mass' means the 'technically permissible
+  maximum laden mass'; DE 'Gesamtmasse'); Directive 1999/37/EC code F.1 (DE 'Technisch zulässige
+  Gesamtmasse'); CoC item 16.1; UN/ECE Rec 20 KGM

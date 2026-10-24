@@ -23,23 +23,23 @@
       <ram:SpecifiedTradeProduct>
         <ram:Name>Fahrzeug: Volkswagen Golf, XX-VE 1</ram:Name>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugdaten-Standard [vehicle.profile]</ram:Description>
+          <ram:Description>VINvoice-Spezifikation [vehicle.specificationId]</ram:Description>
           <ram:Value>vehicle/1.0</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugbezug [vehicle.role]</ram:Description>
+          <ram:Description>Fahrzeugrolle [vehicle.roleCode]</ram:Description>
           <ram:Value>service</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>FIN [vehicle.vin]</ram:Description>
+          <ram:Description>Fahrzeug-Identifizierungsnummer (FIN) [vehicle.vin]</ram:Description>
           <ram:Value>TSTVEH033L0000004</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kennzeichen [vehicle.plate]</ram:Description>
+          <ram:Description>Amtliches Kennzeichen [vehicle.registrationNumber]</ram:Description>
           <ram:Value>XX-VE 1</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Zulassungsland [vehicle.registrationCountry]</ram:Description>
+          <ram:Description>Zulassungsland [vehicle.registrationCountryCode]</ram:Description>
           <ram:Value>DE</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
@@ -51,19 +51,19 @@
           <ram:Value>Golf</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Erstzulassung [vehicle.firstRegistration]</ram:Description>
+          <ram:Description>Datum der Erstzulassung [vehicle.firstRegistrationDate]</ram:Description>
           <ram:Value>2020-06-15</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kilometerstand (km) [vehicle.odometerKm]</ram:Description>
+          <ram:Description>Kilometerstand (km) [vehicle.odometerReadingKm]</ram:Description>
           <ram:Value>61230</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kilometerstand am [vehicle.odometerDate]</ram:Description>
+          <ram:Description>Datum des Zählerstands [vehicle.odometerReadingDate]</ram:Description>
           <ram:Value>2026-10-20</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Nächste HU [vehicle.inspectionDue]</ram:Description>
+          <ram:Description>Nächste technische Prüfung [vehicle.nextRoadworthinessTestDate]</ram:Description>
           <ram:Value>2028-10</ram:Value>
         </ram:ApplicableProductCharacteristic>
       </ram:SpecifiedTradeProduct>

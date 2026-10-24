@@ -4,11 +4,48 @@ import PageHead from '../../components/PageHead.astro';
 import Rows from '../../components/Rows.astro';
 import { corpus, featured, firstLine, levels, type CorpusFile } from '../../lib/corpus';
 import { downloads } from '../../lib/downloads';
-import { formatBytes } from '../../lib/site';
+import { formatBytes, SITE } from '../../lib/site';
+import { registry, terms } from '../../lib/registry';
 
 const positive = corpus.filter((f) => !f.negative);
 const negative = corpus.filter((f) => f.negative);
 const bytes = (s: string) => new TextEncoder().encode(s).length;
+const LICENCE_URL: Record<string, string> = {
+  'CC0 1.0': 'https://creativecommons.org/publicdomain/zero/1.0/',
+  'CC BY 4.0': 'https://creativecommons.org/licenses/by/4.0/',
+  'Apache-2.0': 'https://www.apache.org/licenses/LICENSE-2.0',
+};
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: 'VINvoice registry',
+  description: `Machine-readable registry of VINvoice, the open convention for vehicle data in EN 16931 e-invoices (Factur-X, ZUGFeRD, XRechnung, Peppol): ${terms.length} keys with English and German labels, definitions, value grammars, units, token lists and legal anchors, a JSON Schema, Schematron rules and ${corpus.length} test invoices.`,
+  url: `${SITE.url}/examples/`,
+  version: registry.version,
+  dateModified: registry.date,
+  inLanguage: ['en', 'de'],
+  isAccessibleForFree: true,
+  license: LICENCE_URL['CC0 1.0'],
+  keywords: [
+    'e-invoicing',
+    'EN 16931',
+    'ZUGFeRD',
+    'Factur-X',
+    'XRechnung',
+    'Peppol',
+    'vehicle identification number',
+    'VIN',
+    'automotive',
+    'vehicle data',
+  ],
+  distribution: downloads.map((d) => ({
+    '@type': 'DataDownload',
+    name: d.file,
+    encodingFormat: d.type.split(';')[0],
+    contentUrl: `${SITE.url}/downloads/${d.file}`,
+    license: LICENCE_URL[d.licence],
+  })),
+};
 const groups: [string, string, CorpusFile[]][] = [
   ['valid', 'Conforming invoices', positive],
   [
@@ -21,7 +58,8 @@ const groups: [string, string, CorpusFile[]][] = [
 
 <Base
   title="Examples and downloads"
-  description="VINvoice test invoices in CII and UBL (Factur-X, XRechnung, Peppol) and the registry as JSON, CSV and JSON-LD."
+  description="VINvoice test invoices in CII and UBL (Factur-X, XRechnung, Peppol) and the registry as JSON, CSV, JSON-LD, JSON Schema and Schematron."
+  jsonLd={jsonLd}
 >
   <PageHead
     title="Examples and downloads"

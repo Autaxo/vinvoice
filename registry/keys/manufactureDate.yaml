@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.manufactureDate
+tier: optional
+status: draft
+labelEn: Date of manufacture
+labelDe: Herstellungsdatum
+definition: Date on which manufacture of the vehicle was finalised in accordance with its approval,
+  as in CoC item 0.11.
+representationTerm: Date
+valueFormat: YYYY-MM-DD, YYYY-MM or YYYY (reduced-precision date)
+grammar: '^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2])|[0-9]{4})$'
+unit: null
+tokens: []
+codeList: none
+conditionality: MAY; SHOULD on manufacturer and importer invoices for new vehicles
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Herstellungsdatum [vehicle.manufactureDate]', BT-161 '2022-01-14'"
+anchors: Reg. (EU) 2018/858 Art. 3(58) 'date of manufacture of the vehicle'; CoC item 0.11 (DE
+  'Herstellungsdatum des Fahrzeugs'); UN/EDIFACT 2005 code 94; PL KSeF P_22BRP (year)

@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.nextRoadworthinessTestDate
+tier: recommended
+status: draft
+labelEn: Next roadworthiness test
+labelDe: Nächste technische Prüfung
+definition: "Date by which the next periodic roadworthiness test is due: the date of the next test
+  or the expiry date of the current certificate, as shown on the registration document (code X), the
+  last roadworthiness certificate or the inspection mark. A month value (YYYY-MM) means due by the
+  last day of that month."
+representationTerm: Date
+valueFormat: YYYY-MM-DD or YYYY-MM
+grammar: '^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2]))$'
+unit: null
+tokens: []
+codeList: none
+conditionality: SHOULD on supply of used vehicles and on service documents that include a periodic test
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Nächste technische Prüfung [vehicle.nextRoadworthinessTestDate]', BT-161 '2027-03'"
+anchors: Directive 1999/37/EC code X ('proof of having passed the roadworthiness test, date of next
+  roadworthiness test or expiry of current certificate'); Directive 2014/45/EU Art. 8 and Annex II
+  item 8 ('date of the next roadworthiness test or date of expiry of the current certificate');
+  COM(2025) 179 Annex I (proposal)

@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.seatingPositionCount
+tier: optional
+status: draft
+labelEn: Number of seating positions
+labelDe: Anzahl der Sitzplätze
+definition: Number of seating positions including the driver, as in CoC item 42 (excluding seats for
+  use only when the vehicle is stationary and wheelchair positions, footnote 115). Where only the
+  registration document is available, its field S.1 (seats including the driver's seat) is used; on
+  conflict the CoC value governs. Standing places (S.2) are not part of 1.0.
+representationTerm: Count
+valueFormat: integer ^[1-9][0-9]{0,2}$
+grammar: '^[1-9][0-9]{0,2}$'
+unit: null
+tokens: []
+codeList: none
+conditionality: MAY
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Anzahl der Sitzplätze [vehicle.seatingPositionCount]', BT-161 '5'"
+anchors: Reg. (EU) 2018/858 Annex I Part A 1.1 'seating position'; CoC item 42 and footnote 115 (DE
+  'Anzahl der Sitzplätze'); Directive 1999/37/EC code S.1

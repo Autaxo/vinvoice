@@ -3,11 +3,11 @@
 // and implementers read. Output is deterministic; CI fails if generated/ is not up to date.
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadChecked, ROOT, FIELD_ORDER } from './lib/registry.mjs';
+import { loadChecked, ROOT, JSON_ORDER, META_ORDER, POLICY_FIELDS } from './lib/registry.mjs';
 import { toCsv } from './lib/csv.mjs';
 import { schematron } from './lib/schematron.mjs';
 
-const { meta, byLocal, crosswalk } = loadChecked();
+const { meta, byLocal, tokenLists, reserved, naming, crosswalk } = loadChecked();
 const out = path.join(ROOT, 'generated');
 fs.mkdirSync(out, { recursive: true });
 const write = (file, text) => {
@@ -17,27 +17,25 @@ const write = (file, text) => {
 const json = (x) => JSON.stringify(x, null, 2) + '\n';
 
 const keys = meta.keys.map((local) =>
-  Object.fromEntries(FIELD_ORDER.map((f) => [f, byLocal.get(local)[f]]))
+  Object.fromEntries(JSON_ORDER.map((f) => [f, byLocal.get(local)[f]]))
 );
 const refs = Object.fromEntries(
-  Object.entries(meta.refs).map(([role, local]) => [role, meta.prefix + local])
+  Object.entries(meta.refs).map(([role, local]) => [role, `${meta.root}.${local}`])
 );
 const counts = Object.fromEntries(
   meta.tiers.map((t) => [t, keys.filter((k) => k.tier === t).length])
 );
-
-write(
-  'registry.json',
-  json({
-    version: meta.version,
-    date: meta.date,
-    licence: meta.licence,
-    prefix: meta.prefix,
-    counts,
-    refs,
-    keys,
-  })
-);
+const registry = {
+  ...Object.fromEntries(META_ORDER.map((f) => [f, meta[f]])),
+  counts,
+  keys,
+  reserved,
+  tokenLists,
+  namingRules: naming.rules,
+  ...Object.fromEntries(POLICY_FIELDS.map((f) => [f, naming[f]])),
+  refs,
+};
+write('registry.json', json(registry));
 
 const csvCols = [
   'key',
@@ -49,20 +47,18 @@ const csvCols = [
   'labelEn',
   'grammar',
   'codeList',
+  'representationTerm',
+  'repeatable',
 ];
 write('registry.csv', toCsv([csvCols, ...keys.map((k) => csvCols.map((c) => k[c]))]));
 
+const local = (k) => k.key.slice(meta.root.length + 1);
 write(
   'context.jsonld',
   json({
     '@context': {
-      [meta.jsonld.prefix]: meta.jsonld.namespace,
-      ...Object.fromEntries(
-        keys.map((k) => {
-          const local = k.key.slice(meta.prefix.length);
-          return [local, `${meta.jsonld.prefix}:${local}`];
-        })
-      ),
+      [meta.root]: meta.iriBase,
+      ...Object.fromEntries(keys.map((k) => [local(k), `${meta.root}:${local(k)}`])),
     },
   })
 );
@@ -76,7 +72,8 @@ write(
 );
 
 // JSON Schema for the facts of one vehicle line as a JSON object, for systems that store or
-// exchange VINvoice data outside the invoice. Unknown keys stay allowed: readers ignore them.
+// exchange VINvoice data outside the invoice. Unknown registry keys stay allowed (readers ignore
+// them); reserved names are not properties; vendor keys follow vendorKeyGrammar.
 const property = (k) => {
   const one = { type: 'string', pattern: k.grammar };
   return {
@@ -93,16 +90,18 @@ write(
     $id: 'https://vinvoice.org/downloads/vehicle-facts.schema.json',
     title: `VINvoice vehicle facts (${meta.version})`,
     description:
-      'The VINvoice facts of one vehicle line as a JSON object, keyed by full key. Value grammars are the registry grammars. Unknown keys are allowed, because readers ignore keys they do not know. Generated from the registry; licence CC0-1.0.',
+      'The VINvoice facts of one vehicle line as a JSON object, keyed by full key. Value grammars are those of the registry. Unknown registry keys are allowed, because readers ignore keys they do not know; vendor keys use reverse-DNS names. Generated from the registry; licence CC0-1.0.',
     type: 'object',
     required: [refs.marker, refs.role],
     properties: Object.fromEntries(keys.map((k) => [k.key, property(k)])),
     patternProperties: {
-      [`^${meta.prefix.replace('.', '\\.')}x\\.`]: {
-        description: 'Vendor key, ignored by readers.',
+      // vendorKeyGrammar also matches registry keys such as vehicle.de.hsn; vendor keys are the
+      // names it matches outside the registry root.
+      [`^(?!${meta.root}\\.)${meta.vendorKeyGrammar.slice(1)}`]: {
+        description: 'Vendor key (reverse-DNS name), ignored by readers.',
       },
     },
   })
 );
 
-write('vinvoice.sch', schematron({ meta, keys, refs }));
+write('vinvoice.sch', schematron({ meta, keys, refs, reserved }));

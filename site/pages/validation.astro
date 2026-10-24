@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Key from '../components/Key.astro';
-import { REF, linkKeys } from '../lib/registry';
+import { REF, linkKeys, registry, prefix } from '../lib/registry';
 import { corpus, validation, checker, levels } from '../lib/corpus';
 import { REPO } from '../lib/site';
 
@@ -171,7 +171,7 @@ const negatives = corpus.filter((f) => f.negative);
         REPO ? (
           <>
             {' '}
-            (<a href={REPO.file('checker/vinvoice_check.py')}>checker/vinvoice_check.py</a>)
+            (<a href={REPO.file('checker/vehicle_check.py')}>checker/vehicle_check.py</a>)
           </>
         ) : (
           ''
@@ -185,10 +185,10 @@ const negatives = corpus.filter((f) => f.negative);
         >vinvoice.sch</a
       >, generated from the registry. It runs on CII and UBL invoices in any XSLT 2.0 Schematron
       processor, next to the EN 16931 and national rules. Rule identifiers match the checker. The
-      VIN check digit (V-05), the six-months-or-6,000-km test of V-08, the plate comparison (V-18)
-      and the reader notes on level 0 and attached lines (V-19, V-20) stay with the checker. On the
-      test corpus both report the same errors and warnings; continuous integration checks this on
-      every change.
+      VIN check digit (V-05), the six-months-or-6,000-km test of V-08, the registration-number
+      comparison (V-18) and the reader notes on level 0 and attached lines (V-19, V-20) stay with
+      the checker. On the test corpus both report the same errors and warnings; continuous
+      integration checks this on every change.
     </p>
   </div>
 
@@ -249,29 +249,37 @@ const negatives = corpus.filter((f) => f.negative);
           >
           <td>
             <Key t={REF.newMeansOfTransport} /> without <Key t={REF.power} /> or <Key
-              t={REF.displacement}
+              t={REF.engineCapacity}
             />, or without any newness feature (errors); without an odometer reading, registered but
-            without <Key t={REF.firstUse} />, or beyond both 6,000 km and six months (warnings).
+            without <Key t={REF.firstEntryIntoService} />, or beyond both 6,000 km and six months
+            (warnings).
           </td>
         </tr>
         <tr>
-          <th scope="row" class="nowrap">V-09</th><td class="warn">warning</td>
+          <th scope="row" class="nowrap">V-09</th><td
+            ><span class="warn">warning</span>, <span class="muted">info</span></td
+          >
           <td>
-            A used, demonstrator or pre-registered vehicle supplied or traded in without an odometer
-            reading (or status) or without <Key t={REF.firstRegistration} />.
+            A used vehicle supplied or traded in without an odometer reading or a status saying none
+            is available (warning; only where <Key t={REF.category} /> is empty or an M, N or L category);
+            without <Key t={REF.firstRegistrationDate} /> (info: correct only if it was never registered).
           </td>
         </tr>
         <tr>
           <th scope="row" class="nowrap">V-10</th><td class="warn">warning</td>
-          <td>A service line without VIN or plate, or without an odometer reading or status.</td>
+          <td>
+            A service line without VIN or registration number, or without an odometer reading or
+            status (for vehicles that have an odometer).
+          </td>
         </tr>
         <tr>
           <th scope="row" class="nowrap">V-11</th><td
             ><span class="err">error</span>, <span class="muted">info</span></td
           >
           <td>
-            A statutory key written without its label (error); a name longer than 64 characters, a
-            label that is not in the registry, or a marker that is not the first row (info).
+            A statutory key written without its label (error); a key longer than {registry.keyCap}
+            or a name longer than {registry.nameCap} characters, a label that is not in the registry,
+            or a marker that is not the first row (info).
           </td>
         </tr>
         <tr>
@@ -292,7 +300,11 @@ const negatives = corpus.filter((f) => f.negative);
         </tr>
         <tr>
           <th scope="row" class="nowrap">V-16</th><td class="warn">warning</td>
-          <td><Key t={REF.batterySoh} /> without the date of the measurement.</td>
+          <td
+            ><Key t={REF.stateOfHealth} /> without <Key t={REF.stateOfHealthDate} /> or without <Key
+              t={REF.stateOfHealthMethod}
+            />.</td
+          >
         </tr>
         <tr>
           <th scope="row" class="nowrap">V-17</th><td class="err">error</td>
@@ -302,7 +314,11 @@ const negatives = corpus.filter((f) => f.negative);
         </tr>
         <tr>
           <th scope="row" class="nowrap">V-18</th><td class="warn">warning</td>
-          <td>A plate in BT-128 (scheme <code>ABZ</code>) differs from <Key t={REF.plate} />.</td>
+          <td
+            >A registration number in BT-128 (scheme <code>ABZ</code>) differs from <Key
+              t={REF.registrationNumber}
+            />.</td
+          >
         </tr>
         <tr>
           <th scope="row" class="nowrap">V-19</th><td class="muted">info</td>
@@ -318,7 +334,10 @@ const negatives = corpus.filter((f) => f.negative);
         </tr>
         <tr>
           <th scope="row" class="nowrap">V-22</th><td class="muted">info</td>
-          <td>Unknown key, ignored.</td>
+          <td>
+            Unknown key or <a href="/vocabulary/#reserved">reserved name</a>, ignored. Vendor rows
+            (reverse-DNS names outside <code>{prefix}</code>) are ignored without a finding.
+          </td>
         </tr>
       </tbody>
     </table>

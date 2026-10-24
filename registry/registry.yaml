@@ -1,78 +1,91 @@
-# VINvoice registry: release metadata and the order of keys.
+# VINvoice registry: release metadata, grammars, caps, tiers and the order of keys.
 # refs name the keys that the specification text and the tools refer to by role.
 # SPDX-License-Identifier: CC0-1.0
 
 version: vehicle/1.0-draft
 date: '2026-10-24'
 licence: CC0-1.0
-prefix: vehicle.
-jsonld:
-  prefix: veh
-  namespace: https://w3id.org/veh/ns#
+root: vehicle
+markerKey: vehicle.specificationId
+markerGrammar: '^vehicle/[1-9][0-9]*[.](0|[1-9][0-9]*)$'
+keyGrammar: '^vehicle([.][a-z][A-Za-z0-9]*)+$'
+keyGrammarAuthoring: '^vehicle([.][a-z][a-z0-9]*([A-Z][a-z0-9]*)*)+$'
+vendorKeyGrammar: '^[a-z0-9]+(-[a-z0-9]+)*([.][a-z0-9]+(-[a-z0-9]+)*)+[.][a-z][A-Za-z0-9]*$'
+keyCap: 40
+nameCap: 64
+iriBase: https://w3id.org/vinvoice/ns#
 tiers:
   - core
   - recommended
   - optional
 refs:
-  marker: profile
-  role: role
+  marker: specificationId
+  role: roleCode
   vin: vin
   make: make
   model: model
-  condition: condition
-  firstRegistration: firstRegistration
-  odometerKm: odometerKm
-  odometerMi: odometerMi
-  odometerStatus: odometerStatus
-  power: powerKw
-  displacement: displacementCm3
-  newMeansOfTransport: newMeansOfTransport
-  firstUse: firstUse
-  marginScheme: marginScheme
-  plate: plate
-  batterySoh: batterySohPct
-  batterySohDate: batterySohDate
+  condition: conditionCode
+  firstRegistrationDate: firstRegistrationDate
+  odometerKm: odometerReadingKm
+  odometerMi: odometerReadingMi
+  odometerStatus: odometerReadingStatusCode
+  power: maximumNetPowerKw
+  engineCapacity: engineCapacityCm3
+  newMeansOfTransport: newMeansOfTransportIndicator
+  firstEntryIntoService: firstEntryIntoServiceDate
+  marginScheme: marginSchemeIndicator
+  registrationNumber: registrationNumber
+  registrationCountry: registrationCountryCode
+  category: categoryCode
+  stateOfHealth: batteryStateOfHealthPercent
+  stateOfHealthDate: batteryStateOfHealthDate
+  stateOfHealthMethod: batteryStateOfHealthMethodCode
 keys:
-  - profile
-  - role
+  - specificationId
+  - roleCode
   - vin
   - make
   - model
-  - condition
-  - firstRegistration
-  - odometerKm
-  - odometerMi
-  - powerKw
-  - newMeansOfTransport
-  - firstUse
-  - marginScheme
-  - plate
-  - registrationCountry
-  - odometerStatus
-  - odometerDate
-  - variant
-  - displacementCm3
-  - fuel
-  - powertrain
-  - category
-  - colour
-  - hsn
-  - tsn
-  - inspectionDue
-  - batteryCapacityKwh
+  - conditionCode
+  - firstRegistrationDate
+  - odometerReadingKm
+  - odometerReadingMi
+  - maximumNetPowerKw
+  - newMeansOfTransportIndicator
+  - firstEntryIntoServiceDate
+  - marginSchemeIndicator
+  - registrationNumber
+  - registrationCountryCode
+  - odometerReadingStatusCode
+  - odometerReadingDate
+  - configuration
+  - engineCapacityCm3
+  - energySourceCode
+  - powertrainTypeCode
+  - categoryCode
+  - basicColourCode
+  - nextRoadworthinessTestDate
+  - usableBatteryEnergyKwh
   - typeApprovalNumber
-  - emissionClass
-  - co2GPerKm
-  - bodyType
-  - seats
+  - de.hsn
+  - de.tsn
+  - exhaustEmissionLevelCode
+  - wltpCo2EmissionsGPerKm
+  - nedcCo2EmissionsGPerKm
+  - bodyworkCode
+  - seatingPositionCount
   - modelYear
-  - productionDate
-  - electricRangeKm
-  - batterySohPct
-  - batterySohDate
-  - batteryPassport
-  - maxMassKg
-  - catalogId
-  - registeredKeepers
-  - accidentDamaged
-  - damageUnrepaired
+  - manufactureDate
+  - wltpElectricRangeKm
+  - batteryStateOfHealthPercent
+  - batteryStateOfHealthDate
+  - batteryStateOfHealthMethodCode
+  - batteryPassportUrl
+  - maximumMassKg
+  - registeredMaximumMassKg
+  - catalogueId
+  - approvedType
+  - approvedVariant
+  - approvedVersion
+  - axleCount
+  - cumulativeOperatingHours

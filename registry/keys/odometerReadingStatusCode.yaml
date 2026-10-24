@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.odometerReadingStatusCode
+tier: recommended
+status: draft
+labelEn: Odometer reading status
+labelDe: Status des Zählerstands
+definition: "Issuer's statement on how the odometer reading of this line is to be read. displayed:
+  the reading as displayed; the total distance is not verified. replaced: the instrument or its
+  display was replaced, so the reading is not the total distance. rolled-over: the counter passed
+  its maximum and restarted. inoperative: the issuer states that the odometer cannot be read.
+  unknown: no reading is available to the issuer. other. An absent row makes no statement. There is
+  no 'verified' status in 1.0."
+representationTerm: Code
+valueFormat: one token from VEHICLE-ODOMETER-STATUS 1.0
+grammar: '^(displayed|replaced|rolled-over|inoperative|unknown|other)$'
+unit: null
+tokens:
+  - displayed
+  - replaced
+  - rolled-over
+  - inoperative
+  - unknown
+  - other
+codeList: "VEHICLE-ODOMETER-STATUS 1.0: displayed, replaced, rolled-over, inoperative, unknown, other"
+conditionality: SHOULD whenever the reading is not a plain displayed reading; MUST be inoperative or
+  unknown when an odometer reading is required but none is given; MUST NOT be inoperative or unknown
+  together with a reading
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Status des Zählerstands [vehicle.odometerReadingStatusCode]', BT-161 'replaced'"
+anchors: "No EU status list; Directive 2014/45/EU Annex I item 7.11 (test-centre findings 'obviously
+  inoperative', 'obviously manipulated') as related wording only; informative: ADF odometer status,
+  RDW tellerstandoordeel"

@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.batteryStateOfHealthMethodCode
+tier: optional
+status: draft
+labelEn: State of health method
+labelDe: Ermittlungsmethode
+definition: "How the state of health in vehicle.batteryStateOfHealthPercent was determined.
+  on-board: read from the vehicle's battery management system (the data of Reg. (EU) 2023/1542 Art.
+  14, for example the SOCE). manufacturer-test: determined with the manufacturer's diagnostic
+  procedure. independent-test: determined with the test procedure of a party other than the
+  manufacturer. other."
+representationTerm: Code
+valueFormat: one token from VEHICLE-STATE-OF-HEALTH-METHOD 1.0
+grammar: '^(on-board|manufacturer-test|independent-test|other)$'
+unit: null
+tokens:
+  - on-board
+  - manufacturer-test
+  - independent-test
+  - other
+codeList: "VEHICLE-STATE-OF-HEALTH-METHOD 1.0: on-board, manufacturer-test, independent-test, other"
+conditionality: MUST when vehicle.batteryStateOfHealthPercent is present
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Ermittlungsmethode [vehicle.batteryStateOfHealthMethodCode]', BT-161 'on-board'"
+anchors: Reg. (EU) 2023/1542 Art. 3 ('battery management system'), Art. 14 (read-only access) and
+  Annex VII Part A; UN GTR No. 22 (on-board battery durability monitor)

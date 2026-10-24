@@ -7,24 +7,28 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH016N0000001",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH016N0000001",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.variant": "2.0 TDI Life",
-     "vehicle.condition": "used",
-     "vehicle.firstRegistration": "2022-03-18",
-     "vehicle.odometerKm": "48200",
-     "vehicle.powerKw": "110",
-     "vehicle.displacementCm3": "1968",
-     "vehicle.fuel": "diesel",
-     "vehicle.colour": "grey",
-     "vehicle.inspectionDue": "2027-03",
-     "vehicle.marginScheme": "true"
+     "vehicle.configuration": "2.0 TDI Life",
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2022-03-18",
+     "vehicle.odometerReadingKm": "48200",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.engineCapacityCm3": "1968",
+     "vehicle.energySourceCode": [
+      "diesel"
+     ],
+     "vehicle.basicColourCode": [
+      "grey"
+     ],
+     "vehicle.nextRoadworthinessTestDate": "2027-03",
+     "vehicle.marginSchemeIndicator": "true"
     }
    }
   ],
@@ -41,24 +45,28 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH016N0000001",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH016N0000001",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.variant": "2.0 TDI Life",
-     "vehicle.condition": "used",
-     "vehicle.firstRegistration": "2022-03-18",
-     "vehicle.odometerKm": "48200",
-     "vehicle.powerKw": "110",
-     "vehicle.displacementCm3": "1968",
-     "vehicle.fuel": "diesel",
-     "vehicle.colour": "grey",
-     "vehicle.inspectionDue": "2027-03",
-     "vehicle.marginScheme": "true"
+     "vehicle.configuration": "2.0 TDI Life",
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2022-03-18",
+     "vehicle.odometerReadingKm": "48200",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.engineCapacityCm3": "1968",
+     "vehicle.energySourceCode": [
+      "diesel"
+     ],
+     "vehicle.basicColourCode": [
+      "grey"
+     ],
+     "vehicle.nextRoadworthinessTestDate": "2027-03",
+     "vehicle.marginSchemeIndicator": "true"
     }
    }
   ],
@@ -75,20 +83,22 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH042M0000005",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH042M0000005",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Passat",
-     "vehicle.condition": "used",
-     "vehicle.firstRegistration": "2021-05-04",
-     "vehicle.odometerKm": "96410",
-     "vehicle.powerKw": "110",
-     "vehicle.fuel": "diesel",
-     "vehicle.marginScheme": "true"
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2021-05-04",
+     "vehicle.odometerReadingKm": "96410",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.energySourceCode": [
+      "diesel"
+     ],
+     "vehicle.marginSchemeIndicator": "true"
     }
    }
   ],
@@ -105,7 +115,7 @@
    {
     "line": "1",
     "vin": "TSTVEH065R0000007",
-    "plate": null
+    "registrationNumber": null
    }
   ],
   "attached": [],
@@ -127,18 +137,18 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH020T0000002",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH020T0000002",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Tiguan",
-     "vehicle.condition": "pre-registered",
-     "vehicle.firstRegistration": "2026-09-30",
-     "vehicle.newMeansOfTransport": "true",
-     "vehicle.marginScheme": "true"
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2026-09-30",
+     "vehicle.newMeansOfTransportIndicator": "true",
+     "vehicle.marginSchemeIndicator": "true"
     }
    }
   ],
@@ -156,31 +166,31 @@
     "severity": "error",
     "rule": "V-07",
     "line": "1",
-    "msg": "margin scheme on an intra-EU supply (category K): excluded by Art. 313(2) Directive, § 25a Abs. 7 Nr. 1 b and Nr. 3 UStG"
+    "msg": "margin scheme on an intra-EU supply (category K): excluded by Art. 139(3) and Art. 313(2) Directive 2006/112/EC"
    },
    {
     "severity": "warning",
     "rule": "V-07",
     "line": "1",
-    "msg": "margin line but no BG-1 note with 'Gebrauchtgegenstände/Sonderregelung' or the Art. 226(14) mention"
+    "msg": "margin line but no BG-1 note with the Art. 226(14) mention (for example 'Margin scheme - Second-hand goods' or 'Gebrauchtgegenstände/Sonderregelung')"
    },
    {
     "severity": "error",
     "rule": "V-08",
     "line": "1",
-    "msg": "new means of transport without vehicle.powerKw or vehicle.displacementCm3"
+    "msg": "new means of transport without vehicle.maximumNetPowerKw or vehicle.engineCapacityCm3"
    },
    {
     "severity": "error",
     "rule": "V-08",
     "line": "1",
-    "msg": "new means of transport without any newness feature (no odometer value, no vehicle.firstUse)"
+    "msg": "new means of transport without any newness feature (no odometer reading, no vehicle.firstEntryIntoServiceDate)"
    },
    {
     "severity": "warning",
     "rule": "V-09",
     "line": "1",
-    "msg": "used/demonstrator/pre-registered supply without odometer (or status) or first registration"
+    "msg": "used supply without an odometer reading (or status inoperative/unknown)"
    }
   ]
  },
@@ -192,20 +202,20 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH016N0000001",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH016N0000009",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.condition": "used",
-     "vehicle.firstRegistration": "2022-03-18",
-     "vehicle.odometerStatus": "defective",
-     "vehicle.powerKw": "110",
-     "vehicle.batterySohPct": "91",
-     "vehicle.marginScheme": "true"
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2022-03-18",
+     "vehicle.odometerReadingStatusCode": "inoperative",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.batteryStateOfHealthPercent": "91",
+     "vehicle.marginSchemeIndicator": "true"
     }
    }
   ],
@@ -217,7 +227,7 @@
     "severity": "error",
     "rule": "V-11",
     "line": "1",
-    "msg": "statutory key vehicle.powerKw in bare form; the labelled form is mandatory"
+    "msg": "statutory key vehicle.odometerReadingKm in bare form; the labelled form is mandatory"
    },
    {
     "severity": "warning",
@@ -229,13 +239,13 @@
     "severity": "error",
     "rule": "V-02",
     "line": "1",
-    "msg": "vehicle.odometerKm='48.200 km' violates the registry grammar; value dropped by the reader"
+    "msg": "vehicle.odometerReadingKm='48.200 km' violates the registry grammar; value dropped by the reader"
    },
    {
     "severity": "error",
     "rule": "V-02",
     "line": "1",
-    "msg": "vehicle.variant='=HYPERLINK(\"x\")' violates the registry grammar; value dropped by the reader"
+    "msg": "vehicle.configuration='=HYPERLINK(\"x\")' violates the registry grammar; value dropped by the reader"
    },
    {
     "severity": "warning",
@@ -247,7 +257,13 @@
     "severity": "warning",
     "rule": "V-16",
     "line": "1",
-    "msg": "vehicle.batterySohPct without vehicle.batterySohDate"
+    "msg": "vehicle.batteryStateOfHealthPercent without vehicle.batteryStateOfHealthDate"
+   },
+   {
+    "severity": "warning",
+    "rule": "V-16",
+    "line": "1",
+    "msg": "vehicle.batteryStateOfHealthPercent without vehicle.batteryStateOfHealthMethodCode"
    }
   ]
  },
@@ -259,30 +275,30 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH016N0000002",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH016N0000002",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.condition": "used",
-     "vehicle.odometerKm": "48200",
-     "vehicle.odometerMi": "30000",
-     "vehicle.odometerStatus": "defective"
+     "vehicle.conditionCode": "used",
+     "vehicle.odometerReadingKm": "48200",
+     "vehicle.odometerReadingMi": "30000",
+     "vehicle.odometerReadingStatusCode": "inoperative"
     }
    },
    {
     "line": "2",
     "level": 1,
     "vin": null,
-    "plate": "XX-VE 1",
-    "version": "vehicle/1.0",
+    "registrationNumber": "XX-VE 1",
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "service",
-     "vehicle.plate": "XX-VE 1",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "service",
+     "vehicle.registrationNumber": "XX-VE 1",
      "vehicle.make": "Volkswagen"
     }
    },
@@ -290,23 +306,29 @@
     "line": "5",
     "level": 1,
     "vin": null,
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
+     "vehicle.specificationId": "vehicle/1.0",
      "vehicle.make": "Volkswagen"
     }
    }
   ],
   "level0": [],
   "attached": [],
-  "ignored": [],
+  "ignored": [
+   {
+    "line": "5",
+    "key": "com.example.stockNumber",
+    "reason": "vendor row (not under vehicle.)"
+   }
+  ],
   "findings": [
    {
     "severity": "error",
     "rule": "V-02",
     "line": "1",
-    "msg": "vehicle.firstRegistration='2022-02-30' violates the registry grammar; value dropped by the reader"
+    "msg": "vehicle.firstRegistrationDate='2022-02-30' violates the registry grammar; value dropped by the reader"
    },
    {
     "severity": "warning",
@@ -318,25 +340,25 @@
     "severity": "error",
     "rule": "V-13",
     "line": "1",
-    "msg": "vehicle.odometerKm and vehicle.odometerMi on the same line"
+    "msg": "vehicle.odometerReadingKm and vehicle.odometerReadingMi on the same line"
    },
    {
     "severity": "error",
     "rule": "V-17",
     "line": "1",
-    "msg": "odometer value given although vehicle.odometerStatus = defective"
+    "msg": "odometer reading given although vehicle.odometerReadingStatusCode = inoperative"
    },
    {
-    "severity": "warning",
+    "severity": "info",
     "rule": "V-09",
     "line": "1",
-    "msg": "used/demonstrator/pre-registered supply without odometer (or status) or first registration"
+    "msg": "used supply without vehicle.firstRegistrationDate (correct only if the vehicle was never registered)"
    },
    {
     "severity": "warning",
     "rule": "V-18",
     "line": "2",
-    "msg": "BT-128 ABZ plate differs from vehicle.plate"
+    "msg": "BT-128 ABZ registration number differs from vehicle.registrationNumber"
    },
    {
     "severity": "warning",
@@ -372,7 +394,7 @@
     "severity": "error",
     "rule": "V-01",
     "line": "5",
-    "msg": "marker without vehicle.role"
+    "msg": "marker without vehicle.roleCode"
    }
   ]
  },
@@ -384,22 +406,26 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH022T0000003",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH022T0000003",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Tiguan",
-     "vehicle.variant": "2.0 TDI Elegance",
-     "vehicle.condition": "new",
-     "vehicle.odometerKm": "12",
-     "vehicle.powerKw": "110",
-     "vehicle.displacementCm3": "1968",
-     "vehicle.fuel": "diesel",
-     "vehicle.colour": "black",
-     "vehicle.newMeansOfTransport": "true"
+     "vehicle.configuration": "2.0 TDI Elegance",
+     "vehicle.conditionCode": "new",
+     "vehicle.odometerReadingKm": "12",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.engineCapacityCm3": "1968",
+     "vehicle.energySourceCode": [
+      "diesel"
+     ],
+     "vehicle.basicColourCode": [
+      "black"
+     ],
+     "vehicle.newMeansOfTransportIndicator": "true"
     }
    }
   ],
@@ -416,24 +442,28 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH020T0000002",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH020T0000002",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Tiguan",
-     "vehicle.variant": "2.0 TDI Elegance",
-     "vehicle.condition": "pre-registered",
-     "vehicle.firstRegistration": "2026-09-30",
-     "vehicle.odometerKm": "48",
-     "vehicle.powerKw": "110",
-     "vehicle.displacementCm3": "1968",
-     "vehicle.fuel": "diesel",
-     "vehicle.colour": "black",
-     "vehicle.newMeansOfTransport": "true",
-     "vehicle.firstUse": "2026-09-30"
+     "vehicle.configuration": "2.0 TDI Elegance",
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2026-09-30",
+     "vehicle.odometerReadingKm": "48",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.engineCapacityCm3": "1968",
+     "vehicle.energySourceCode": [
+      "diesel"
+     ],
+     "vehicle.basicColourCode": [
+      "black"
+     ],
+     "vehicle.newMeansOfTransportIndicator": "true",
+     "vehicle.firstEntryIntoServiceDate": "2026-09-30"
     }
    }
   ],
@@ -450,24 +480,28 @@
     "line": "1",
     "level": 1,
     "vin": "TSTVEH016N0000001",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH016N0000001",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.variant": "2.0 TDI Life",
-     "vehicle.condition": "used",
-     "vehicle.firstRegistration": "2022-03-18",
-     "vehicle.odometerKm": "48200",
-     "vehicle.powerKw": "110",
-     "vehicle.displacementCm3": "1968",
-     "vehicle.fuel": "diesel",
-     "vehicle.colour": "grey",
-     "vehicle.inspectionDue": "2027-03",
-     "vehicle.marginScheme": "true"
+     "vehicle.configuration": "2.0 TDI Life",
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2022-03-18",
+     "vehicle.odometerReadingKm": "48200",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.engineCapacityCm3": "1968",
+     "vehicle.energySourceCode": [
+      "diesel"
+     ],
+     "vehicle.basicColourCode": [
+      "grey"
+     ],
+     "vehicle.nextRoadworthinessTestDate": "2027-03",
+     "vehicle.marginSchemeIndicator": "true"
     }
    }
   ],
@@ -484,24 +518,28 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH016N0000001",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH016N0000001",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.variant": "2.0 TDI Life",
-     "vehicle.condition": "used",
-     "vehicle.firstRegistration": "2022-03-18",
-     "vehicle.odometerKm": "48200",
-     "vehicle.powerKw": "110",
-     "vehicle.displacementCm3": "1968",
-     "vehicle.fuel": "diesel",
-     "vehicle.colour": "grey",
-     "vehicle.inspectionDue": "2027-03",
-     "vehicle.marginScheme": "true"
+     "vehicle.configuration": "2.0 TDI Life",
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2022-03-18",
+     "vehicle.odometerReadingKm": "48200",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.engineCapacityCm3": "1968",
+     "vehicle.energySourceCode": [
+      "diesel"
+     ],
+     "vehicle.basicColourCode": [
+      "grey"
+     ],
+     "vehicle.nextRoadworthinessTestDate": "2027-03",
+     "vehicle.marginSchemeIndicator": "true"
     }
    }
   ],
@@ -518,24 +556,28 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH016N0000001",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH016N0000001",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.variant": "2.0 TDI Life",
-     "vehicle.condition": "used",
-     "vehicle.firstRegistration": "2022-03-18",
-     "vehicle.odometerKm": "48200",
-     "vehicle.powerKw": "110",
-     "vehicle.displacementCm3": "1968",
-     "vehicle.fuel": "diesel",
-     "vehicle.colour": "grey",
-     "vehicle.inspectionDue": "2027-03",
-     "vehicle.marginScheme": "true"
+     "vehicle.configuration": "2.0 TDI Life",
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2022-03-18",
+     "vehicle.odometerReadingKm": "48200",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.engineCapacityCm3": "1968",
+     "vehicle.energySourceCode": [
+      "diesel"
+     ],
+     "vehicle.basicColourCode": [
+      "grey"
+     ],
+     "vehicle.nextRoadworthinessTestDate": "2027-03",
+     "vehicle.marginSchemeIndicator": "true"
     }
    }
   ],
@@ -552,30 +594,40 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH016N0000001",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH016N0000001",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.variant": "2.0 TDI Life",
-     "vehicle.condition": "used",
-     "vehicle.firstRegistration": "2022-03-18",
-     "vehicle.odometerKm": "48200",
-     "vehicle.powerKw": "110",
-     "vehicle.displacementCm3": "1968",
-     "vehicle.fuel": "diesel",
-     "vehicle.colour": "grey",
-     "vehicle.inspectionDue": "2027-03",
-     "vehicle.marginScheme": "true"
+     "vehicle.configuration": "2.0 TDI Life",
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2022-03-18",
+     "vehicle.odometerReadingKm": "48200",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.engineCapacityCm3": "1968",
+     "vehicle.energySourceCode": [
+      "diesel"
+     ],
+     "vehicle.basicColourCode": [
+      "grey"
+     ],
+     "vehicle.nextRoadworthinessTestDate": "2027-03",
+     "vehicle.marginSchemeIndicator": "true"
     }
    }
   ],
   "level0": [],
   "attached": [],
-  "ignored": [],
+  "ignored": [
+   {
+    "line": "1",
+    "key": "com.example.stockNumber",
+    "reason": "vendor row (not under vehicle.)"
+   }
+  ],
   "findings": []
  },
  "sale-25a.peppol.ubl.xml": {
@@ -586,24 +638,28 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH016N0000001",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH016N0000001",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.variant": "2.0 TDI Life",
-     "vehicle.condition": "used",
-     "vehicle.firstRegistration": "2022-03-18",
-     "vehicle.odometerKm": "48200",
-     "vehicle.powerKw": "110",
-     "vehicle.displacementCm3": "1968",
-     "vehicle.fuel": "diesel",
-     "vehicle.colour": "grey",
-     "vehicle.inspectionDue": "2027-03",
-     "vehicle.marginScheme": "true"
+     "vehicle.configuration": "2.0 TDI Life",
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2022-03-18",
+     "vehicle.odometerReadingKm": "48200",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.engineCapacityCm3": "1968",
+     "vehicle.energySourceCode": [
+      "diesel"
+     ],
+     "vehicle.basicColourCode": [
+      "grey"
+     ],
+     "vehicle.nextRoadworthinessTestDate": "2027-03",
+     "vehicle.marginSchemeIndicator": "true"
     }
    }
   ],
@@ -620,24 +676,28 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH016N0000001",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH016N0000001",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.variant": "2.0 TDI Life",
-     "vehicle.condition": "used",
-     "vehicle.firstRegistration": "2022-03-18",
-     "vehicle.odometerKm": "48200",
-     "vehicle.powerKw": "110",
-     "vehicle.displacementCm3": "1968",
-     "vehicle.fuel": "diesel",
-     "vehicle.colour": "grey",
-     "vehicle.inspectionDue": "2027-03",
-     "vehicle.marginScheme": "true"
+     "vehicle.configuration": "2.0 TDI Life",
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2022-03-18",
+     "vehicle.odometerReadingKm": "48200",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.engineCapacityCm3": "1968",
+     "vehicle.energySourceCode": [
+      "diesel"
+     ],
+     "vehicle.basicColourCode": [
+      "grey"
+     ],
+     "vehicle.nextRoadworthinessTestDate": "2027-03",
+     "vehicle.marginSchemeIndicator": "true"
     }
    }
   ],
@@ -654,24 +714,28 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH016N0000001",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH016N0000001",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.variant": "2.0 TDI Life",
-     "vehicle.condition": "used",
-     "vehicle.firstRegistration": "2022-03-18",
-     "vehicle.odometerKm": "48200",
-     "vehicle.powerKw": "110",
-     "vehicle.displacementCm3": "1968",
-     "vehicle.fuel": "diesel",
-     "vehicle.colour": "grey",
-     "vehicle.inspectionDue": "2027-03",
-     "vehicle.marginScheme": "true"
+     "vehicle.configuration": "2.0 TDI Life",
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2022-03-18",
+     "vehicle.odometerReadingKm": "48200",
+     "vehicle.maximumNetPowerKw": "110",
+     "vehicle.engineCapacityCm3": "1968",
+     "vehicle.energySourceCode": [
+      "diesel"
+     ],
+     "vehicle.basicColourCode": [
+      "grey"
+     ],
+     "vehicle.nextRoadworthinessTestDate": "2027-03",
+     "vehicle.marginSchemeIndicator": "true"
     }
    }
   ],
@@ -680,31 +744,35 @@
   "ignored": [],
   "findings": []
  },
- "sale-regular-odometer-defective.fx.cii.xml": {
-  "file": "sale-regular-odometer-defective.fx.cii.xml",
+ "sale-regular-odometer-inoperative.fx.cii.xml": {
+  "file": "sale-regular-odometer-inoperative.fx.cii.xml",
   "syntax": "CII",
   "vehicles": [
    {
     "line": "1",
     "level": 2,
     "vin": "TSTVEH058P0000006",
-    "plate": null,
-    "version": "vehicle/1.0",
+    "registrationNumber": null,
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "supply",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "supply",
      "vehicle.vin": "TSTVEH058P0000006",
      "vehicle.make": "Skoda",
      "vehicle.model": "Octavia",
-     "vehicle.condition": "used",
-     "vehicle.firstRegistration": "2023-02-01",
-     "vehicle.odometerStatus": "defective",
-     "vehicle.powerKw": "85",
-     "vehicle.fuel": "petrol",
-     "vehicle.colour": "white",
-     "vehicle.category": "M1",
-     "vehicle.hsn": "8004",
-     "vehicle.tsn": "BHR"
+     "vehicle.conditionCode": "used",
+     "vehicle.firstRegistrationDate": "2023-02-01",
+     "vehicle.odometerReadingStatusCode": "inoperative",
+     "vehicle.maximumNetPowerKw": "85",
+     "vehicle.energySourceCode": [
+      "petrol"
+     ],
+     "vehicle.basicColourCode": [
+      "white"
+     ],
+     "vehicle.categoryCode": "M1",
+     "vehicle.de.hsn": "8004",
+     "vehicle.de.tsn": "BHR"
     }
    }
   ],
@@ -721,20 +789,20 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH033L0000004",
-    "plate": "XX-VE 1",
-    "version": "vehicle/1.0",
+    "registrationNumber": "XX-VE 1",
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "service",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "service",
      "vehicle.vin": "TSTVEH033L0000004",
-     "vehicle.plate": "XX-VE 1",
-     "vehicle.registrationCountry": "DE",
+     "vehicle.registrationNumber": "XX-VE 1",
+     "vehicle.registrationCountryCode": "DE",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.firstRegistration": "2020-06-15",
-     "vehicle.odometerKm": "61230",
-     "vehicle.odometerDate": "2026-10-20",
-     "vehicle.inspectionDue": "2028-10"
+     "vehicle.firstRegistrationDate": "2020-06-15",
+     "vehicle.odometerReadingKm": "61230",
+     "vehicle.odometerReadingDate": "2026-10-20",
+     "vehicle.nextRoadworthinessTestDate": "2028-10"
     }
    }
   ],
@@ -773,20 +841,20 @@
     "line": "1",
     "level": 2,
     "vin": "TSTVEH033L0000004",
-    "plate": "XX-VE 1",
-    "version": "vehicle/1.0",
+    "registrationNumber": "XX-VE 1",
+    "specification": "vehicle/1.0",
     "facts": {
-     "vehicle.profile": "vehicle/1.0",
-     "vehicle.role": "service",
+     "vehicle.specificationId": "vehicle/1.0",
+     "vehicle.roleCode": "service",
      "vehicle.vin": "TSTVEH033L0000004",
-     "vehicle.plate": "XX-VE 1",
-     "vehicle.registrationCountry": "DE",
+     "vehicle.registrationNumber": "XX-VE 1",
+     "vehicle.registrationCountryCode": "DE",
      "vehicle.make": "Volkswagen",
      "vehicle.model": "Golf",
-     "vehicle.firstRegistration": "2020-06-15",
-     "vehicle.odometerKm": "61230",
-     "vehicle.odometerDate": "2026-10-20",
-     "vehicle.inspectionDue": "2028-10"
+     "vehicle.firstRegistrationDate": "2020-06-15",
+     "vehicle.odometerReadingKm": "61230",
+     "vehicle.odometerReadingDate": "2026-10-20",
+     "vehicle.nextRoadworthinessTestDate": "2028-10"
     }
    }
   ],

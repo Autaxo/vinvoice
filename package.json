@@ -14,7 +14,6 @@
   "scripts": {
     "validate": "node scripts/validate.mjs",
     "generate": "node scripts/generate.mjs",
-    "import:json": "node scripts/import-json.mjs",
     "dev": "npm run generate && astro dev --root site",
     "build": "npm run validate && npm run generate && astro build --root site",
     "preview": "astro preview --root site",
@@ -22,7 +21,8 @@
     "format": "prettier --write .",
     "test:checker": "python3 -I -m unittest discover -s checker -v",
     "test:schematron": "sh scripts/schematron-test.sh",
-    "test": "npm run validate && node scripts/test-generated.mjs && npm run test:checker"
+    "test": "npm run validate && node scripts/test-generated.mjs && npm run test:checker",
+    "import:release": "node scripts/import-release.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
@@ -32,5 +32,21 @@
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.7.0",
     "yaml": "^2.9.1"
-  }
+  },
+  "keywords": [
+    "vinvoice",
+    "e-invoice",
+    "einvoice",
+    "en16931",
+    "zugferd",
+    "factur-x",
+    "xrechnung",
+    "peppol",
+    "vehicle",
+    "vin",
+    "automotive",
+    "dealer",
+    "schematron",
+    "json-schema"
+  ]
 }

@@ -1,0 +1,221 @@
+# SPDX-License-Identifier: CC0-1.0
+
+- list: VEHICLE-ROLE 1.0 (vehicle.roleCode)
+  tokens:
+    - supply
+    - trade-in
+    - service
+    - rental
+    - lease
+    - agency
+    - transport
+    - other
+  source: "Registry-owned; there is no EU list. The rental/lease boundary of 30 days follows Directive
+    2006/112/EC Art. 56(3) as a boundary only; the tokens state no VAT treatment. Informative
+    alignment: schema.org businessFunction."
+- list: VEHICLE-CONDITION 1.0 (vehicle.conditionCode), partition without other
+  tokens:
+    - new
+    - used
+  source: "Registry-owned partition of all vehicles by observable facts (registration before the
+    supply, use before the supply). Related legal notions, documented but not equal: Directive
+    1999/94/EC Art. 2(2) 'new passenger car', Directive 2006/112/EC Art. 2(2)(b) and Art. 311(1)(1).
+    The draft tokens pre-registered and demonstrator are withdrawn; prior use is deferred under the
+    reserved name vehicle.priorUseCode."
+- list: VEHICLE-ODOMETER-STATUS 1.0 (vehicle.odometerReadingStatusCode)
+  tokens:
+    - displayed
+    - replaced
+    - rolled-over
+    - inoperative
+    - unknown
+    - other
+  source: "Registry-owned issuer statements. Related wording only: Directive 2014/45/EU Annex I item
+    7.11 (test-centre findings); informative parallels: ADF odometer status, RDW tellerstandoordeel.
+    'manipulated' is reserved for testing bodies and not issued in 1.0."
+- list: VEHICLE-ENERGY-SOURCE 1.0 (vehicle.energySourceCode, repeatable)
+  tokens:
+    - petrol
+    - diesel
+    - lpg
+    - cng
+    - lng
+    - ethanol
+    - biodiesel
+    - hydrogen
+    - electricity
+    - other
+  source: "Directive 1999/37/EC code P.3; CoC item 26 ('Diesel/petrol/LPG/NG -
+    Biomethane/Ethanol/Biodiesel/Hydrogen') and item 23 (pure electric); Reg. (EU) 2023/1804 Art.
+    2(4) for electricity, CNG and LNG. cng and lng include biomethane. Published mapping to IVI 2.0
+    EnergySource (after the licence check): petrol 10 (11, 12), ethanol 15 (16), diesel 20,
+    biodiesel 21, lpg 30, cng 40 and 44, hydrogen 50, lng 60, electricity 95, other 90 (19, 22, 55,
+    91)."
+- list: VEHICLE-POWERTRAIN 1.0 (vehicle.powertrainTypeCode)
+  tokens:
+    - internal-combustion
+    - hybrid-electric
+    - plug-in-hybrid-electric
+    - pure-electric
+    - fuel-cell
+    - other
+  source: "Reg. (EU) 2017/1151 Annex XXI points 3.3.15-3.3.20; CoC items 23 and 23.1. Published
+    mapping: hybrid-electric = NOVC-HEV; plug-in-hybrid-electric = OVC-HEV, including range
+    extenders; pure-electric = PEV (CoC 23 'pure electric: yes'); fuel-cell = FCV, NOVC-FCHV,
+    OVC-FCHV."
+- list: VEHICLE-COLOUR 1.0 (vehicle.basicColourCode, repeatable)
+  tokens:
+    - white
+    - yellow
+    - orange
+    - red
+    - violet
+    - blue
+    - green
+    - grey
+    - brown
+    - black
+    - other
+  source: Reg. (EU) 2020/683 Annex VIII CoC item 40 footnote 114 ('Indicate only the basic colour(s)';
+    DE 'Grundfarben'); Directive 1999/37/EC code R. National register colours outside the ten map
+    through the registry's published mapping table.
+- list: VEHICLE-STATE-OF-HEALTH-METHOD 1.0 (vehicle.batteryStateOfHealthMethodCode)
+  tokens:
+    - on-board
+    - manufacturer-test
+    - independent-test
+    - other
+  source: Registry-owned. on-board refers to the battery management system data of Reg. (EU) 2023/1542
+    Art. 14 and Annex VII Part A (SOCE for electric vehicle batteries) and the on-board monitor of
+    UN GTR No. 22.
+- list: VEHICLE-EMISSION-LEVEL 1.0 (vehicle.exhaustEmissionLevelCode), grammar not enumeration; examples
+  tokens:
+    - euro-4
+    - euro-5
+    - euro-5-plus
+    - euro-6b
+    - euro-6c
+    - euro-6d-temp
+    - euro-6d-temp-evap-isc
+    - euro-6d
+    - euro-6d-isc-fcm
+    - euro-6e
+    - euro-6e-bis
+    - euro-6e-bis-fcm
+    - euro-7
+    - euro-vi-e
+    - stage-v
+    - other
+  source: CoC item 47 and footnote 116; Reg. (EU) 2017/1151 Annex I Appendix 6 Table 1 'Emission
+    standard' names; Reg. (EC) 715/2007; Reg. (EC) 595/2009 (heavy duty, Roman numerals); Reg. (EU)
+    168/2013 (L-category, Euro 5+); Reg. (EU) 2024/1257 (Euro 7); Reg. (EU) 2016/1628 (stages).
+    Grammar in the key's valueFormat.
+- list: EU vehicle categories (vehicle.categoryCode), external; base codes, plus suffixes and
+    sub-categories per grammar
+  tokens:
+    - M1
+    - M2
+    - M3
+    - N1
+    - N2
+    - N3
+    - O1
+    - O2
+    - O3
+    - O4
+    - L1e
+    - L2e
+    - L3e
+    - L4e
+    - L5e
+    - L6e
+    - L7e
+    - T1
+    - T2
+    - T3
+    - T4
+    - T5
+    - C1
+    - C2
+    - C3
+    - C4
+    - R1
+    - R2
+    - R3
+    - R4
+    - S1
+    - S2
+  source: Reg. (EU) 2018/858 Art. 4 and Annex I Part A 2.1-2.3 (G for M and N; S for incomplete
+    special purpose vehicles); Reg. (EU) 168/2013 Art. 4 (L sub-categories); Reg. (EU) 167/2013 Art.
+    4 (T, C, R, S with a/b); T5 is the legacy category of Directive 2003/37/EC still printed on
+    older documents.
+- list: EU bodywork codes (vehicle.bodyworkCode), external; optional two supplementary digits per
+    Appendix 2
+  tokens:
+    - AA
+    - AB
+    - AC
+    - AD
+    - AE
+    - AF
+    - AG
+    - BA
+    - BB
+    - BC
+    - BD
+    - BE
+    - BX
+    - CA
+    - CB
+    - CC
+    - CD
+    - CE
+    - CF
+    - CG
+    - CH
+    - CI
+    - CJ
+    - CX
+    - DA
+    - DB
+    - DC
+    - DE
+    - SA
+    - SB
+    - SC
+    - SD
+    - SE
+    - SF
+    - SG
+    - SH
+    - SJ
+  source: Reg. (EU) 2018/858 Annex I Part C points 2-5 and Appendix 2 (digits), Part A point 5
+    (special purpose vehicles); the trailer codes are DA, DB, DC and DE.
+- list: EN 16931 country code list (vehicle.registrationCountryCode), external
+  tokens:
+    - DE
+    - AT
+    - FR
+    - NL
+    - IT
+    - ES
+    - PL
+    - GR
+    - XI
+    - 1A
+    - ...
+  source: The country code list EN 16931 uses for BT-40 and the other country codes (ISO 3166-1
+    alpha-2 plus XI for Northern Ireland and 1A for Kosovo). Greece is GR, not EL. Not the
+    distinguishing signs of vehicles.
+- list: VEHICLE-CATALOGUE-SCHEME 1.0 (vehicle.catalogueId), open register
+  tokens:
+    - manufacturer
+  source: "Opened with one scheme: 'manufacturer', whose id is the make's own model or sales code for
+    the vehicle. Third-party schemes are added only with the catalogue owner's written confirmation,
+    each with a licence note; candidates are kept in the non-normative implementation notes
+    (NR-16)."
+- list: Indicator values (all ...Indicator keys)
+  tokens:
+    - "true"
+    - "false"
+  source: NR-08. Lower case only; 'false' is an active statement; an absent row means no statement.

@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.basicColourCode
+tier: recommended
+status: draft
+labelEn: Basic colour
+labelDe: Grundfarbe
+definition: Basic colour of the vehicle as printed in CoC item 40 or registration field R, one row
+  per basic colour for multi-coloured vehicles. National register colours outside the ten (for
+  example beige or cream) are mapped by the registry's published mapping table. The manufacturer's
+  paint name or code is not part of 1.0.
+representationTerm: Code
+valueFormat: one token from VEHICLE-COLOUR 1.0 per row; repeatable
+grammar: '^(white|yellow|orange|red|violet|blue|green|grey|brown|black|other)$'
+unit: null
+tokens:
+  - white
+  - yellow
+  - orange
+  - red
+  - violet
+  - blue
+  - green
+  - grey
+  - brown
+  - black
+  - other
+codeList: "VEHICLE-COLOUR 1.0: white, yellow, orange, red, violet, blue, green, grey, brown, black, other"
+conditionality: SHOULD on supply and trade-in
+statutory: false
+repeatable: true
+carrier: "BG-32: BT-160 'Grundfarbe [vehicle.basicColourCode]', BT-161 'grey' (repeatable: one row
+  per basic colour)"
+anchors: "Reg. (EU) 2020/683 Annex VIII CoC item 40 and footnote 114 ('Indicate only the basic
+  colour(s): white, yellow, orange, red, violet, blue, green, grey, brown or black'); Directive
+  1999/37/EC code R 'colour of the vehicle'; UN/CEFACT vocabulary colourCode"

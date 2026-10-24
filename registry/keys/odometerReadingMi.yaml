@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.odometerReadingMi
+tier: core
+status: draft
+labelEn: Odometer reading (mi)
+labelDe: Meilenstand (mi)
+definition: As vehicle.odometerReadingKm, for an odometer that reads in statute miles; never
+  converted. Receivers that apply the 6 000 km test convert with 1 mi = 1.609344 km.
+representationTerm: Measure, unit mi (Rec 20 SMI)
+valueFormat: integer ^(0|[1-9][0-9]{0,6})$
+grammar: '^(0|[1-9][0-9]{0,6})$'
+unit: SMI
+tokens: []
+codeList: "unit fixed: statute mile (Rec 20 SMI)"
+conditionality: Instead of odometerReadingKm, never together with it; same conditions
+statutory: true
+repeatable: false
+carrier: "BG-32: BT-160 'Meilenstand (mi) [vehicle.odometerReadingMi]', BT-161 '30000'. Labelled
+  name mandatory (statutory feature)"
+anchors: As odometerReadingKm; Reg. (EU) 2020/683 Annex VIII (CoC statement whether the odometer has
+  metric or imperial units); UN/ECE Rec 20 SMI

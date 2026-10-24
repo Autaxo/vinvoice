@@ -15,7 +15,7 @@ import unittest
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
-import vinvoice_check  # noqa: E402
+import vehicle_check  # noqa: E402
 
 REGISTRY = json.loads((ROOT / 'generated/registry.json').read_text(encoding='utf-8'))
 EXPECTED_FILE = ROOT / 'corpus/checker-expected.json'
@@ -24,7 +24,7 @@ CORPUS = sorted((ROOT / 'corpus').glob('*.xml'))
 
 def run(path):
     # Round trip through JSON so that dates and tuples compare like the stored expectations.
-    return json.loads(json.dumps(vinvoice_check.check(REGISTRY, str(path)), ensure_ascii=False, default=str))
+    return json.loads(json.dumps(vehicle_check.check(REGISTRY, str(path)), ensure_ascii=False, default=str))
 
 
 class Corpus(unittest.TestCase):
@@ -52,7 +52,7 @@ class Corpus(unittest.TestCase):
     def test_grammars_compile_in_python(self):
         for k in REGISTRY['keys']:
             with self.subTest(key=k['key']):
-                re.compile(k['grammar'])
+                re.compile(k['grammar'].replace('\\p{Lu}', vehicle_check.lu_class()))
 
 
 if __name__ == '__main__':

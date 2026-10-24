@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.odometerReadingDate
+tier: recommended
+status: draft
+labelEn: Date of odometer reading
+labelDe: Datum des Zählerstands
+definition: Date the odometer reading was taken, when it differs from the reference date (BT-72,
+  else BT-2), for example at workshop intake or trade-in appraisal.
+representationTerm: Date
+valueFormat: YYYY-MM-DD
+grammar: '^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$'
+unit: null
+tokens: []
+codeList: none
+conditionality: SHOULD whenever the reading date differs from the reference date; SHOULD on service lines
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Datum des Zählerstands [vehicle.odometerReadingDate]', BT-161 '2026-10-20'"
+anchors: "Directive 2014/45/EU Annex II item 4 (reading at the time of the test); COM(2025) 180
+  (proposal); informative: STAR OdometerReading/Date"

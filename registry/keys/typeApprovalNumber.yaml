@@ -1,18 +1,23 @@
 # SPDX-License-Identifier: CC0-1.0
 
 key: vehicle.typeApprovalNumber
-tier: optional
-status: provisional
+tier: recommended
+status: draft
 labelEn: Type-approval number
 labelDe: Typgenehmigungsnummer
-definition: EU whole-vehicle type-approval number, or national approval number, as in registration field K.
-valueFormat: text, 1-60 characters as printed (e.g. e1*2018/858*...)
+definition: "Approval number as printed in registration field K, including the extension number: the
+  EU whole-vehicle type-approval number, or a national or individual approval number, which is
+  accepted as printed and not validated."
+representationTerm: Number
+valueFormat: text, NFC, trimmed, no control or bidi characters, first character not = + - @, 1-60
+  characters as printed (e.g. e1*2018/858*00123*01)
 grammar: '^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,60}$'
 unit: null
+tokens: []
 codeList: none
-conditionality: MAY; useful on new-vehicle invoices from manufacturers and importers
+conditionality: SHOULD on supply of new vehicles; MAY otherwise
 statutory: false
 repeatable: false
-signOff: null
-carrier: "BG-32: BT-160 'Typgenehmigungsnummer [vehicle.typeApprovalNumber]'"
-anchors: EU registration code K ('if available'); CoC type-approval number.
+carrier: "BG-32: BT-160 'Typgenehmigungsnummer [vehicle.typeApprovalNumber]', BT-161 'e1*2018/858*00123*01'"
+anchors: Directive 1999/37/EC code K 'type-approval number (if available)'; CoC certificate number;
+  IVI 2.0 TypeApprovalNumber

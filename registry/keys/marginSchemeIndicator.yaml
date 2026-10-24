@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.marginSchemeIndicator
+tier: core
+status: draft
+labelEn: Margin scheme
+labelDe: Differenzbesteuerung
+definition: "The supply on this line falls under one of the special arrangements of Directive
+  2006/112/EC Title XII Chapter 4 for second-hand goods, works of art, collectors' items and
+  antiques, for which Art. 226(14) requires the mention 'Margin scheme - Second-hand goods' or its
+  equivalent. Not the travel agents' margin scheme (Art. 306, Art. 226(13)). A structured hint only:
+  it never replaces the VAT category code, the exemption reason (BT-120) or the Art. 226(14)
+  mention."
+representationTerm: Indicator
+valueFormat: true | false
+grammar: '^(true|false)$'
+unit: null
+tokens:
+  - "true"
+  - "false"
+codeList: "Indicator values: true, false"
+conditionality: MUST be true on every vehicle line supplied under such an arrangement, whatever VAT
+  category code the issuer's national rules or CIUS prescribe for it; MUST NOT be true with category
+  K (Art. 139(3)); false only as an active statement
+statutory: true
+repeatable: false
+carrier: "BG-32: BT-160 'Differenzbesteuerung [vehicle.marginSchemeIndicator]', BT-161 'true'.
+  Labelled name mandatory (statutory feature)"
+anchors: Directive 2006/112/EC Title XII Chapter 4 (Arts. 311-343), Art. 139(3) and Art. 226(14) as
+  amended by Directive 2010/45/EU ('Margin scheme - Second-hand goods', '- Works of art', '-
+  Collector's items and antiques'; DE 'Differenzbesteuerung'); HU NAV marginSchemeIndicator; PL KSeF
+  P_PMarzy; IT FatturaPA Natura N5 with RF14; ES Veri*Factu ClaveRegimen 03; national transposition
+  e.g. DE UStG §25a

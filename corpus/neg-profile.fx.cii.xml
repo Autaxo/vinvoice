@@ -27,15 +27,15 @@
         <ram:SellerAssignedID>STK-26-0042</ram:SellerAssignedID>
         <ram:Name>Volkswagen Golf 2.0 TDI Life</ram:Name>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugdaten-Standard [vehicle.profile]</ram:Description>
+          <ram:Description>VINvoice-Spezifikation [vehicle.specificationId]</ram:Description>
           <ram:Value>vehicle/1.0</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugbezug [vehicle.role]</ram:Description>
+          <ram:Description>Fahrzeugrolle [vehicle.roleCode]</ram:Description>
           <ram:Value>supply</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>FIN [vehicle.vin]</ram:Description>
+          <ram:Description>Fahrzeug-Identifizierungsnummer (FIN) [vehicle.vin]</ram:Description>
           <ram:Value>TSTVEH016N0000009</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
@@ -47,23 +47,23 @@
           <ram:Value>Golf</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Zustand [vehicle.condition]</ram:Description>
+          <ram:Description>Fahrzeugzustand [vehicle.conditionCode]</ram:Description>
           <ram:Value>used</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Erstzulassung [vehicle.firstRegistration]</ram:Description>
+          <ram:Description>Datum der Erstzulassung [vehicle.firstRegistrationDate]</ram:Description>
           <ram:Value>2022-03-18</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kilometerstand (km) [vehicle.odometerKm]</ram:Description>
+          <ram:Description>vehicle.odometerReadingKm</ram:Description>
           <ram:Value>48.200 km</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kilometerstand-Status [vehicle.odometerStatus]</ram:Description>
-          <ram:Value>defective</ram:Value>
+          <ram:Description>Status des Zählerstands [vehicle.odometerReadingStatusCode]</ram:Description>
+          <ram:Value>inoperative</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>vehicle.powerKw</ram:Description>
+          <ram:Description>vehicle.maximumNetPowerKw</ram:Description>
           <ram:Value>110</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
@@ -71,15 +71,15 @@
           <ram:Value>VW</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Batteriezustand SoH (%) [vehicle.batterySohPct]</ram:Description>
+          <ram:Description>Alterungszustand (%) [vehicle.batteryStateOfHealthPercent]</ram:Description>
           <ram:Value>91</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Ausführung [vehicle.variant]</ram:Description>
+          <ram:Description>Modellausführung [vehicle.configuration]</ram:Description>
           <ram:Value>=HYPERLINK("x")</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Differenzbesteuerung [vehicle.marginScheme]</ram:Description>
+          <ram:Description>Differenzbesteuerung [vehicle.marginSchemeIndicator]</ram:Description>
           <ram:Value>true</ram:Value>
         </ram:ApplicableProductCharacteristic>
       </ram:SpecifiedTradeProduct>

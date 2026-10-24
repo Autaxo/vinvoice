@@ -33,7 +33,7 @@ See [LICENSE.md](LICENSE.md) for the details.
 - Check invoices with Python:
 
   ```bash
-  python3 -I checker/vinvoice_check.py generated/registry.json invoice.xml
+  python3 -I checker/vehicle_check.py generated/registry.json invoice.xml
   ```
 
 - Validate a vehicle's facts as JSON: `generated/vehicle-facts.schema.json` (JSON Schema 2020-12).
@@ -58,7 +58,10 @@ YAML and `generated/`. CI fails if `generated/` is out of date. See
 the rules.
 
 A registry release delivered as JSON (for example from a naming review) comes in with
-`npm run import:json -- <folder with registry.json, crosswalk.csv, context.jsonld>`.
+`npm run import:release -- <folder with out/registry.json, out/crosswalk.csv, corpus/, reports/, vehicle_check.py>`.
+
+AI coding agents: see [AGENTS.md](AGENTS.md). The website publishes `llms.txt` and
+`llms-full.txt` for language models.
 
 ## Before the first public push
 
@@ -73,6 +76,10 @@ A registry release delivered as JSON (for example from a naming review) comes in
    `2606:50c0:8002::153`, `2606:50c0:8003::153`; `CNAME` for `www` to `<org>.github.io`.
    Verify the domain for the organisation (Settings → Pages → Verified domains) to prevent takeover.
 5. Protect `main`: pull requests only, CI must pass.
+6. Repository description and topics, so that people and agents find it: description
+   "Open convention for vehicle data in EN 16931 e-invoices (ZUGFeRD, Factur-X, XRechnung, Peppol)";
+   website `https://vinvoice.org`; topics `e-invoicing`, `en16931`, `zugferd`, `factur-x`,
+   `xrechnung`, `peppol`, `vin`, `automotive`, `schematron`, `json-schema`, `open-standard`.
 
 ---
 

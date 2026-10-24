@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.de.hsn
+tier: optional
+status: provisional
+labelEn: German manufacturer key number (HSN)
+labelDe: Herstellerschlüsselnummer (HSN)
+definition: German KBA manufacturer key number, national field 2.1 of registration certificate Part
+  I; exists only for vehicles with a German registration document. Provisional until checked against
+  the KBA key directory; deviations are warnings.
+representationTerm: Number (implicit in the national abbreviation hsn)
+valueFormat: ^[0-9A-Z]{4}$ (provisional; deviations are warnings)
+grammar: '^[0-9A-Z]{4}$'
+unit: null
+tokens: []
+codeList: none
+conditionality: SHOULD for vehicles with a German registration certificate; otherwise omit
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Herstellerschlüsselnummer (HSN) [vehicle.de.hsn]', BT-161 '8004'"
+anchors: German registration certificate Part I field 2.1 (national code allowed by Directive
+  1999/37/EC Annex I II.7); KBA key directory (format unverified)

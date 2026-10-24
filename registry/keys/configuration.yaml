@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.configuration
+tier: recommended
+status: draft
+labelEn: Vehicle configuration
+labelDe: Modellausführung
+definition: Commercial configuration of the model (engine, gearbox, equipment line), for example
+  '2.0 TDI Life'. Not the type-approval type, variant or version (vehicle.approvedType,
+  approvedVariant, approvedVersion) and not the interior trim.
+representationTerm: Text (implicit)
+valueFormat: text, NFC, trimmed, no control or bidi characters, first character not = + - @, 1-100 characters
+grammar: '^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,100}$'
+unit: null
+tokens: []
+codeList: none
+conditionality: SHOULD whenever known
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Modellausführung [vehicle.configuration]', BT-161 '2.0 TDI Life'"
+anchors: No EU legal term; schema.org vehicleConfiguration; COVESA VSS
+  VehicleIdentification.VehicleConfiguration

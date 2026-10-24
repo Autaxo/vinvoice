@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.catalogueId
+tier: optional
+status: draft
+labelEn: Catalogue identifier
+labelDe: Katalogkennung
+definition: Reference into a vehicle data catalogue as scheme:id; identifiers only, never catalogue
+  content; one row per scheme. Scheme 'manufacturer' carries the make's own model or sales code for
+  the vehicle.
+representationTerm: Id
+valueFormat: scheme:id; scheme ^[a-z][a-z0-9-]{1,19}$ from the VEHICLE-CATALOGUE-SCHEME register, id
+  ^[A-Za-z0-9._-]{1,40}$; repeatable
+grammar: '^[a-z][a-z0-9-]{1,19}:[A-Za-z0-9._][A-Za-z0-9._-]{0,39}$'
+unit: null
+tokens: []
+codeList: "VEHICLE-CATALOGUE-SCHEME 1.0 (open register): manufacturer"
+conditionality: MAY; scheme 'manufacturer' is open to every issuer; other schemes only after their
+  owner has cleared printing identifiers on invoices
+statutory: false
+repeatable: true
+carrier: "BG-32: BT-160 'Katalogkennung [vehicle.catalogueId]', BT-161 'manufacturer:5NA1X2'
+  (repeatable: one row per scheme)"
+anchors: No EU term; EN 16931 identifier-with-scheme pattern (BT-157 with BT-157-1, BT-158)

@@ -11,8 +11,8 @@ body:
   - type: input
     id: local-name
     attributes:
-      label: Local name
-      description: Lower camel case, after the prefix. Put the unit at the end for quantities (e.g. odometerKm).
+      label: Key name (without the root)
+      description: The name after the root, following the naming rules (https://vinvoice.org/naming-rules/), e.g. a representation term or unit at the end.
       placeholder: e.g. towingCapacityKg
     validations:
       required: true

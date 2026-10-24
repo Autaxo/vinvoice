@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.engineCapacityCm3
+tier: recommended
+status: draft
+labelEn: Engine capacity (cm3)
+labelDe: Hubraum (cm3)
+definition: Capacity of the internal combustion engine in cubic centimetres as in registration field
+  P.1 or CoC item 25. Omitted, never 0, for vehicles without a combustion engine.
+representationTerm: Measure, unit cm3 (Rec 20 CMQ)
+valueFormat: integer ^[1-9][0-9]{0,5}$
+grammar: '^[1-9][0-9]{0,5}$'
+unit: CMQ
+tokens: []
+codeList: "unit fixed: cubic centimetre (Rec 20 CMQ)"
+conditionality: SHOULD for vehicles with a combustion engine; with newMeansOfTransportIndicator =
+  true this key or maximumNetPowerKw SHOULD be present (more-than-48-cm3 threshold of Art.
+  2(2)(a)(i)), and MUST where national law makes it an invoice particular (DE)
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Hubraum (cm3) [vehicle.engineCapacityCm3]', BT-161 '1968'"
+anchors: "Directive 1999/37/EC code P.1 'capacity (in cm3)'; CoC item 25 'Engine capacity' (DE
+  'Hubraum'); Directive 2006/112/EC Art. 2(2)(a)(i) (48 cubic centimetres threshold); national
+  invoice particular: DE UStG §14a(4) with §1b(2); HU NAV engineCapacity; UN/ECE Rec 20 CMQ"

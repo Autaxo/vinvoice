@@ -28,15 +28,15 @@
         <ram:Name>Volkswagen Passat Variant 2.0 TDI</ram:Name>
         <ram:Description>FIN TSTVEH042M0000005 · Erstzulassung 04.05.2021 · 96.410 km</ram:Description>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugdaten-Standard [vehicle.profile]</ram:Description>
+          <ram:Description>VINvoice-Spezifikation [vehicle.specificationId]</ram:Description>
           <ram:Value>vehicle/1.0</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Fahrzeugbezug [vehicle.role]</ram:Description>
+          <ram:Description>Fahrzeugrolle [vehicle.roleCode]</ram:Description>
           <ram:Value>supply</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>FIN [vehicle.vin]</ram:Description>
+          <ram:Description>Fahrzeug-Identifizierungsnummer (FIN) [vehicle.vin]</ram:Description>
           <ram:Value>TSTVEH042M0000005</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
@@ -48,27 +48,27 @@
           <ram:Value>Passat</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Zustand [vehicle.condition]</ram:Description>
+          <ram:Description>Fahrzeugzustand [vehicle.conditionCode]</ram:Description>
           <ram:Value>used</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Erstzulassung [vehicle.firstRegistration]</ram:Description>
+          <ram:Description>Datum der Erstzulassung [vehicle.firstRegistrationDate]</ram:Description>
           <ram:Value>2021-05-04</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kilometerstand (km) [vehicle.odometerKm]</ram:Description>
+          <ram:Description>Kilometerstand (km) [vehicle.odometerReadingKm]</ram:Description>
           <ram:Value>96410</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Leistung (kW) [vehicle.powerKw]</ram:Description>
+          <ram:Description>Höchste Nutzleistung (kW) [vehicle.maximumNetPowerKw]</ram:Description>
           <ram:Value>110</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Kraftstoff [vehicle.fuel]</ram:Description>
+          <ram:Description>Kraftstoffart oder Energiequelle [vehicle.energySourceCode]</ram:Description>
           <ram:Value>diesel</ram:Value>
         </ram:ApplicableProductCharacteristic>
         <ram:ApplicableProductCharacteristic>
-          <ram:Description>Differenzbesteuerung [vehicle.marginScheme]</ram:Description>
+          <ram:Description>Differenzbesteuerung [vehicle.marginSchemeIndicator]</ram:Description>
           <ram:Value>true</ram:Value>
         </ram:ApplicableProductCharacteristic>
       </ram:SpecifiedTradeProduct>

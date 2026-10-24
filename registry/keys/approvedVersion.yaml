@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.approvedVersion
+tier: optional
+status: draft
+labelEn: Version (type-approval)
+labelDe: Version (Typgenehmigung)
+definition: Version designation within the approved variant, as in CoC item 0.2 or registration
+  field D.2; same rule for undivided strings as vehicle.approvedType.
+representationTerm: Name (implicit)
+valueFormat: text, NFC, trimmed, no control or bidi characters, first character not = + - @, 1-35
+  characters as printed
+grammar: '^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,35}$'
+unit: null
+tokens: []
+codeList: none
+conditionality: Same as vehicle.approvedType
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Version (Typgenehmigung) [vehicle.approvedVersion]', BT-161 'N1'"
+anchors: Reg. (EU) 2018/858 Annex I Part B 1.3; Directive 1999/37/EC code D.2; CoC item 0.2; IVI 2.0 Version

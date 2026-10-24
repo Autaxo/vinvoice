@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.batteryStateOfHealthPercent
+tier: optional
+status: draft
+labelEn: State of health (%)
+labelDe: Alterungszustand (%)
+definition: State of health of the battery (NR-25) in percent of its initial condition (Reg. (EU)
+  2023/1542 Art. 3(28)), as determined on vehicle.batteryStateOfHealthDate by the method in
+  vehicle.batteryStateOfHealthMethodCode; with the on-board method, the state of certified energy
+  (SOCE, Annex VII Part A). A figure produced by the stated method, not a guarantee of capacity or
+  lifetime.
+representationTerm: Percent
+valueFormat: decimal ^(100([.]0)?|[1-9]?[0-9]([.][0-9])?)$
+grammar: '^(100([.]0)?|[1-9]?[0-9]([.][0-9])?)$'
+unit: P1
+tokens: []
+codeList: "unit fixed: percent (Rec 20 P1)"
+conditionality: MAY for used pure-electric and plug-in-hybrid-electric vehicles; requires
+  vehicle.batteryStateOfHealthDate and vehicle.batteryStateOfHealthMethodCode
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Alterungszustand (%) [vehicle.batteryStateOfHealthPercent]', BT-161 '91.5'"
+anchors: "Reg. (EU) 2023/1542 Art. 3(14) 'electric vehicle battery', Art. 3(28) 'state of health'
+  (DE 'Alterungszustand'), Art. 14 and Annex VII Part A (SOCE); UN GTR No. 22; UN/ECE Rec 20 P1;
+  informative: COVESA VSS TractionBattery.StateOfHealth"

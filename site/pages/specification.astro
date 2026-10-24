@@ -10,22 +10,33 @@ import {
   REF,
   markerValue,
   markerVersion,
-  grammarTokens,
   statutoryTerms,
-  signOffTerms,
   linkKeys,
   rowName,
 } from '../lib/registry';
 import { featured, firstLine } from '../lib/corpus';
-import { formatDate } from '../lib/site';
+import { BINDINGS, codeSpans } from '../lib/bindings';
+import { formatDate, SITE } from '../lib/site';
 
-const roles = grammarTokens(REF.role) ?? [];
+const roles = REF.role.tokens;
 const repeatable = terms.filter((t) => t.repeatable);
 const markerMajor = markerVersion.split('.')[0];
-const vendorPrefix = `${prefix}x.`;
 const repeatableNote = repeatable.length
   ? `Exception: repeatable keys (${linkKeys(repeatable.map((t) => t.key).join(', '))}) take one row per value.`
   : '';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'VINvoice specification: vehicle data in EN 16931 e-invoices',
+  url: `${SITE.url}/specification/`,
+  version: registry.version,
+  dateModified: registry.date,
+  inLanguage: 'en',
+  license: 'https://creativecommons.org/licenses/by/4.0/',
+  about: ['EN 16931', 'electronic invoicing', 'vehicle identification number', 'vehicle data'],
+  isAccessibleForFree: true,
+};
 
 const toc = [
   ['status', 'Status of this document'],
@@ -48,6 +59,7 @@ const toc = [
 <Base
   title="Specification"
   description="The VINvoice convention: vehicle lines, row names and value grammars, conformance levels 0 to 2, CII and UBL bindings, reading rules and VAT handling."
+  jsonLd={jsonLd}
 >
   <PageHead
     title="VINvoice specification"
@@ -166,9 +178,11 @@ const toc = [
         people; software reads only the key in brackets.
       </li>
       <li>
-        A name MUST NOT be longer than 64 characters. Keys are case-sensitive and consist of the
-        prefix
-        <code>{prefix}</code> and a local name.
+        Keys are case-sensitive, start with <code>{prefix}</code> and follow the <a
+          href="/naming-rules/">naming rules</a
+        >: at most {registry.keyCap} characters per key and {registry.nameCap} per name. A two-letter
+        segment after the root is a country scope for national facts, as in <code>{prefix}de.</code
+        >.
       </li>
       <li>
         A key MAY be written bare, without label and brackets, unless it is a statutory key. Keys
@@ -196,8 +210,11 @@ const toc = [
         />) and never part of the value. See <a href="/code-lists/#units">units</a>.
       </li>
       <li>
-        Closed lists use lower-case tokens such as <code>used</code>. Tokens are never translated.
-        See <a href="/code-lists/">code lists</a>.
+        Registry-owned lists use lower-case tokens such as <code>used</code>; codes that an EU or
+        international list publishes (vehicle categories, bodywork codes, countries) keep their
+        official form, such as <code>M1</code>. Neither is ever translated. See <a
+          href="/code-lists/">code lists</a
+        >.
       </li>
       <li>
         Free text is Unicode NFC, trimmed, without control or bidirectional formatting characters,
@@ -223,8 +240,9 @@ const toc = [
       national validators.
     </p>
     <p>
-      When no VIN is known, BT-128 MAY carry the registration plate with the scheme <code>ABZ</code
-      >; the row <Key t={REF.plate} /> then repeats it. A plate is never a VIN.
+      When no VIN is known, BT-128 MAY carry the registration number with the scheme <code>ABZ</code
+      >; the row <Key t={REF.registrationNumber} /> then repeats it. A registration number is never a
+      VIN.
     </p>
 
     <h2 id="levels">7. Conformance levels</h2>
@@ -288,72 +306,15 @@ const toc = [
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">Invoice line</th>
-          <td
-            ><code
-              >/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:IncludedSupplyChainTradeLineItem</code
-            ></td
-          >
-          <td><code>/Invoice/cac:InvoiceLine</code>, <code>/CreditNote/cac:CreditNoteLine</code></td
-          >
-        </tr>
-        <tr>
-          <th scope="row">BG-32 item attribute (one row)</th>
-          <td><code>ram:SpecifiedTradeProduct/ram:ApplicableProductCharacteristic</code></td>
-          <td><code>cac:Item/cac:AdditionalItemProperty</code></td>
-        </tr>
-        <tr>
-          <th scope="row">BT-160 name</th>
-          <td><code>ram:Description</code></td>
-          <td><code>cbc:Name</code></td>
-        </tr>
-        <tr>
-          <th scope="row">BT-161 value</th>
-          <td><code>ram:Value</code></td>
-          <td><code>cbc:Value</code></td>
-        </tr>
-        <tr>
-          <th scope="row">BT-128 line object identifier</th>
-          <td>
-            <code>ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument</code> with
-            <code>ram:IssuerAssignedID</code> = VIN, <code>ram:TypeCode</code> = <code>130</code>
-          </td>
-          <td>
-            <code>cac:DocumentReference</code> with <code>cbc:ID</code> = VIN, <code
-              >cbc:DocumentTypeCode</code
-            > = <code>130</code>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">BT-128-1 scheme</th>
-          <td><code>ram:ReferenceTypeCode</code> = <code>AKG</code></td>
-          <td><code>cbc:ID/@schemeID</code> = <code>AKG</code></td>
-        </tr>
-        <tr>
-          <th scope="row">BT-18 invoice object identifier</th>
-          <td>
-            <code
-              >/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:AdditionalReferencedDocument</code
-            >
-            (<code>ram:TypeCode</code> = <code>130</code>, <code>ram:ReferenceTypeCode</code> = <code
-              >AKG</code
-            >)
-          </td>
-          <td>
-            <code>/Invoice/cac:AdditionalDocumentReference</code> (<code>cbc:ID/@schemeID</code> =
-            <code>AKG</code>, <code>cbc:DocumentTypeCode</code> = <code>130</code>)
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">BG-1 invoice note</th>
-          <td
-            ><code
-              >/rsm:CrossIndustryInvoice/rsm:ExchangedDocument/ram:IncludedNote/ram:Content</code
-            ></td
-          >
-          <td><code>/Invoice/cbc:Note</code></td>
-        </tr>
+        {
+          BINDINGS.map((b) => (
+            <tr>
+              <th scope="row">{b.term}</th>
+              <td set:html={codeSpans(b.cii)} />
+              <td set:html={codeSpans(b.ubl)} />
+            </tr>
+          ))
+        }
       </tbody>
     </table>
   </div>
@@ -390,7 +351,9 @@ const toc = [
       </li>
       <li>
         Check each value against the grammar of its key and drop values that do not match. Ignore
-        unknown keys, and ignore vendor keys (those starting with <code>{vendorPrefix}</code>).
+        unknown keys and <a href="/vocabulary/#reserved">reserved names</a>. Ignore vendor rows:
+        rows whose name in brackets is not under <code>{prefix}</code> but a reverse-DNS name of a domain
+        the vendor controls, such as <code>com.example.stockNumber</code>.
       </li>
       <li>If a key that is not repeatable appears twice, keep the first value.</li>
       <li>
@@ -417,7 +380,7 @@ const toc = [
     <div class="note draft">
       <p>
         The encodings in this section are provisional until a tax adviser has signed them off in
-        writing. Keys awaiting that sign-off: <KeyList terms={signOffTerms} />.
+        writing.
       </p>
     </div>
     <h3>Margin scheme for second-hand goods</h3>
@@ -452,10 +415,10 @@ const toc = [
       An intra-EU supply of a new means of transport (Art. 2(2)(b) and 138 VAT Directive; §§ 1b, 6a
       and 14a(4) UStG) MUST carry <Key t={REF.newMeansOfTransport} value="true" />. The line then
       states the features that make the vehicle new: <Key t={REF.power} /> or <Key
-        t={REF.displacement}
-      />, and an odometer reading or <Key t={REF.firstUse} />. A land vehicle counts as new if it
-      was first put into service at most six months before the supply or has travelled at most 6,000
-      km.
+        t={REF.engineCapacity}
+      />, and an odometer reading or <Key t={REF.firstEntryIntoService} />. A land vehicle counts as
+      new if it was first put into service at most six months before the supply or has travelled at
+      most 6,000 km.
     </p>
     <p>
       Supplies of new vehicles to buyers in another member state who have no VAT identification
@@ -498,10 +461,10 @@ const toc = [
 
     <h2 id="personal-data">13. Personal data</h2>
     <p>
-      A VIN or a registration plate can identify a person when the buyer or keeper is a natural
-      person. Write the plate only where the receiver needs it (service, lease and rental) and leave
-      it out on invoices to private persons unless it is required. All examples on this site use
-      fictional data.
+      A VIN or a registration number can identify a person when the buyer or keeper is a natural
+      person. Write the registration number only where the receiver needs it (service, lease and
+      rental) and leave it out on invoices to private persons unless it is required. All examples on
+      this site use fictional data.
     </p>
 
     <h2 id="references">14. References</h2>

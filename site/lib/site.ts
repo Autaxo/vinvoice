@@ -20,6 +20,7 @@ export const REPO = REPO_URL.includes('__GITHUB_ORG__')
 export const NAV = [
   { href: '/specification/', label: 'Specification' },
   { href: '/vocabulary/', label: 'Vocabulary' },
+  { href: '/naming-rules/', label: 'Naming rules' },
   { href: '/code-lists/', label: 'Code lists' },
   { href: '/examples/', label: 'Examples' },
   { href: '/validation/', label: 'Validation' },

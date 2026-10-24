@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: CC0-1.0
+
+- key: vehicle.previousHolderCount
+  labelEn: Number of previous holders
+  labelDe: Anzahl der Vorhalter
+  was: veh.registeredKeepers
+- key: vehicle.knownAccidentDamageIndicator
+  labelEn: Known accident damage
+  labelDe: Bekannter Unfallschaden
+  was: veh.accidentDamaged
+- key: vehicle.knownUnrepairedDamageIndicator
+  labelEn: Known unrepaired damage
+  labelDe: Unreparierter Schaden
+  was: veh.damageUnrepaired

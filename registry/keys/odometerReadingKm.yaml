@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.odometerReadingKm
+tier: core
+status: draft
+labelEn: Odometer reading (km)
+labelDe: Kilometerstand (km)
+definition: Reading of an odometer that reads in kilometres, in whole kilometres, as displayed at
+  the reference date (vehicle.odometerReadingDate, else BT-72, else BT-2). Never converted from
+  miles and never estimated. It is the displayed reading, not a statement of the distance actually
+  travelled; vehicle.odometerReadingStatusCode qualifies it. For the 6 000 km test of Art.
+  2(2)(b)(i) the issuer relies on it, and it SHOULD then be the reading at delivery.
+representationTerm: Measure, unit km (Rec 20 KMT)
+valueFormat: integer ^(0|[1-9][0-9]{0,6})$, no group separator, no unit text; 0 is valid
+grammar: '^(0|[1-9][0-9]{0,6})$'
+unit: KMT
+tokens: []
+codeList: "unit fixed: kilometre (Rec 20 KMT)"
+conditionality: For roles supply and trade-in of used vehicles fitted with an odometer (normally
+  categories M, N and L), exactly one of odometerReadingKm and odometerReadingMi MUST be present
+  unless odometerReadingStatusCode is inoperative or unknown; SHOULD on service lines and for new
+  vehicles; with newMeansOfTransportIndicator = true, an odometer reading or
+  firstEntryIntoServiceDate MUST be present (Art. 226(12)); omitted for vehicles without an odometer
+  (categories O, R, S and hour-metered machines)
+statutory: true
+repeatable: false
+carrier: "BG-32: BT-160 'Kilometerstand (km) [vehicle.odometerReadingKm]', BT-161 '48200'. Labelled
+  name mandatory (statutory feature)"
+anchors: "Directive 2006/112/EC Art. 2(2)(b)(i) (6 000 km) and Art. 226(12); Directive 2014/45/EU
+  Annex II item 4 'odometer reading' (DE 'Kilometerstand'); COM(2025) 180 (proposal); national
+  guidance: DE KoSIT/FeRD Pflichtangaben row 'Laufleistung'; HU NAV kms; PL KSeF P_22B; IT FatturaPA
+  DatiVeicoli/TotalePercorso; UN/ECE Rec 20 KMT"

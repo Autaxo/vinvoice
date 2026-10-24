@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.registeredMaximumMassKg
+tier: optional
+status: draft
+labelEn: Registered maximum mass (kg)
+labelDe: Zulässige Gesamtmasse (kg)
+definition: Maximum permissible laden mass of the vehicle in service in the Member State of
+  registration, in kg, as in registration field F.2. It can be lower than the technical maximum mass
+  (vehicle.maximumMassKg) when a vehicle is registered below it; national rules commonly refer to
+  this mass.
+representationTerm: Measure, unit kg (Rec 20 KGM)
+valueFormat: integer ^[1-9][0-9]{0,5}$
+grammar: '^[1-9][0-9]{0,5}$'
+unit: KGM
+tokens: []
+codeList: "unit fixed: kilogram (Rec 20 KGM)"
+conditionality: MAY; SHOULD for categories M2, M3, N2, N3, O3 and O4 when F.2 differs from F.1
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Zulässige Gesamtmasse (kg) [vehicle.registeredMaximumMassKg]', BT-161 '1800'"
+anchors: Directive 1999/37/EC Annex I II.6 code F.2 'maximum permissible laden mass of the vehicle
+  in service in the Member State of registration' (DE 'Im Zulassungsmitgliedstaat zulässige
+  Gesamtmasse des in Betrieb befindlichen Fahrzeugs'); UN/ECE Rec 20 KGM

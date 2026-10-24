@@ -9,7 +9,7 @@ VINvoice checker must flag.
 | File | Content |
 |---|---|
 | `index.json` | Scenario descriptions and carrier names, shown on the website. |
-| `checker-expected.json` | What `checker/vinvoice_check.py` reports for every file. The checker tests compare against it; refresh with `python3 -I checker/test_corpus.py --update` after an intended change. |
+| `checker-expected.json` | What `checker/vehicle_check.py` reports for every file. The checker tests compare against it; refresh with `python3 -I checker/test_corpus.py --update` after an intended change. |
 | `validation.json` | Evidence from the official validators (Factur-X and UBL XSD, CEN EN 16931 1.3.17, Factur-X 1.09.2, KoSIT XRechnung 3.0.2, Peppol BIS 3.0.20), reduced to counts per file. Produced outside this repository, because the validators are not redistributed. |
 
 Licence: CC0-1.0.

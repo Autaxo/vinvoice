@@ -638,3 +638,22 @@ section > .tokens,
 .nowrap {
   white-space: nowrap;
 }
+.rule-index {
+  columns: 2 18rem;
+  column-gap: 2rem;
+  padding-left: 1.25rem;
+}
+.rule {
+  border-top: 1px solid var(--border);
+  padding-top: 0.5rem;
+  margin-top: 1.5rem;
+}
+.rule h3 {
+  margin-top: 0.5rem;
+}
+.rule-id {
+  font-family: var(--mono);
+  font-size: 0.9em;
+  color: var(--muted);
+  margin-right: 0.25rem;
+}

@@ -1,5 +1,5 @@
 {
-  "source": "v1",
+  "source": "v2",
   "validators": [
     {
       "id": "xsd-fx",
@@ -161,12 +161,12 @@
         "errors": 0
       },
       "cen": {
-        "firedRules": 183,
+        "firedRules": 185,
         "failedAsserts": 0,
         "reports": 0
       },
       "fx": {
-        "firedRules": 195,
+        "firedRules": 197,
         "failedAsserts": 0,
         "reports": 0
       }
@@ -266,12 +266,12 @@
         "errors": 0
       },
       "cen": {
-        "firedRules": 127,
+        "firedRules": 129,
         "failedAsserts": 0,
         "reports": 0
       },
       "fx": {
-        "firedRules": 136,
+        "firedRules": 138,
         "failedAsserts": 0,
         "reports": 0
       }
@@ -324,7 +324,7 @@
         "reports": 0
       }
     },
-    "sale-regular-odometer-defective.fx.cii.xml": {
+    "sale-regular-odometer-inoperative.fx.cii.xml": {
       "xsd-fx": {
         "errors": 0
       },

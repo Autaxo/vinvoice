@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.de.tsn
+tier: optional
+status: provisional
+labelEn: German type key number (TSN)
+labelDe: Typschlüsselnummer (TSN)
+definition: "German KBA type key: the first three characters of national field 2.2 of registration
+  certificate Part I, without the check characters. Not the type-approval number (field K).
+  Provisional until checked against the KBA key directory."
+representationTerm: Number (implicit in the national abbreviation tsn)
+valueFormat: ^[0-9A-Z]{3}$ (provisional; deviations are warnings)
+grammar: '^[0-9A-Z]{3}$'
+unit: null
+tokens: []
+codeList: none
+conditionality: SHOULD together with vehicle.de.hsn
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Typschlüsselnummer (TSN) [vehicle.de.tsn]', BT-161 'BHR'. Never BT-158 with
+  UNTDID 7143 'TSN' (Taxonomic Serial Number)"
+anchors: German registration certificate Part I field 2.2 (national code allowed by Directive
+  1999/37/EC Annex I II.7); KBA key directory (format unverified)

@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.powertrainTypeCode
+tier: recommended
+status: draft
+labelEn: Powertrain type
+labelDe: Antriebsart
+definition: "Powertrain architecture by the class the approval assigns (CoC items 23 and 23.1).
+  internal-combustion: internal combustion engine(s) only. hybrid-electric: NOVC-HEV.
+  plug-in-hybrid-electric: OVC-HEV, including range-extender vehicles. pure-electric: PEV (CoC 23
+  'pure electric: yes'). fuel-cell: FCV, NOVC-FCHV and OVC-FCHV; the off-vehicle charging of an
+  OVC-FCHV is not expressed in 1.0. other. Marketing terms such as 'mild hybrid' do not decide the
+  token."
+representationTerm: Code
+valueFormat: one token from VEHICLE-POWERTRAIN 1.0
+grammar: '^(internal-combustion|hybrid-electric|plug-in-hybrid-electric|pure-electric|fuel-cell|other)$'
+unit: null
+tokens:
+  - internal-combustion
+  - hybrid-electric
+  - plug-in-hybrid-electric
+  - pure-electric
+  - fuel-cell
+  - other
+codeList: "VEHICLE-POWERTRAIN 1.0: internal-combustion, hybrid-electric, plug-in-hybrid-electric,
+  pure-electric, fuel-cell, other"
+conditionality: SHOULD for hybrid, electric and fuel-cell vehicles; MAY otherwise
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Antriebsart [vehicle.powertrainTypeCode]', BT-161 'plug-in-hybrid-electric'"
+anchors: "Reg. (EU) 2017/1151 Annex XXI points 3.3.15-3.3.20 (NOVC-HEV, OVC-HEV, PEV, FCV, FCHV) and
+  3.4.1 'powertrain'; Reg. (EU) 2020/683 Annex VIII CoC items 23 and 23.1; informative: COVESA VSS
+  Powertrain.Type"

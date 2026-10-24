@@ -3,46 +3,54 @@
 note: "informative; names and IRIs of third-party works, CC BY 4.0, sources stated; VDA 4938:
   reprint with source"
 entries:
-  vehicle.role: "VDA 4938 BMW variant: process code VHS (vehicle settlement), context only"
-  vehicle.vin: "schema.org vehicleIdentificationNumber; VDA 4938 P2 v3.1 seg. 77 GIN+VV; mobile.de
-    vin; STAR VehicleInvoice: no VIN-typed element found in the invoice tables (VINType exists in
-    the type catalogue, ChassisSerial is OpenIDType); Odette FVL FV14a by name only; BR NF-e
-    veicProd chassi; MX VentaVehiculos Niv"
-  vehicle.make: schema.org brand; mobile.de make; STAR Make (NCIC make code)
-  vehicle.model: schema.org model; mobile.de model; STAR Model
-  vehicle.condition: schema.org itemCondition (NewCondition/UsedCondition, coarser); mobile.de
-    condition + usageType; ADF status new|used
-  vehicle.firstRegistration: schema.org dateVehicleFirstRegistered; VDA 4938 P2 v3.1 seg. 76 DTM+375
-    (CCYYMMDD, format 102; a YYYY-MM value has no VDA equivalent); mobile.de firstRegistration
-    (yyyyMM)
-  vehicle.odometerKm: schema.org mileageFromOdometer (unitCode KMT); VDA 4938 P2 v3.1 seg. 66
-    QTY+372:<n>:KMT (no reading date); STAR OdometerReading; ADF odometer; mobile.de mileage
-  vehicle.odometerMi: VDA 4938 P2 v3.1 seg. 66 QTY+372:<n>:SMI; schema.org mileageFromOdometer (SMI)
-  vehicle.powerKw: schema.org enginePower (auto extension, KWT); mobile.de power (kW)
-  vehicle.plate: VDA 4938 P2 v3.1 seg. 77 GIN+BL; COVESA VSS LicensePlate; schema.org has no plate
-    property; Odette FVL by name only
-  vehicle.registrationCountry: STAR VehicleDetails RegistrationCountry; no VDA 4938 equivalent
-  vehicle.odometerStatus: ADF odometer status unknown|rolledover|replaced|original
-  vehicle.odometerDate: STAR OdometerReading Date; ADF odometer; VDA 4938 QTY+372 has no date
-  vehicle.variant: schema.org vehicleConfiguration; STAR Series/Trim; mobile.de modelDescription
-  vehicle.displacementCm3: schema.org engineDisplacement (auto extension, CMQ); mobile.de cubicCapacity
-  vehicle.fuel: schema.org fuelType; mobile.de fuel; IVI 2.0 EnergySource (10 petrol, 20 diesel, 30
-    LPG, 40 CNG, 44 biomethane, 50 hydrogen, 60 LNG, 95 electricity, 90 other)
-  vehicle.powertrain: KBA Kraftstoffcode (mixes energy source and hybridisation)
-  vehicle.colour: schema.org color (inherited from Product); mobile.de exteriorColor
-  vehicle.hsn: mobile.de kba.hsn
-  vehicle.tsn: mobile.de kba.tsn
-  vehicle.inspectionDue: mobile.de generalInspection (yyyyMM)
-  vehicle.batteryCapacityKwh: schema.org has no kWh property (fuelCapacity uses Ah for EVs)
-  vehicle.emissionClass: mobile.de emissionClass
-  vehicle.co2GPerKm: schema.org emissionsCO2 (auto extension)
-  vehicle.bodyType: schema.org bodyType (auto extension)
-  vehicle.seats: schema.org vehicleSeatingCapacity
-  vehicle.modelYear: schema.org vehicleModelDate; STAR ModelYear
-  vehicle.productionDate: schema.org productionDate
-  vehicle.batteryPassport: schema.org hasDigitalProductPassport (inherited from Product); GS1 Digital
-    Link / ISO/IEC 18975 resolvers
-  vehicle.catalogId: mobile.de schwackeCode
-  vehicle.registeredKeepers: schema.org numberOfPreviousOwners (counts the current owner); mobile.de numberOfPreviousOwners
-  vehicle.accidentDamaged: mobile.de accidentDamaged; schema.org knownVehicleDamages (text only)
-  vehicle.damageUnrepaired: mobile.de damageUnrepaired
+  vehicle.specificationId: EN 16931 BT-24 Specification identifier (analogy only)
+  vehicle.roleCode: schema.org businessFunction; VDA 4938 process code VHS (vehicle settlement), context only
+  vehicle.vin: "schema.org vehicleIdentificationNumber; VDA 4938 P2 v3.1 seg. 77 GIN+VV; STAR
+    VehicleInvoice: no VIN-typed element found in the invoice tables (VINType exists in the type
+    catalogue, ChassisSerial is OpenIDType); Odette FVL FV14a by name only; BR NF-e veicProd chassi;
+    MX VentaVehiculos Niv"
+  vehicle.make: schema.org brand; CII BrandName; STAR Make (NCIC make code)
+  vehicle.model: schema.org model; CII ModelName; COVESA VSS Model; STAR Model
+  vehicle.conditionCode: schema.org itemCondition (NewCondition/UsedCondition); ADF status new|used
+  vehicle.firstRegistrationDate: schema.org dateVehicleFirstRegistered; COVESA VSS
+    DateVehicleFirstRegistered; STAR FirstRegistrationDate; VDA 4938 P2 v3.1 seg. 76 DTM+375
+    (CCYYMMDD, format 102; a YYYY-MM value has no VDA equivalent)
+  vehicle.odometerReadingKm: schema.org mileageFromOdometer (unitCode KMT); VDA 4938 P2 v3.1 seg. 66
+    QTY+372:<n>:KMT (no reading date); STAR OdometerReading; ADF odometer
+  vehicle.odometerReadingMi: VDA 4938 P2 v3.1 seg. 66 QTY+372:<n>:SMI; schema.org mileageFromOdometer (SMI)
+  vehicle.maximumNetPowerKw: schema.org enginePower (auto extension, KWT); HU NAV enginePower
+  vehicle.newMeansOfTransportIndicator: PL KSeF NowySrodekTransportu; HU NAV newTransportMean; IT FatturaPA DatiVeicoli
+  vehicle.firstEntryIntoServiceDate: HU NAV firstEntryIntoService; PL KSeF P_22A; IT FatturaPA DatiVeicoli/Data
+  vehicle.marginSchemeIndicator: HU NAV marginSchemeIndicator; PL KSeF P_PMarzy; IT FatturaPA Natura
+    N5 with RF14; ES Veri*Factu ClaveRegimen 03
+  vehicle.registrationNumber: VDA 4938 P2 v3.1 seg. 77 GIN+BL; COVESA VSS LicensePlate; UN/EDIFACT
+    7405 BL; PL KSeF P_22BNR; schema.org has no registration-number property; Odette FVL by name
+    only
+  vehicle.registrationCountryCode: STAR VehicleDetails RegistrationCountry; no VDA 4938 equivalent
+  vehicle.odometerReadingStatusCode: ADF odometer status unknown|rolledover|replaced|original; RDW tellerstandoordeel
+  vehicle.odometerReadingDate: STAR OdometerReading Date; ADF odometer; VDA 4938 QTY+372 has no date
+  vehicle.configuration: schema.org vehicleConfiguration; COVESA VSS
+    VehicleIdentification.VehicleConfiguration; STAR Series/Trim
+  vehicle.engineCapacityCm3: schema.org engineDisplacement (auto extension, CMQ); HU NAV engineCapacity
+  vehicle.energySourceCode: schema.org fuelType; IVI 2.0 EnergySource (10 petrol, 20 diesel, 30 LPG,
+    40 CNG, 44 biomethane, 50 hydrogen, 60 LNG, 95 electricity, 90 other; licence of the IVI list
+    unverified)
+  vehicle.powertrainTypeCode: COVESA VSS Powertrain.Type; KBA fuel code (mixes energy source and hybridisation)
+  vehicle.categoryCode: KoSIT CIUS XRechnung CVD v0.9 (M1, M2, M3, N1, N2, N3)
+  vehicle.basicColourCode: schema.org color (inherited from Product); UN/CEFACT vocabulary colourCode
+  vehicle.usableBatteryEnergyKwh: UN GTR No. 22 certified UBE; COVESA VSS TractionBattery.NetCapacity;
+    schema.org has no kWh property (fuelCapacity uses Ah for EVs)
+  vehicle.typeApprovalNumber: IVI 2.0 TypeApprovalNumber
+  vehicle.exhaustEmissionLevelCode: IVI 2.0 ExhaustEmissionLevel
+  vehicle.wltpCo2EmissionsGPerKm: schema.org emissionsCO2 (auto extension)
+  vehicle.bodyworkCode: schema.org bodyType (free text, another value space)
+  vehicle.seatingPositionCount: schema.org vehicleSeatingCapacity
+  vehicle.modelYear: schema.org vehicleModelDate; STAR ModelYear; COVESA VSS VehicleIdentification.Year
+  vehicle.manufactureDate: schema.org productionDate; UN/EDIFACT 2005 code 94; PL KSeF P_22BRP (year)
+  vehicle.batteryStateOfHealthPercent: COVESA VSS TractionBattery.StateOfHealth
+  vehicle.batteryPassportUrl: schema.org hasDigitalProductPassport (inherited from Product); GS1
+    Digital Link / ISO/IEC 18975 resolvers
+  vehicle.approvedType: IVI 2.0 Type
+  vehicle.approvedVariant: IVI 2.0 Variant
+  vehicle.approvedVersion: IVI 2.0 Version
+  vehicle.cumulativeOperatingHours: ISO 15143-3 (AEMP 2.0) CumulativeOperatingHours

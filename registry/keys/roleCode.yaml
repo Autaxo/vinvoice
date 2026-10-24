@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.roleCode
+tier: core
+status: draft
+labelEn: Vehicle role
+labelDe: Fahrzeugrolle
+definition: "Why the vehicle appears on this line, seen from the issuer. supply: the vehicle is the
+  goods supplied, including self-billed purchases, hire-purchase and leases with agreed transfer of
+  ownership. trade-in: the vehicle is taken in from the buyer in part-exchange; how its value is
+  invoiced follows the issuer's VAT treatment, not this token. service: work, parts, test or repair
+  on the vehicle. rental: a charge for the use of the vehicle for a continuous period of at most 30
+  days. lease: a periodic charge for use over a longer period without agreed transfer of ownership,
+  including subscriptions. agency: a commission for intermediating the sale or purchase of the
+  vehicle. transport: transfer, delivery or logistics of the vehicle. other. The token states no VAT
+  treatment and no place of supply."
+representationTerm: Code
+valueFormat: one token from VEHICLE-ROLE 1.0
+grammar: '^(supply|trade-in|service|rental|lease|agency|transport|other)$'
+unit: null
+tokens:
+  - supply
+  - trade-in
+  - service
+  - rental
+  - lease
+  - agency
+  - transport
+  - other
+codeList: "VEHICLE-ROLE 1.0: supply, trade-in, service, rental, lease, agency, transport, other"
+conditionality: MUST on every vehicle line; SHOULD be the second row
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Fahrzeugrolle [vehicle.roleCode]', BT-161 'supply'"
+anchors: "No EU legal term (EN 16931 BT-3 types the document, not the line); Directive 2006/112/EC
+  Art. 56(3) ('short-term' = continuous possession or use for at most 30 days), used only as the
+  rental/lease boundary; Art. 14(2)(b) (contracts with transfer of ownership), informative;
+  informative: schema.org businessFunction"

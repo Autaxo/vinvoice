@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.conditionCode
+tier: core
+status: draft
+labelEn: Vehicle condition
+labelDe: Fahrzeugzustand
+definition: "Commercial condition at supply, as a partition of all vehicles. new: not registered
+  before this supply, other than in the buyer's name for this supply, and not used except for
+  delivery, transfer and pre-delivery checks. used: every other vehicle, including vehicles
+  pre-registered by a manufacturer, importer or dealer and demonstration vehicles. Not the VAT
+  notions 'new means of transport' (vehicle.newMeansOfTransportIndicator) and 'second-hand goods'
+  (Art. 311(1)), and not 'new passenger car' of Directive 1999/94/EC Art. 2(2)."
+representationTerm: Code
+valueFormat: one token from VEHICLE-CONDITION 1.0
+grammar: '^(new|used)$'
+unit: null
+tokens:
+  - new
+  - used
+codeList: "VEHICLE-CONDITION 1.0: new, used"
+conditionality: MUST for roles supply and trade-in; omit for all other roles
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Fahrzeugzustand [vehicle.conditionCode]', BT-161 'used'"
+anchors: "No EU legal term for this partition. Related but different notions: Directive 1999/94/EC
+  Art. 2(2) ('new passenger car': not previously sold to a person who bought it other than for
+  resale); Directive 2006/112/EC Art. 2(2)(b) and Art. 311(1)(1). Informative: schema.org
+  itemCondition (NewCondition, UsedCondition)"

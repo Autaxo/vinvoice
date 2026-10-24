@@ -2,18 +2,22 @@
 
 key: vehicle.modelYear
 tier: optional
-status: provisional
+status: draft
 labelEn: Model year
 labelDe: Modelljahr
-definition: Model year designated by the manufacturer; may differ from the production year.
+definition: "Model year designated by the manufacturer: a trade designation with no EU legal
+  definition, which can differ from the year of manufacture. Where the manufacturer encodes a model
+  year in the VIN under ISO 3779:2009 section 5.4, the two agree."
+representationTerm: Year
 valueFormat: ^(19|20)[0-9]{2}$
 grammar: '^(19|20)[0-9]{2}$'
 unit: null
+tokens: []
 codeList: none
 conditionality: MAY
 statutory: false
 repeatable: false
-signOff: null
-carrier: "BG-32: BT-160 'Modelljahr [vehicle.modelYear]'. UNTDID 7143 'RY' exists for BT-158 but is
-  not used"
-anchors: Own definition.
+carrier: "BG-32: BT-160 'Modelljahr [vehicle.modelYear]', BT-161 '2022'"
+anchors: "ISO 3779:2009 section 5.4 (model year in the vehicle descriptor section, referenced in
+  Reg. (EU) 2020/683 Annex I item 9.17.4.2); informative: STAR ModelYear, NHTSA vPIC Model Year,
+  COVESA VSS VehicleIdentification.Year"

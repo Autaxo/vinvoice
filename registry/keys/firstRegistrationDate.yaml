@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.firstRegistrationDate
+tier: core
+status: draft
+labelEn: Date of first registration
+labelDe: Datum der Erstzulassung
+definition: Date of first registration of the vehicle as printed in registration field B of the
+  registration document the issuer relies on; for an imported vehicle, the date that document shows.
+  An absent row makes no statement.
+representationTerm: Date
+valueFormat: YYYY-MM-DD; YYYY-MM only if the day is genuinely unknown (reduced-precision date)
+grammar: '^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2]))$'
+unit: null
+tokens: []
+codeList: none
+conditionality: MUST for roles supply and trade-in whenever the vehicle has been registered; SHOULD
+  on service lines; MAY with conditionCode new when the registration was made in the buyer's name
+  for this supply
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Datum der Erstzulassung [vehicle.firstRegistrationDate]', BT-161 '2022-03-18'"
+anchors: Directive 1999/37/EC Art. 2(b) ('registration') and Annex I code B 'date of first
+  registration of the vehicle' (DE 'Datum der Erstzulassung des Fahrzeugs'); UN/EDIFACT 2005
+  qualifier 375 'Date of first registration' (VDA 4938 DTM+375); schema.org
+  dateVehicleFirstRegistered; COVESA VSS DateVehicleFirstRegistered; STAR FirstRegistrationDate

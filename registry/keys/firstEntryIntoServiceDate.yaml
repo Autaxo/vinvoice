@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.firstEntryIntoServiceDate
+tier: core
+status: draft
+labelEn: First entry into service
+labelDe: Erste Inbetriebnahme
+definition: "Date of first entry into service of the vehicle for the six-month test of Directive
+  2006/112/EC Art. 2(2)(b)(i), as the issuer establishes it under the rules of the Member State
+  concerned (Art. 2(2)(c)). It can be earlier or later than the first registration date: use before
+  registration makes it earlier, and under some national rules a registration without use makes it
+  later. An absent row makes no statement."
+representationTerm: Date
+valueFormat: YYYY-MM-DD
+grammar: '^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$'
+unit: null
+tokens: []
+codeList: none
+conditionality: "With newMeansOfTransportIndicator = true: SHOULD whenever the vehicle was put into
+  service before the supply, and this key or an odometer reading MUST be present; otherwise MAY"
+statutory: true
+repeatable: false
+carrier: "BG-32: BT-160 'Erste Inbetriebnahme [vehicle.firstEntryIntoServiceDate]', BT-161
+  '2026-09-30'. Labelled name mandatory (statutory feature)"
+anchors: "Directive 2006/112/EC Art. 2(2)(b)(i) 'date of first entry into service' (DE 'erste
+  Inbetriebnahme') and Art. 226(12); national transposition e.g. DE UStG §1b(3); HU NAV
+  firstEntryIntoService; PL KSeF P_22A; informative only: Reg. (EU) 2018/858 Art. 3(52)
+  (type-approval meaning, limited to first use 'in the Union')"

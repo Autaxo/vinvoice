@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.wltpElectricRangeKm
+tier: optional
+status: draft
+labelEn: WLTP electric range (km)
+labelDe: Elektrische Reichweite WLTP (km)
+definition: "Electric range determined under the WLTP (Reg. (EU) 2017/1151 Annex XXI), combined: the
+  pure electric range (PER) for pure electric vehicles, the all-electric range (AER) for OVC-HEV.
+  Not the equivalent all-electric range (EAER). A type-approval value, not a promise of real-world
+  range."
+representationTerm: Measure, unit km (Rec 20 KMT)
+valueFormat: integer ^[1-9][0-9]{0,3}$
+grammar: '^[1-9][0-9]{0,3}$'
+unit: KMT
+tokens: []
+codeList: "unit fixed: kilometre (Rec 20 KMT)"
+conditionality: MAY for pure-electric and plug-in-hybrid-electric vehicles
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Elektrische Reichweite WLTP (km) [vehicle.wltpElectricRangeKm]', BT-161 '420'"
+anchors: Reg. (EU) 2020/683 Annex VIII CoC item 49 ('Electric range of pure electric vehicles',
+  'Electric range of OVC hybrid electric vehicles'; DE 'Elektrische Reichweite'); Reg. (EU)
+  2017/1151 Annex XXI (PER, AER, EAER); UN/ECE Rec 20 KMT

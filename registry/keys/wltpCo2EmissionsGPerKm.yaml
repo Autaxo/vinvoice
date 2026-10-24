@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.wltpCo2EmissionsGPerKm
+tier: optional
+status: draft
+labelEn: WLTP CO2 emissions (g/km)
+labelDe: CO2-Emissionen WLTP (g/km)
+definition: "CO2 emissions in g/km determined under the WLTP (Reg. (EU) 2017/1151), as printed in
+  CoC item 49 or registration field V.7: the combined value, or the weighted combined value for
+  OVC-HEV. A type-approval value, not real-world emissions. NEDC values go into
+  vehicle.nedcCo2EmissionsGPerKm."
+representationTerm: Measure, unit g/km (no Rec 20 code)
+valueFormat: integer ^(0|[1-9][0-9]{0,3})$
+grammar: '^(0|[1-9][0-9]{0,3})$'
+unit: null
+tokens: []
+codeList: "unit fixed: g/km (no Rec 20 code, so never BT-212); test procedure fixed: WLTP"
+conditionality: MAY; useful for M1 and N1 fleets
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'CO2-Emissionen WLTP (g/km) [vehicle.wltpCo2EmissionsGPerKm]', BT-161 '132'"
+anchors: "Directive 1999/37/EC code V.7 'CO2 (in g/km)'; Reg. (EU) 2020/683 Annex VIII CoC item 49
+  (WLTP values; DE 'CO2-Emissionen'); Reg. (EU) 2017/1151 Annex XXI; informative: schema.org
+  emissionsCO2"

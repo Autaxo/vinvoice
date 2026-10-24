@@ -42,8 +42,9 @@ const nextMajor = markerValue.replace(/\/([0-9]+)\.[0-9]+$/, (_, m) => `/${Numbe
         disclosed; the sponsor is named at the foot of every page.
       </li>
       <li>
-        No vendor-specific keys in the registry. Data that only one vendor needs goes under
-        <code>{prefix}x.&lt;vendor&gt;.*</code>, which readers ignore.
+        No vendor-specific keys in the registry. A vendor that needs its own rows names them with
+        the reverse-DNS name of a domain it controls, such as <code>com.example.stockNumber</code>;
+        readers ignore them.
       </li>
       <li>
         A key is registered only if two independent organisations will write or read it. Promotion
@@ -104,10 +105,11 @@ const nextMajor = markerValue.replace(/\/([0-9]+)\.[0-9]+$/, (_, m) => `/${Numbe
         > for an existing key with the same meaning.
       </li>
       <li>
-        Describe the key in the form of a <a href="/vocabulary/">term page</a>: local name (lower
-        camel case after <code>{prefix}</code>), English and German label, definition, value format
-        and grammar, unit (UN/ECE Rec. 20 code) or code list, the conditions under which it is
-        required, and an example value.
+        Describe the key in the form of a <a href="/vocabulary/">term page</a>: name (after <code
+          >{prefix}</code
+        >, following the <a href="/naming-rules/">naming rules</a>), English and German label,
+        definition, representation term, value format and grammar, unit (UN/ECE Rec. 20 code) or
+        code list, the conditions under which it is required, and an example value.
       </li>
       <li>
         Anchor the meaning in a source others can check: a field of the EU registration certificate,

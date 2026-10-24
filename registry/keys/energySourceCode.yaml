@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.energySourceCode
+tier: recommended
+status: draft
+labelEn: Fuel or power source
+labelDe: Kraftstoffart oder Energiequelle
+definition: "Fuel or power source the vehicle is approved for, one row per source, in the order the
+  registration document (P.3) or CoC (item 26) lists them. A blend or renewable variant used under
+  an approved fuel type (E10, B7, paraffinic diesel) is reported as that fuel type. cng and lng:
+  natural gas or biomethane stored compressed or liquefied (CoC 26 'NG - Biomethane'). electricity:
+  electric energy from an external source (pure electric and off-vehicle charging vehicles). The
+  hybrid architecture goes into vehicle.powertrainTypeCode; the fuel mode of CoC item 26.1 is not
+  part of 1.0."
+representationTerm: Code
+valueFormat: one token from VEHICLE-ENERGY-SOURCE 1.0 per row; repeatable; rows in source-document order
+grammar: '^(petrol|diesel|lpg|cng|lng|ethanol|biodiesel|hydrogen|electricity|other)$'
+unit: null
+tokens:
+  - petrol
+  - diesel
+  - lpg
+  - cng
+  - lng
+  - ethanol
+  - biodiesel
+  - hydrogen
+  - electricity
+  - other
+codeList: "VEHICLE-ENERGY-SOURCE 1.0: petrol, diesel, lpg, cng, lng, ethanol, biodiesel, hydrogen,
+  electricity, other"
+conditionality: SHOULD for motor vehicles on supply and trade-in
+statutory: false
+repeatable: true
+carrier: "BG-32: BT-160 'Kraftstoffart oder Energiequelle [vehicle.energySourceCode]', BT-161
+  'diesel' (repeatable: one row per source, in source-document order)"
+anchors: "Directive 1999/37/EC code P.3 'type of fuel or power source' (DE 'Kraftstoffart oder
+  Energiequelle'); Reg. (EU) 2020/683 Annex VIII CoC items 23, 26 and 26.1; Reg. (EU) 2023/1804
+  (AFIR) Art. 2(4) 'alternative fuels' (electricity, hydrogen, CNG, LNG, LPG, biofuels, synthetic
+  and paraffinic fuels), which replaced Directive 2014/94/EU; IVI 2.0 EnergySource (published
+  mapping only); informative: schema.org fuelType"

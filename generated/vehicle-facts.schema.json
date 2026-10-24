@@ -2,250 +2,276 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://vinvoice.org/downloads/vehicle-facts.schema.json",
   "title": "VINvoice vehicle facts (vehicle/1.0-draft)",
-  "description": "The VINvoice facts of one vehicle line as a JSON object, keyed by full key. Value grammars are the registry grammars. Unknown keys are allowed, because readers ignore keys they do not know. Generated from the registry; licence CC0-1.0.",
+  "description": "The VINvoice facts of one vehicle line as a JSON object, keyed by full key. Value grammars are those of the registry. Unknown registry keys are allowed, because readers ignore keys they do not know; vendor keys use reverse-DNS names. Generated from the registry; licence CC0-1.0.",
   "type": "object",
   "required": [
-    "vehicle.profile",
-    "vehicle.role"
+    "vehicle.specificationId",
+    "vehicle.roleCode"
   ],
   "properties": {
-    "vehicle.profile": {
-      "title": "Vehicle data standard (Fahrzeugdaten-Standard)",
-      "description": "Marker that makes an invoice line a vehicle line and states the major.minor version of the convention. It stands in for a BT-24 announcement, which a Factur-X hybrid (closed list) and Peppol (fixed prefix, R004) cannot carry.",
+    "vehicle.specificationId": {
+      "title": "VINvoice specification (VINvoice-Spezifikation)",
+      "description": "Marker row. Identifies the vehicle data specification and the major.minor version that the vehicle rows of this line follow, and so makes the line a vehicle line. Analogous to EN 16931 BT-24 (Specification identifier) at line level; it is not a BT-24 value and never appears in BT-24.",
       "type": "string",
       "pattern": "^vehicle/[1-9][0-9]*[.](0|[1-9][0-9]*)$"
     },
-    "vehicle.role": {
-      "title": "Vehicle role (Fahrzeugbezug)",
-      "description": "Why the vehicle appears on this line, seen from the seller (BG-4). supply = the vehicle is the item supplied (a sale, or a purchase documented by self-billing). trade-in = a vehicle taken in from the buyer, shown on an informational line with price 0.00 and no money meaning. service = work, parts, inspection or repair on the vehicle. lease / rental = a periodic charge for using the vehicle. agency = commission or intermediation for a vehicle. transport = transfer, delivery or logistics of the vehicle. other.",
+    "vehicle.roleCode": {
+      "title": "Vehicle role (Fahrzeugrolle)",
+      "description": "Why the vehicle appears on this line, seen from the issuer. supply: the vehicle is the goods supplied, including self-billed purchases, hire-purchase and leases with agreed transfer of ownership. trade-in: the vehicle is taken in from the buyer in part-exchange; how its value is invoiced follows the issuer's VAT treatment, not this token. service: work, parts, test or repair on the vehicle. rental: a charge for the use of the vehicle for a continuous period of at most 30 days. lease: a periodic charge for use over a longer period without agreed transfer of ownership, including subscriptions. agency: a commission for intermediating the sale or purchase of the vehicle. transport: transfer, delivery or logistics of the vehicle. other. The token states no VAT treatment and no place of supply.",
       "type": "string",
-      "pattern": "^(supply|trade-in|service|lease|rental|agency|transport|other)$"
+      "pattern": "^(supply|trade-in|service|rental|lease|agency|transport|other)$"
     },
     "vehicle.vin": {
-      "title": "VIN (FIN)",
-      "description": "Identification number marked on the vehicle: normally the 17-character VIN of Reg. (EU) 2021/535 Annex II Part 2; for vehicles without one, the national identifier (StVZO § 59 allows other identifiers of up to 14 characters). Same value as BT-128 when both are present. The BG-32 copy is shown by every viewer and lets stacks that cannot yet emit BT-128 conform at Level 1.",
+      "title": "Vehicle identification number (VIN) (Fahrzeug-Identifizierungsnummer (FIN))",
+      "description": "Identification number marked on the vehicle: the 17-character VIN (ISO 3779; Reg. (EU) 2021/535 Annex II Part 2). For a vehicle without a VIN, the identifier printed in registration field E (for example a chassis or product identification number); receivers treat only a 17-character value of the expected form as an ISO 3779 VIN. Same value as BT-128 with scheme AKG when both are present. A VIN can be personal data when the holder can be identified.",
       "type": "string",
       "pattern": "^[A-Z0-9]{1,17}$"
     },
     "vehicle.make": {
       "title": "Make (Marke)",
-      "description": "Manufacturer brand as in registration field D.1 / CoC item 0.1, without model or trim, spelled as in the source document.",
+      "description": "Trade name of the manufacturer as in registration field D.1 or CoC item 0.1, without model or configuration; not the legal name of the manufacturer (CoC item 0.5).",
       "type": "string",
       "pattern": "^(?![=+@\\s-])(?!.*\\s$)[^\\x00-\\x1F\\x7F\\u200E\\u200F\\u202A-\\u202E\\u2066-\\u2069]{1,60}$"
     },
     "vehicle.model": {
       "title": "Model (Modell)",
-      "description": "Commercial name of the model as in registration field D.3 / CoC item 0.2.1 (e.g. Golf), without make and trim. The full marketing name stays in BT-153.",
+      "description": "Commercial description of the vehicle as printed in registration field D.3 or CoC item 0.2.1 (for example Golf, or Golf Variant), without the make. Configuration details sent in vehicle.configuration SHOULD NOT be repeated here. Not the type-approval type (vehicle.approvedType).",
       "type": "string",
       "pattern": "^(?![=+@\\s-])(?!.*\\s$)[^\\x00-\\x1F\\x7F\\u200E\\u200F\\u202A-\\u202E\\u2066-\\u2069]{1,60}$"
     },
-    "vehicle.condition": {
-      "title": "Condition (Zustand)",
-      "description": "Seller's commercial classification at the time of supply. new = never registered and not used except for delivery. pre-registered = registered for the dealer or importer without use by an end customer (Tageszulassung). demonstrator = used as a demonstration or courtesy vehicle. used = all others. Independent of vehicle.newMeansOfTransport (a VAT test) and of the VAT treatment.",
+    "vehicle.conditionCode": {
+      "title": "Vehicle condition (Fahrzeugzustand)",
+      "description": "Commercial condition at supply, as a partition of all vehicles. new: not registered before this supply, other than in the buyer's name for this supply, and not used except for delivery, transfer and pre-delivery checks. used: every other vehicle, including vehicles pre-registered by a manufacturer, importer or dealer and demonstration vehicles. Not the VAT notions 'new means of transport' (vehicle.newMeansOfTransportIndicator) and 'second-hand goods' (Art. 311(1)), and not 'new passenger car' of Directive 1999/94/EC Art. 2(2).",
       "type": "string",
-      "pattern": "^(new|pre-registered|demonstrator|used)$"
+      "pattern": "^(new|used)$"
     },
-    "vehicle.firstRegistration": {
-      "title": "First registration (Erstzulassung)",
-      "description": "Date of the vehicle's first registration anywhere (registration field B), also for imported vehicles. Absent means never registered or unknown.",
+    "vehicle.firstRegistrationDate": {
+      "title": "Date of first registration (Datum der Erstzulassung)",
+      "description": "Date of first registration of the vehicle as printed in registration field B of the registration document the issuer relies on; for an imported vehicle, the date that document shows. An absent row makes no statement.",
       "type": "string",
       "pattern": "^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2]))$"
     },
-    "vehicle.odometerKm": {
-      "title": "Odometer (km) (Kilometerstand (km))",
-      "description": "Odometer reading in whole kilometres as displayed by an instrument that reads in kilometres, at the reference date: vehicle.odometerDate if present, else BT-72 actual delivery date, else BT-2 issue date. Not converted from miles and not estimated. It states the displayed reading; whether it equals the distance actually travelled is qualified only by vehicle.odometerStatus.",
+    "vehicle.odometerReadingKm": {
+      "title": "Odometer reading (km) (Kilometerstand (km))",
+      "description": "Reading of an odometer that reads in kilometres, in whole kilometres, as displayed at the reference date (vehicle.odometerReadingDate, else BT-72, else BT-2). Never converted from miles and never estimated. It is the displayed reading, not a statement of the distance actually travelled; vehicle.odometerReadingStatusCode qualifies it. For the 6 000 km test of Art. 2(2)(b)(i) the issuer relies on it, and it SHOULD then be the reading at delivery.",
       "type": "string",
       "pattern": "^(0|[1-9][0-9]{0,6})$"
     },
-    "vehicle.odometerMi": {
-      "title": "Odometer (miles) (Kilometerstand (Meilen))",
-      "description": "As vehicle.odometerKm, for an instrument that reads in statute miles. Never converted, so odometer-integrity checks see what the instrument shows.",
+    "vehicle.odometerReadingMi": {
+      "title": "Odometer reading (mi) (Meilenstand (mi))",
+      "description": "As vehicle.odometerReadingKm, for an odometer that reads in statute miles; never converted. Receivers that apply the 6 000 km test convert with 1 mi = 1.609344 km.",
       "type": "string",
       "pattern": "^(0|[1-9][0-9]{0,6})$"
     },
-    "vehicle.powerKw": {
-      "title": "Power (kW) (Leistung (kW))",
-      "description": "Maximum net power in kilowatts as entered in registration field P.2 (CoC item 27.1). For hybrid and electric vehicles use the value the registration document shows, not a marketing system power. PS/hp are never sent (display only; 1 PS = 0.73549875 kW).",
+    "vehicle.maximumNetPowerKw": {
+      "title": "Maximum net power (kW) (Höchste Nutzleistung (kW))",
+      "description": "Maximum net power in kilowatts: CoC item 27.1 (internal combustion engine) where the vehicle has one; otherwise CoC item 27.3 (electric motors, consolidated for several motors). Registration field P.2 normally shows this value; where it shows another quantity, such as the maximum 30-minute power of an electric motor (CoC item 27.4), the CoC value is sent. Never a combined system power, a 30-minute power or PS/hp.",
       "type": "string",
       "pattern": "^(0|[1-9][0-9]{0,3})([.][0-9])?$"
     },
-    "vehicle.newMeansOfTransport": {
-      "title": "New means of transport (VAT) (Neues Fahrzeug (§ 1b UStG))",
-      "description": "Issuer's statement that at the date of supply the vehicle is a 'new means of transport' for VAT: a motorised land vehicle of more than 48 cm3 or more than 7.2 kW that has covered no more than 6,000 km OR was first put into service no more than 6 months earlier (Art. 2(2)(b) Directive 2006/112/EC; § 1b Abs. 2 Nr. 1, Abs. 3 Nr. 1 UStG). A statement of fact; the VAT treatment stays in the VAT terms. Land vehicles only: vessels and aircraft (§ 1b Abs. 2 Nr. 2/3) are out of scope of 1.0. Not the same as condition = new.",
+    "vehicle.newMeansOfTransportIndicator": {
+      "title": "New means of transport (Neues Fahrzeug (USt))",
+      "description": "Issuer's statement that at the time of supply the vehicle is a 'new means of transport' for VAT: a motorised land vehicle intended for the transport of persons or goods, of more than 48 cm3 or more than 7.2 kW (Art. 2(2)(a)(i)), supplied within six months of the date of first entry into service or having travelled no more than 6 000 km (Art. 2(2)(b)(i)), with the facts established under the rules of the Member State (Art. 2(2)(c)). A statement of fact, not a VAT determination; the VAT treatment stays in the VAT terms. 'Neues Fahrzeug' is the VAT term, not the commercial condition (vehicle.conditionCode). Land vehicles only in 1.0.",
       "type": "string",
       "pattern": "^(true|false)$"
     },
-    "vehicle.firstUse": {
+    "vehicle.firstEntryIntoServiceDate": {
       "title": "First entry into service (Erste Inbetriebnahme)",
-      "description": "Date the vehicle was first put into service; the 6-month test runs from here. Often the first registration date, but earlier if the vehicle was used before registration. This is the KoSIT/FeRD row 'Zeitpunkt der ersten Inbetriebnahme'. An absent row carries no meaning; in particular it is not a statement that the vehicle was never put into service.",
+      "description": "Date of first entry into service of the vehicle for the six-month test of Directive 2006/112/EC Art. 2(2)(b)(i), as the issuer establishes it under the rules of the Member State concerned (Art. 2(2)(c)). It can be earlier or later than the first registration date: use before registration makes it earlier, and under some national rules a registration without use makes it later. An absent row makes no statement.",
       "type": "string",
       "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
     },
-    "vehicle.marginScheme": {
-      "title": "Margin scheme (second-hand goods) (Differenzbesteuerung)",
-      "description": "The vehicle on this line is supplied under the margin scheme for second-hand goods (Art. 311-325 Directive 2006/112/EC; § 25a UStG). A hint for receivers (no input VAT deduction, resaleable under the margin scheme) that the 2017 VAT model cannot express. It never replaces the VAT category, BT-120 or the BG-1 mention.",
+    "vehicle.marginSchemeIndicator": {
+      "title": "Margin scheme (Differenzbesteuerung)",
+      "description": "The supply on this line falls under one of the special arrangements of Directive 2006/112/EC Title XII Chapter 4 for second-hand goods, works of art, collectors' items and antiques, for which Art. 226(14) requires the mention 'Margin scheme - Second-hand goods' or its equivalent. Not the travel agents' margin scheme (Art. 306, Art. 226(13)). A structured hint only: it never replaces the VAT category code, the exemption reason (BT-120) or the Art. 226(14) mention.",
       "type": "string",
-      "pattern": "^(true)$"
+      "pattern": "^(true|false)$"
     },
-    "vehicle.plate": {
-      "title": "Registration plate (Kennzeichen)",
-      "description": "Registration number as in registration field A, without the country sign. It identifies the registration, not the vehicle, and is personal data when it can be linked to a natural person.",
+    "vehicle.registrationNumber": {
+      "title": "Registration number (Amtliches Kennzeichen)",
+      "description": "Registration number as printed in registration field A, without the country sign, including temporary, export and trade (dealer) registration numbers. It identifies the registration, not the vehicle, and is personal data when it can be linked to a natural person.",
       "type": "string",
-      "pattern": "^[A-ZÄÖÜ0-9][A-ZÄÖÜ0-9 -]{0,14}$"
+      "pattern": "^[\\p{Lu}0-9][\\p{Lu}0-9 -]{0,14}$"
     },
-    "vehicle.registrationCountry": {
+    "vehicle.registrationCountryCode": {
       "title": "Country of registration (Zulassungsland)",
-      "description": "State in which the vehicle is currently registered, i.e. the state that issued vehicle.plate.",
+      "description": "State that issued vehicle.registrationNumber, as a code from the EN 16931 country code list (ISO 3166-1 alpha-2, plus XI and 1A). Greece is GR, not the VAT prefix EL. Not the distinguishing sign on plates (D, A, F).",
       "type": "string",
-      "pattern": "^[A-Z]{2}$"
+      "pattern": "^([A-Z]{2}|1A)$"
     },
-    "vehicle.odometerStatus": {
-      "title": "Odometer status (Kilometerstand-Status)",
-      "description": "Qualifies the odometer reading. displayed = the reading as shown by the instrument, total distance not verified by the issuer (default meaning when the row is absent). replaced = instrument or display replaced, the reading does not show the total distance. rolled-over = the counter has wrapped. defective = no reading possible. unknown = no reading available to the issuer. A 'verified' status is deliberately not offered in 1.0 (warranty exposure, pending legal review).",
+    "vehicle.odometerReadingStatusCode": {
+      "title": "Odometer reading status (Status des Zählerstands)",
+      "description": "Issuer's statement on how the odometer reading of this line is to be read. displayed: the reading as displayed; the total distance is not verified. replaced: the instrument or its display was replaced, so the reading is not the total distance. rolled-over: the counter passed its maximum and restarted. inoperative: the issuer states that the odometer cannot be read. unknown: no reading is available to the issuer. other. An absent row makes no statement. There is no 'verified' status in 1.0.",
       "type": "string",
-      "pattern": "^(displayed|replaced|rolled-over|defective|unknown)$"
+      "pattern": "^(displayed|replaced|rolled-over|inoperative|unknown|other)$"
     },
-    "vehicle.odometerDate": {
-      "title": "Odometer reading date (Kilometerstand am)",
-      "description": "Date the odometer reading was taken, when it differs from the reference date (BT-72 actual delivery date, else BT-2). Typical cases: workshop intake, trade-in appraisal.",
+    "vehicle.odometerReadingDate": {
+      "title": "Date of odometer reading (Datum des Zählerstands)",
+      "description": "Date the odometer reading was taken, when it differs from the reference date (BT-72, else BT-2), for example at workshop intake or trade-in appraisal.",
       "type": "string",
       "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
     },
-    "vehicle.variant": {
-      "title": "Variant / trim (Ausführung)",
-      "description": "Marketing derivative or trim (engine, gearbox, equipment line), e.g. '2.0 TDI Life'. Not the type-approval type/variant/version of field D.2.",
+    "vehicle.configuration": {
+      "title": "Vehicle configuration (Modellausführung)",
+      "description": "Commercial configuration of the model (engine, gearbox, equipment line), for example '2.0 TDI Life'. Not the type-approval type, variant or version (vehicle.approvedType, approvedVariant, approvedVersion) and not the interior trim.",
       "type": "string",
       "pattern": "^(?![=+@\\s-])(?!.*\\s$)[^\\x00-\\x1F\\x7F\\u200E\\u200F\\u202A-\\u202E\\u2066-\\u2069]{1,100}$"
     },
-    "vehicle.displacementCm3": {
-      "title": "Displacement (cm³) (Hubraum (cm³))",
-      "description": "Cylinder capacity in cubic centimetres (registration field P.1, CoC item 25). Omitted for battery-electric vehicles.",
+    "vehicle.engineCapacityCm3": {
+      "title": "Engine capacity (cm3) (Hubraum (cm3))",
+      "description": "Capacity of the internal combustion engine in cubic centimetres as in registration field P.1 or CoC item 25. Omitted, never 0, for vehicles without a combustion engine.",
       "type": "string",
       "pattern": "^[1-9][0-9]{0,5}$"
     },
-    "vehicle.fuel": {
-      "title": "Fuel / energy source (Kraftstoff)",
-      "description": "Energy source(s) of the propulsion, primary first. Hybrids list the combustion fuel and electric (petrol,electric); the hybrid type goes into vehicle.powertrain.",
-      "type": "string",
-      "pattern": "^(petrol|diesel|electric|lpg|cng|lng|hydrogen|ethanol|biodiesel|biomethane|other)(,(petrol|diesel|electric|lpg|cng|lng|hydrogen|ethanol|biodiesel|biomethane|other))*$"
+    "vehicle.energySourceCode": {
+      "title": "Fuel or power source (Kraftstoffart oder Energiequelle)",
+      "description": "Fuel or power source the vehicle is approved for, one row per source, in the order the registration document (P.3) or CoC (item 26) lists them. A blend or renewable variant used under an approved fuel type (E10, B7, paraffinic diesel) is reported as that fuel type. cng and lng: natural gas or biomethane stored compressed or liquefied (CoC 26 'NG - Biomethane'). electricity: electric energy from an external source (pure electric and off-vehicle charging vehicles). The hybrid architecture goes into vehicle.powertrainTypeCode; the fuel mode of CoC item 26.1 is not part of 1.0.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(petrol|diesel|lpg|cng|lng|ethanol|biodiesel|hydrogen|electricity|other)$"
+      },
+      "minItems": 1
     },
-    "vehicle.powertrain": {
-      "title": "Powertrain (Antriebsart)",
-      "description": "Drive architecture. combustion; hybrid = not externally chargeable (NOVC-HEV, including mild hybrids); plug-in-hybrid = externally chargeable (OVC-HEV); battery-electric; fuel-cell; other.",
+    "vehicle.powertrainTypeCode": {
+      "title": "Powertrain type (Antriebsart)",
+      "description": "Powertrain architecture by the class the approval assigns (CoC items 23 and 23.1). internal-combustion: internal combustion engine(s) only. hybrid-electric: NOVC-HEV. plug-in-hybrid-electric: OVC-HEV, including range-extender vehicles. pure-electric: PEV (CoC 23 'pure electric: yes'). fuel-cell: FCV, NOVC-FCHV and OVC-FCHV; the off-vehicle charging of an OVC-FCHV is not expressed in 1.0. other. Marketing terms such as 'mild hybrid' do not decide the token.",
       "type": "string",
-      "pattern": "^(combustion|hybrid|plug-in-hybrid|battery-electric|fuel-cell|other)$"
+      "pattern": "^(internal-combustion|hybrid-electric|plug-in-hybrid-electric|pure-electric|fuel-cell|other)$"
     },
-    "vehicle.category": {
-      "title": "EU vehicle category (EU-Fahrzeugklasse)",
-      "description": "Vehicle category as in registration field J / CoC item 0.4: Reg. (EU) 2018/858 (M1-M3, N1-N3, O1-O4, optional suffix G) or Reg. (EU) 168/2013 (L1e-L7e).",
+    "vehicle.categoryCode": {
+      "title": "Vehicle category (Fahrzeugklasse)",
+      "description": "EU vehicle category as in registration field J or CoC item 0.4, with the official suffixes G (off-road, M and N only) and S (special purpose, incomplete). Not a body style or listing class, and not the VAT category (BT-151). Omitted when the vehicle has no EU category or the document does not print J.",
       "type": "string",
-      "pattern": "^((M[1-3]|N[1-3]|O[1-4])G?|L[1-7]e(-[A-Z][0-9]?)?)$"
+      "pattern": "^((M[1-3]|N[1-3])G?S?|O[1-4]S?|L(1e(-[AB])?|2e(-[PU])?|3e(-A[123][ET]?)?|4e|5e(-[AB])?|6e(-A|-B[PU]?)?|7e(-(A[12]?|B[12]?|C[PU]?))?)|[TC]([1-4](\\.[1-3])?[ab]?)?|T5|R([1-4][ab]?)?|S([12][ab]?)?)$"
     },
-    "vehicle.colour": {
-      "title": "Basic colour (Farbe)",
-      "description": "Basic body colour: the ten CoC basic colours plus beige, gold, silver and other. The manufacturer's colour name is not part of 1.0.",
+    "vehicle.basicColourCode": {
+      "title": "Basic colour (Grundfarbe)",
+      "description": "Basic colour of the vehicle as printed in CoC item 40 or registration field R, one row per basic colour for multi-coloured vehicles. National register colours outside the ten (for example beige or cream) are mapped by the registry's published mapping table. The manufacturer's paint name or code is not part of 1.0.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(white|yellow|orange|red|violet|blue|green|grey|brown|black|other)$"
+      },
+      "minItems": 1
+    },
+    "vehicle.nextRoadworthinessTestDate": {
+      "title": "Next roadworthiness test (Nächste technische Prüfung)",
+      "description": "Date by which the next periodic roadworthiness test is due: the date of the next test or the expiry date of the current certificate, as shown on the registration document (code X), the last roadworthiness certificate or the inspection mark. A month value (YYYY-MM) means due by the last day of that month.",
       "type": "string",
-      "pattern": "^(white|yellow|orange|red|violet|blue|green|grey|brown|black|beige|gold|silver|other)$"
+      "pattern": "^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2]))$"
     },
-    "vehicle.hsn": {
-      "title": "Manufacturer key (HSN) (HSN)",
-      "description": "German KBA manufacturer key number from registration certificate Part I (national field 2.1; numbering from secondary sources).",
-      "type": "string",
-      "pattern": "^[0-9A-Z]{4}$"
-    },
-    "vehicle.tsn": {
-      "title": "Type key (TSN) (TSN)",
-      "description": "German KBA type key: the first three characters of national field 2.2 of registration certificate Part I, without the check or variant characters that follow [format from secondary sources].",
-      "type": "string",
-      "pattern": "^[0-9A-Z]{3}$"
-    },
-    "vehicle.inspectionDue": {
-      "title": "Next roadworthiness test (Nächste HU)",
-      "description": "Month in which the next periodic roadworthiness test (HU) is due (registration field X).",
-      "type": "string",
-      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"
-    },
-    "vehicle.batteryCapacityKwh": {
-      "title": "Battery capacity (kWh) (Batteriekapazität (kWh))",
-      "description": "Usable (net) energy content of the traction battery when new, as stated by the manufacturer. Not the state of health.",
+    "vehicle.usableBatteryEnergyKwh": {
+      "title": "Usable battery energy (kWh) (Nutzbare Batterieenergie (kWh))",
+      "description": "Certified usable energy of the battery (NR-25) when new, as declared by the manufacturer (often called net capacity). Not the state of health.",
       "type": "string",
       "pattern": "^[0-9]{1,3}([.][0-9]{1,2})?$"
     },
     "vehicle.typeApprovalNumber": {
       "title": "Type-approval number (Typgenehmigungsnummer)",
-      "description": "EU whole-vehicle type-approval number, or national approval number, as in registration field K.",
+      "description": "Approval number as printed in registration field K, including the extension number: the EU whole-vehicle type-approval number, or a national or individual approval number, which is accepted as printed and not validated.",
       "type": "string",
       "pattern": "^(?![=+@\\s-])(?!.*\\s$)[^\\x00-\\x1F\\x7F\\u200E\\u200F\\u202A-\\u202E\\u2066-\\u2069]{1,60}$"
     },
-    "vehicle.emissionClass": {
-      "title": "Emission class (Schadstoffklasse)",
-      "description": "Exhaust emission level from the type approval.",
+    "vehicle.de.hsn": {
+      "title": "German manufacturer key number (HSN) (Herstellerschlüsselnummer (HSN))",
+      "description": "German KBA manufacturer key number, national field 2.1 of registration certificate Part I; exists only for vehicles with a German registration document. Provisional until checked against the KBA key directory; deviations are warnings.",
       "type": "string",
-      "pattern": "^(euro-1|euro-2|euro-3|euro-4|euro-5|euro-6|euro-6b|euro-6c|euro-6d-temp|euro-6d|euro-6e|euro-7|euro-iv|euro-v|euro-vi|other)$"
+      "pattern": "^[0-9A-Z]{4}$"
     },
-    "vehicle.co2GPerKm": {
-      "title": "CO2 emissions (g/km) (CO2-Emissionen (g/km))",
-      "description": "Combined CO2 emissions in g/km from the type approval (WLTP where available).",
+    "vehicle.de.tsn": {
+      "title": "German type key number (TSN) (Typschlüsselnummer (TSN))",
+      "description": "German KBA type key: the first three characters of national field 2.2 of registration certificate Part I, without the check characters. Not the type-approval number (field K). Provisional until checked against the KBA key directory.",
+      "type": "string",
+      "pattern": "^[0-9A-Z]{3}$"
+    },
+    "vehicle.exhaustEmissionLevelCode": {
+      "title": "Exhaust emission level (Abgasnorm)",
+      "description": "Exhaust emission level of the type approval as printed in CoC item 47 or registration field V.9: the emission standard designation, for light-duty vehicles the 'Emission standard' names of Reg. (EU) 2017/1151 Annex I Appendix 6 (for example Euro 6d-ISC-FCM), lower-cased and joined with hyphens. Light-duty and L-category levels use Arabic numerals (euro-6d), heavy-duty levels Roman numerals (euro-vi-e), as their instruments do; receivers compare strings and do not equate euro-6 with euro-vi. The Appendix 6 character code (for example AX) is not sent. Designators: temp (temporary), evap (evaporative emissions), isc (in-service conformity), fcm (fuel consumption monitoring), bis (second step), plus (Euro 5+ of L-category).",
+      "type": "string",
+      "pattern": "^(euro-([1-7][a-z0-9]*(-[a-z0-9]+)*|(i|ii|iii|iv|v|vi)(-[a-e])?)|stage-(i|ii|iiia|iiib|iv|v)|other)$"
+    },
+    "vehicle.wltpCo2EmissionsGPerKm": {
+      "title": "WLTP CO2 emissions (g/km) (CO2-Emissionen WLTP (g/km))",
+      "description": "CO2 emissions in g/km determined under the WLTP (Reg. (EU) 2017/1151), as printed in CoC item 49 or registration field V.7: the combined value, or the weighted combined value for OVC-HEV. A type-approval value, not real-world emissions. NEDC values go into vehicle.nedcCo2EmissionsGPerKm.",
       "type": "string",
       "pattern": "^(0|[1-9][0-9]{0,3})$"
     },
-    "vehicle.bodyType": {
-      "title": "Bodywork code (Aufbau)",
-      "description": "EU bodywork code (CoC item 38): AA saloon, AB hatchback, AC station wagon, AD coupé, AE convertible, AF multi-purpose vehicle, AG truck station wagon; plus the N, bus, trailer and special-purpose codes.",
+    "vehicle.nedcCo2EmissionsGPerKm": {
+      "title": "NEDC CO2 emissions (g/km) (CO2-Emissionen NEFZ (g/km))",
+      "description": "CO2 emissions in g/km determined under the NEDC (UN Regulation No 101), including NEDC values obtained by correlation from WLTP results, as printed in CoC item 49 or registration field V.7: the combined value, or the weighted combined value for OVC-HEV. A type-approval value, not real-world emissions.",
       "type": "string",
-      "pattern": "^[A-Z]{2}$"
+      "pattern": "^(0|[1-9][0-9]{0,3})$"
     },
-    "vehicle.seats": {
-      "title": "Seats (Sitzplätze)",
-      "description": "Number of seating positions including the driver (registration field S.1, CoC item 42).",
+    "vehicle.bodyworkCode": {
+      "title": "Code for bodywork (Code des Aufbaus)",
+      "description": "EU code for bodywork (CoC item 38): AA-AG passenger cars, BA-BE and BX goods vehicles, CA-CJ and CX buses, DA, DB, DC and DE trailers, SA-SH and SJ special purpose vehicles; with two supplementary digits where Appendix 2 applies.",
       "type": "string",
-      "pattern": "^[1-9][0-9]?$"
+      "pattern": "^(A[A-G]|B[A-E]|BX|C[A-J]|CX|D[ABCE]|S[A-HJ])([0-9]{2})?$"
+    },
+    "vehicle.seatingPositionCount": {
+      "title": "Number of seating positions (Anzahl der Sitzplätze)",
+      "description": "Number of seating positions including the driver, as in CoC item 42 (excluding seats for use only when the vehicle is stationary and wheelchair positions, footnote 115). Where only the registration document is available, its field S.1 (seats including the driver's seat) is used; on conflict the CoC value governs. Standing places (S.2) are not part of 1.0.",
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,2}$"
     },
     "vehicle.modelYear": {
       "title": "Model year (Modelljahr)",
-      "description": "Model year designated by the manufacturer; may differ from the production year.",
+      "description": "Model year designated by the manufacturer: a trade designation with no EU legal definition, which can differ from the year of manufacture. Where the manufacturer encodes a model year in the VIN under ISO 3779:2009 section 5.4, the two agree.",
       "type": "string",
       "pattern": "^(19|20)[0-9]{2}$"
     },
-    "vehicle.productionDate": {
+    "vehicle.manufactureDate": {
       "title": "Date of manufacture (Herstellungsdatum)",
-      "description": "Date of manufacture as stated in the CoC (item 0.11).",
+      "description": "Date on which manufacture of the vehicle was finalised in accordance with its approval, as in CoC item 0.11.",
       "type": "string",
-      "pattern": "^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2]))$"
+      "pattern": "^([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[0-9]{4}-(0[1-9]|1[0-2])|[0-9]{4})$"
     },
-    "vehicle.electricRangeKm": {
-      "title": "Electric range (km) (Elektrische Reichweite (km))",
-      "description": "All-electric range in km from the type approval (WLTP combined).",
+    "vehicle.wltpElectricRangeKm": {
+      "title": "WLTP electric range (km) (Elektrische Reichweite WLTP (km))",
+      "description": "Electric range determined under the WLTP (Reg. (EU) 2017/1151 Annex XXI), combined: the pure electric range (PER) for pure electric vehicles, the all-electric range (AER) for OVC-HEV. Not the equivalent all-electric range (EAER). A type-approval value, not a promise of real-world range.",
       "type": "string",
       "pattern": "^[1-9][0-9]{0,3}$"
     },
-    "vehicle.batterySohPct": {
-      "title": "Battery state of health (%) (Batteriezustand SoH (%))",
-      "description": "State of health of the traction battery as a percentage of rated capacity, read from the battery management system or a test on the date given in vehicle.batterySohDate.",
+    "vehicle.batteryStateOfHealthPercent": {
+      "title": "State of health (%) (Alterungszustand (%))",
+      "description": "State of health of the battery (NR-25) in percent of its initial condition (Reg. (EU) 2023/1542 Art. 3(28)), as determined on vehicle.batteryStateOfHealthDate by the method in vehicle.batteryStateOfHealthMethodCode; with the on-board method, the state of certified energy (SOCE, Annex VII Part A). A figure produced by the stated method, not a guarantee of capacity or lifetime.",
       "type": "string",
       "pattern": "^(100([.]0)?|[1-9]?[0-9]([.][0-9])?)$"
     },
-    "vehicle.batterySohDate": {
-      "title": "Battery SoH date (Batteriezustand ermittelt am)",
-      "description": "Date on which the state of health given in vehicle.batterySohPct was determined.",
+    "vehicle.batteryStateOfHealthDate": {
+      "title": "State of health date (Alterungszustand ermittelt am)",
+      "description": "Date of the determination stated in vehicle.batteryStateOfHealthPercent: the read-out date for the on-board method, otherwise the test date.",
       "type": "string",
       "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
     },
-    "vehicle.batteryPassport": {
-      "title": "Battery passport link (Batteriepass)",
-      "description": "HTTPS link to the battery passport of the traction battery, i.e. the content of the passport QR code (Reg. (EU) 2023/1542 Art. 77, applicable from 2027-02-18 for EV batteries). A link only; no passport content is copied into the invoice.",
+    "vehicle.batteryStateOfHealthMethodCode": {
+      "title": "State of health method (Ermittlungsmethode)",
+      "description": "How the state of health in vehicle.batteryStateOfHealthPercent was determined. on-board: read from the vehicle's battery management system (the data of Reg. (EU) 2023/1542 Art. 14, for example the SOCE). manufacturer-test: determined with the manufacturer's diagnostic procedure. independent-test: determined with the test procedure of a party other than the manufacturer. other.",
+      "type": "string",
+      "pattern": "^(on-board|manufacturer-test|independent-test|other)$"
+    },
+    "vehicle.batteryPassportUrl": {
+      "title": "Battery passport link (Batteriepass-Link)",
+      "description": "HTTPS link to the battery passport of the battery (NR-25), that is the content of the passport QR code. A link only; no passport content is copied into the invoice.",
       "type": "string",
       "pattern": "^https://[^\\s]{1,240}$"
     },
-    "vehicle.maxMassKg": {
-      "title": "Maximum laden mass (kg) (Techn. zul. Gesamtmasse (kg))",
-      "description": "Technically permissible maximum laden mass in kg (registration field F.1).",
+    "vehicle.maximumMassKg": {
+      "title": "Maximum mass (kg) (Technisch zulässige Gesamtmasse (kg))",
+      "description": "Technically permissible maximum laden mass in kg ('maximum mass', Reg. (EU) 2018/858 Annex I Part A 1.4), as in registration field F.1 or CoC item 16.1; for motorcycles, where F.1 is not printed, the CoC value. Not the permissible maximum laden mass in the state of registration (F.2, vehicle.registeredMaximumMassKg), the mass of the whole combination (F.3) or the mass in service (G).",
       "type": "string",
       "pattern": "^[1-9][0-9]{0,5}$"
     },
-    "vehicle.catalogId": {
-      "title": "Catalogue reference (Katalog-ID)",
-      "description": "Reference into a proprietary vehicle catalogue: identifiers only, never catalogue content. Repeatable, one row per scheme.",
+    "vehicle.registeredMaximumMassKg": {
+      "title": "Registered maximum mass (kg) (Zulässige Gesamtmasse (kg))",
+      "description": "Maximum permissible laden mass of the vehicle in service in the Member State of registration, in kg, as in registration field F.2. It can be lower than the technical maximum mass (vehicle.maximumMassKg) when a vehicle is registered below it; national rules commonly refer to this mass.",
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,5}$"
+    },
+    "vehicle.catalogueId": {
+      "title": "Catalogue identifier (Katalogkennung)",
+      "description": "Reference into a vehicle data catalogue as scheme:id; identifiers only, never catalogue content; one row per scheme. Scheme 'manufacturer' carries the make's own model or sales code for the vehicle.",
       "type": "array",
       "items": {
         "type": "string",
@@ -253,28 +279,40 @@
       },
       "minItems": 1
     },
-    "vehicle.registeredKeepers": {
-      "title": "Registered keepers (Anzahl Halter)",
-      "description": "Number of registered keepers (Halter) the vehicle has had up to the supply, as documented in registration certificate Part II or the national register. The buyer of this supply is not counted, nor is a dealer that was never the registered keeper. An issuer declaration.",
+    "vehicle.approvedType": {
+      "title": "Type (type-approval) (Typ (Typgenehmigung))",
+      "description": "Type designation of the approval, as in CoC item 0.2 or registration field D.2: the first part of type-variant-version and the EU-wide type identity. Sent only when the source document shows the parts separately (the CoC always does); an undivided D.2 string is not split by guesswork.",
       "type": "string",
-      "pattern": "^(0|[1-9][0-9]?)$"
+      "pattern": "^(?![=+@\\s-])(?!.*\\s$)[^\\x00-\\x1F\\x7F\\u200E\\u200F\\u202A-\\u202E\\u2066-\\u2069]{1,25}$"
     },
-    "vehicle.accidentDamaged": {
-      "title": "Accident damage declared (Unfallschaden (Angabe Verkäufer))",
-      "description": "Issuer's declaration that it knows of accident damage beyond minor damage ('true') or knows of none ('false'). A declaration, not an expert finding; an absent row means no statement.",
+    "vehicle.approvedVariant": {
+      "title": "Variant (type-approval) (Variante (Typgenehmigung))",
+      "description": "Variant designation within the approved type, as in CoC item 0.2 or registration field D.2; same rule for undivided strings as vehicle.approvedType.",
       "type": "string",
-      "pattern": "^(true|false)$"
+      "pattern": "^(?![=+@\\s-])(?!.*\\s$)[^\\x00-\\x1F\\x7F\\u200E\\u200F\\u202A-\\u202E\\u2066-\\u2069]{1,25}$"
     },
-    "vehicle.damageUnrepaired": {
-      "title": "Unrepaired damage declared (Unreparierter Schaden (Angabe Verkäufer))",
-      "description": "Issuer's declaration that known damage is not repaired ('true') or that it knows of no unrepaired damage ('false'). An absent row means no statement.",
+    "vehicle.approvedVersion": {
+      "title": "Version (type-approval) (Version (Typgenehmigung))",
+      "description": "Version designation within the approved variant, as in CoC item 0.2 or registration field D.2; same rule for undivided strings as vehicle.approvedType.",
       "type": "string",
-      "pattern": "^(true|false)$"
+      "pattern": "^(?![=+@\\s-])(?!.*\\s$)[^\\x00-\\x1F\\x7F\\u200E\\u200F\\u202A-\\u202E\\u2066-\\u2069]{1,35}$"
+    },
+    "vehicle.axleCount": {
+      "title": "Number of axles (Anzahl der Achsen)",
+      "description": "Number of axles as in registration field L or CoC item 1.",
+      "type": "string",
+      "pattern": "^[1-9]$"
+    },
+    "vehicle.cumulativeOperatingHours": {
+      "title": "Cumulative operating hours (Betriebsstundenstand)",
+      "description": "Hour-meter reading in whole hours (lifetime operating time) of a vehicle or non-road mobile machine whose use is measured in hours, at the reference date (BT-72, else BT-2), or on vehicle.odometerReadingDate when the line also carries an odometer reading.",
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]{0,6})$"
     }
   },
   "patternProperties": {
-    "^vehicle\\.x\\.": {
-      "description": "Vendor key, ignored by readers."
+    "^(?!vehicle\\.)[a-z0-9]+(-[a-z0-9]+)*([.][a-z0-9]+(-[a-z0-9]+)*)+[.][a-z][A-Za-z0-9]*$": {
+      "description": "Vendor key (reverse-DNS name), ignored by readers."
     }
   }
 }

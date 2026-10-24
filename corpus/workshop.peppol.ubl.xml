@@ -120,23 +120,23 @@
         </cac:TaxScheme>
       </cac:ClassifiedTaxCategory>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Fahrzeugdaten-Standard [vehicle.profile]</cbc:Name>
+        <cbc:Name>VINvoice-Spezifikation [vehicle.specificationId]</cbc:Name>
         <cbc:Value>vehicle/1.0</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Fahrzeugbezug [vehicle.role]</cbc:Name>
+        <cbc:Name>Fahrzeugrolle [vehicle.roleCode]</cbc:Name>
         <cbc:Value>service</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>FIN [vehicle.vin]</cbc:Name>
+        <cbc:Name>Fahrzeug-Identifizierungsnummer (FIN) [vehicle.vin]</cbc:Name>
         <cbc:Value>TSTVEH033L0000004</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Kennzeichen [vehicle.plate]</cbc:Name>
+        <cbc:Name>Amtliches Kennzeichen [vehicle.registrationNumber]</cbc:Name>
         <cbc:Value>XX-VE 1</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Zulassungsland [vehicle.registrationCountry]</cbc:Name>
+        <cbc:Name>Zulassungsland [vehicle.registrationCountryCode]</cbc:Name>
         <cbc:Value>DE</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
@@ -148,19 +148,19 @@
         <cbc:Value>Golf</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Erstzulassung [vehicle.firstRegistration]</cbc:Name>
+        <cbc:Name>Datum der Erstzulassung [vehicle.firstRegistrationDate]</cbc:Name>
         <cbc:Value>2020-06-15</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Kilometerstand (km) [vehicle.odometerKm]</cbc:Name>
+        <cbc:Name>Kilometerstand (km) [vehicle.odometerReadingKm]</cbc:Name>
         <cbc:Value>61230</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Kilometerstand am [vehicle.odometerDate]</cbc:Name>
+        <cbc:Name>Datum des Zählerstands [vehicle.odometerReadingDate]</cbc:Name>
         <cbc:Value>2026-10-20</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Nächste HU [vehicle.inspectionDue]</cbc:Name>
+        <cbc:Name>Nächste technische Prüfung [vehicle.nextRoadworthinessTestDate]</cbc:Name>
         <cbc:Value>2028-10</cbc:Value>
       </cac:AdditionalItemProperty>
     </cac:Item>

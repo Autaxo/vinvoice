@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: CC0-1.0
+
+key: vehicle.approvedType
+tier: optional
+status: draft
+labelEn: Type (type-approval)
+labelDe: Typ (Typgenehmigung)
+definition: "Type designation of the approval, as in CoC item 0.2 or registration field D.2: the
+  first part of type-variant-version and the EU-wide type identity. Sent only when the source
+  document shows the parts separately (the CoC always does); an undivided D.2 string is not split by
+  guesswork."
+representationTerm: Name (implicit)
+valueFormat: text, NFC, trimmed, no control or bidi characters, first character not = + - @, 1-25
+  characters as printed
+grammar: '^(?![=+@\s-])(?!.*\s$)[^\x00-\x1F\x7F\u200E\u200F\u202A-\u202E\u2066-\u2069]{1,25}$'
+unit: null
+tokens: []
+codeList: none
+conditionality: MAY; SHOULD on supply of new vehicles by manufacturers and importers
+statutory: false
+repeatable: false
+carrier: "BG-32: BT-160 'Typ (Typgenehmigung) [vehicle.approvedType]', BT-161 'TYP-X'"
+anchors: Reg. (EU) 2018/858 Art. 3(32) and Annex I Part B; Directive 1999/37/EC code D.2 'type,
+  variant (if available), version (if available)'; CoC item 0.2; IVI 2.0 Type

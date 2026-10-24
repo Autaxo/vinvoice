@@ -17,11 +17,11 @@
     "export-25a": "Margin-scheme export of a used car to a buyer outside the EU (VAT category G).",
     "new-intra-eu": "New means of transport supplied VAT-exempt to a business buyer in another member state; vehicle already registered, so the date of first entry into service is given.",
     "new-intra-eu-unregistered": "New means of transport supplied VAT-exempt to a business buyer in another member state; unregistered vehicle.",
-    "sale-regular-odometer-defective": "Used car sold under normal VAT with a defective odometer: the status is stated and no reading is given.",
     "workshop": "Workshop invoice: a zero-value vehicle reference line with the rows, labour and parts lines linked to the vehicle by BT-128, and the VIN in BT-18.",
     "level0": "Conformance level 0: the vehicle is identified by BT-128 only, without any rows.",
     "neg-margin-k": "Negative control for the checker: margin-scheme flag on an intra-EU exempt line (category K) and further faults. Valid EN 16931, not a valid VINvoice line.",
     "neg-profile": "Negative control for the checker: malformed rows (statutory key without its label, duplicates, grammar violations).",
-    "neg-profile2": "Negative control for the checker: reader edge cases (unknown major version, unknown key, both odometer units, unmarked rows)."
+    "neg-profile2": "Negative control for the checker: reader edge cases (unknown major version, unknown key, both odometer units, unmarked rows, a vendor row).",
+    "sale-regular-odometer-inoperative": "Used car sold under normal VAT with an inoperative odometer: the status is stated and no reading is given."
   }
 }

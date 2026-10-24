@@ -134,15 +134,15 @@
         </cac:TaxScheme>
       </cac:ClassifiedTaxCategory>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Fahrzeugdaten-Standard [vehicle.profile]</cbc:Name>
+        <cbc:Name>VINvoice-Spezifikation [vehicle.specificationId]</cbc:Name>
         <cbc:Value>vehicle/1.0</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Fahrzeugbezug [vehicle.role]</cbc:Name>
+        <cbc:Name>Fahrzeugrolle [vehicle.roleCode]</cbc:Name>
         <cbc:Value>supply</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>FIN [vehicle.vin]</cbc:Name>
+        <cbc:Name>Fahrzeug-Identifizierungsnummer (FIN) [vehicle.vin]</cbc:Name>
         <cbc:Value>TSTVEH016N0000001</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
@@ -154,43 +154,43 @@
         <cbc:Value>Golf</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Ausführung [vehicle.variant]</cbc:Name>
+        <cbc:Name>Modellausführung [vehicle.configuration]</cbc:Name>
         <cbc:Value>2.0 TDI Life</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Zustand [vehicle.condition]</cbc:Name>
+        <cbc:Name>Fahrzeugzustand [vehicle.conditionCode]</cbc:Name>
         <cbc:Value>used</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Erstzulassung [vehicle.firstRegistration]</cbc:Name>
+        <cbc:Name>Datum der Erstzulassung [vehicle.firstRegistrationDate]</cbc:Name>
         <cbc:Value>2022-03-18</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Kilometerstand (km) [vehicle.odometerKm]</cbc:Name>
+        <cbc:Name>Kilometerstand (km) [vehicle.odometerReadingKm]</cbc:Name>
         <cbc:Value>48200</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Leistung (kW) [vehicle.powerKw]</cbc:Name>
+        <cbc:Name>Höchste Nutzleistung (kW) [vehicle.maximumNetPowerKw]</cbc:Name>
         <cbc:Value>110</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Hubraum (cm³) [vehicle.displacementCm3]</cbc:Name>
+        <cbc:Name>Hubraum (cm3) [vehicle.engineCapacityCm3]</cbc:Name>
         <cbc:Value>1968</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Kraftstoff [vehicle.fuel]</cbc:Name>
+        <cbc:Name>Kraftstoffart oder Energiequelle [vehicle.energySourceCode]</cbc:Name>
         <cbc:Value>diesel</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Farbe [vehicle.colour]</cbc:Name>
+        <cbc:Name>Grundfarbe [vehicle.basicColourCode]</cbc:Name>
         <cbc:Value>grey</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Nächste HU [vehicle.inspectionDue]</cbc:Name>
+        <cbc:Name>Nächste technische Prüfung [vehicle.nextRoadworthinessTestDate]</cbc:Name>
         <cbc:Value>2027-03</cbc:Value>
       </cac:AdditionalItemProperty>
       <cac:AdditionalItemProperty>
-        <cbc:Name>Differenzbesteuerung [vehicle.marginScheme]</cbc:Name>
+        <cbc:Name>Differenzbesteuerung [vehicle.marginSchemeIndicator]</cbc:Name>
         <cbc:Value>true</cbc:Value>
       </cac:AdditionalItemProperty>
     </cac:Item>
