@@ -141,7 +141,6 @@ const tierText: Record<string, string> = {
                 <th scope="col">Reserved name</th>
                 <th scope="col">Label (EN)</th>
                 <th scope="col">Label (DE)</th>
-                <th scope="col">Formerly</th>
               </tr>
             </thead>
             <tbody>
@@ -152,7 +151,6 @@ const tierText: Record<string, string> = {
                   </td>
                   <td>{r.labelEn}</td>
                   <td lang="de">{r.labelDe}</td>
-                  <td>{r.was && <code>{r.was}</code>}</td>
                 </tr>
               ))}
             </tbody>

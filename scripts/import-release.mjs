@@ -90,7 +90,14 @@ write(
   )
 );
 write('registry/token-lists.yaml', yamlDoc(release.tokenLists, CC0));
-write('registry/reserved.yaml', yamlDoc(release.reserved, CC0));
+// Reserved names are published without the history of earlier draft names.
+write(
+  'registry/reserved.yaml',
+  yamlDoc(
+    release.reserved.map(({ was: _was, ...r }) => r),
+    CC0
+  )
+);
 write(
   'registry/naming-rules.yaml',
   yamlDoc(

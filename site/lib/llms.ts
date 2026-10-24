@@ -24,7 +24,7 @@ const keys = (ts: Term[]) => ts.map((t) => `\`${t.key}\``).join(', ');
 
 const SUMMARY = `VINvoice is an open, vendor-neutral convention for structured vehicle data in EN 16931 e-invoices (Factur-X / ZUGFeRD, XRechnung, Peppol BIS Billing). It adds no XML: the vehicle identification number (VIN) goes into the invoice line object identifier BT-128 with scheme \`AKG\`; every other vehicle fact is one BG-32 item attribute (BT-160 name, BT-161 value) named \`Label [key]\` with a plain value; the marker row \`${REF.marker.key}\` = \`${markerValue}\` makes a line a vehicle line. Invoices stay valid EN 16931 invoices.`;
 
-const STATUS = `Status: draft for review (registry ${registry.version}, ${registry.date}). Not yet a published standard; key names may still change before 1.0. VINvoice is not endorsed by CEN, FeRD, KoSIT, OpenPeppol or any public authority.`;
+const STATUS = `Status: draft for review (registry ${registry.version}, ${registry.date}). Not yet a published standard. VINvoice is not endorsed by CEN, FeRD, KoSIT, OpenPeppol or any public authority.`;
 
 export function llmsTxt(): string {
   return `# VINvoice
@@ -170,7 +170,7 @@ ${terms.map(keyBlock).join('\n\n')}
 
 ## Reserved names (never write these)
 
-${list(reserved.map((r) => `\`${r.key}\`: ${r.labelEn} (${r.labelDe})${r.was ? `; formerly ${r.was}` : ''}`))}
+${list(reserved.map((r) => `\`${r.key}\``))}
 
 ## Token lists
 
