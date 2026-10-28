@@ -21,7 +21,7 @@ tokens:
 codeList: "Indicator values: true, false"
 conditionality: MUST be true on every vehicle line supplied under such an arrangement, whatever VAT
   category code the issuer's national rules or CIUS prescribe for it; MUST NOT be true with category
-  K (Art. 139(3)); false only as an active statement
+  K (Art. 139(3) Directive 2006/112/EC, § 25a(7) no. 3 UStG); false only as an active statement
 statutory: true
 repeatable: false
 carrier: "BG-32: BT-160 'Differenzbesteuerung [vehicle.marginSchemeIndicator]', BT-161 'true'.

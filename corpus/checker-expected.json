@@ -166,7 +166,7 @@
     "severity": "error",
     "rule": "V-07",
     "line": "1",
-    "msg": "margin scheme on an intra-EU supply (category K): excluded by Art. 139(3) and Art. 313(2) Directive 2006/112/EC"
+    "msg": "margin scheme on an intra-EU supply (category K): excluded by Art. 139(3) Directive 2006/112/EC and § 25a(7) no. 3 UStG"
    },
    {
     "severity": "warning",

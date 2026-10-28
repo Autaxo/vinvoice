@@ -232,7 +232,7 @@ def check(registry, path):
         cat = ln['cat']
         if rec.get('vehicle.marginSchemeIndicator') == 'true':
             if cat == 'K':
-                F('error', 'V-07', lid, 'margin scheme on an intra-EU supply (category K): excluded by Art. 139(3) and Art. 313(2) Directive 2006/112/EC')
+                F('error', 'V-07', lid, 'margin scheme on an intra-EU supply (category K): excluded by Art. 139(3) Directive 2006/112/EC and § 25a(7) no. 3 UStG')
             elif cat not in ('E', 'F', 'G'):
                 F('warning', 'V-07', lid, f'margin scheme with VAT category {cat}; expected E (2017), F (2026) or G (export)')
             if not any(MARGIN_NOTE.search(n) for n in doc['notes']):

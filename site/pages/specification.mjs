@@ -382,7 +382,7 @@ export function render({ path }) {
       </li>
       <li>
         A margin-scheme line MUST NOT use category <code>K</code> (intra-community supply): the exemption
-        is excluded for margin-scheme goods (Art. 313(2) VAT Directive, § 25a(7) UStG).
+        is excluded for margin-scheme goods (Art. 139(3) VAT Directive, § 25a(7) no. 3 UStG).
       </li>
       <li>
         Under EN 16931-1:2026, category <code>F</code> (margin scheme, second-hand goods) replaces the
