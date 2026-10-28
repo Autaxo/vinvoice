@@ -1,0 +1,131 @@
+import { Base } from '../layouts/base.mjs';
+import { PageHead } from '../components/page-head.mjs';
+import { Key } from '../components/key.mjs';
+import { html } from '../lib/html.mjs';
+import { registry, linkKeys, REF } from '../lib/registry.mjs';
+
+// "Key grammar. A registry key is ..." -> title "Key grammar", body "A registry key is ..."
+const rules = registry.namingRules.map((r) => {
+  const m = r.rule.match(/^([^.]{3,80})\.\s+(.*)$/s);
+  return {
+    ...r,
+    anchor: r.id.toLowerCase(),
+    title: m ? m[1] : r.id,
+    body: m ? m[2] : r.rule,
+  };
+});
+
+const grammars = [
+  ['Registry key, as a reader recognises it', registry.keyGrammar],
+  ['Registry key, as new keys must be written', registry.keyGrammarAuthoring],
+  ['Vendor key (reverse-DNS name outside the registry root)', registry.vendorKeyGrammar],
+  ['Marker value', registry.markerGrammar],
+];
+
+export function render({ path }) {
+  return Base(
+    {
+      path,
+      title: 'Naming rules',
+      description: `The ${rules.length} VINvoice naming rules for keys, labels and tokens, based on ISO/IEC 11179, UN/CEFACT CCTS and the terms of EU law, with rationale and sources.`,
+    },
+    html`
+  ${PageHead({ title: 'Naming rules', lead: `How keys, labels and tokens are named: ${rules.length} rules, each with its rationale and source. New keys must follow them; the registry checks what can be checked automatically.` })}
+
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">On this page</h2>
+    <ol>
+      <li><a href="#grammars">Grammars and limits</a></li>
+      <li><a href="#length">Length of names</a></li>
+      <li><a href="#national">National keys</a></li>
+      <li><a href="#tokens">Values and tokens</a></li>
+      <li><a href="#rules">Rules NR-01 to NR-${rules.length.toString().padStart(2, '0')}</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="grammars">Grammars and limits</h2>
+  <div class="table-wrap">
+    <table class="wrapcode">
+      <thead>
+        <tr>
+          <th scope="col">What</th>
+          <th scope="col">Grammar or limit</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${grammars.map(
+          ([what, g]) =>
+            html`<tr>
+              <th scope="row">${what}</th>
+              <td>
+                <code>${g}</code>
+              </td>
+            </tr>`
+        )}
+        <tr>
+          <th scope="row">Maximum length of a key, root included</th>
+          <td>${registry.keyCap} characters</td>
+        </tr>
+        <tr>
+          <th scope="row">Maximum length of a row name (BT-160)</th>
+          <td>${registry.nameCap} characters</td>
+        </tr>
+        <tr>
+          <th scope="row">Marker key</th>
+          <td>${Key({ t: REF.marker })}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prose">
+    <h2 id="length">Length of names</h2>
+    <p>${linkKeys(registry.nameLengthCap)}</p>
+
+    <h2 id="national">National keys</h2>
+    <p>${linkKeys(registry.nationalKeysPattern)}</p>
+
+    <h2 id="tokens">Values and tokens</h2>
+    <p>${linkKeys(registry.tokenPolicy)}</p>
+    <p>The lists themselves are on the <a href="/code-lists/">code lists</a> page.</p>
+  </div>
+
+  <h2 id="rules">Rules</h2>
+  <div class="prose">
+    <ol class="rule-index">
+      ${rules.map(
+        (r) =>
+          html`<li>
+            <a href="${`#${r.anchor}`}">
+              ${r.id} ${r.title}
+            </a>
+          </li>`
+      )}
+    </ol>
+  </div>
+  ${rules.map(
+    (r) =>
+      html`<section class="rule prose" aria-labelledby="${r.anchor}">
+        <h3 id="${r.anchor}">
+          <span class="rule-id">${r.id}</span> ${r.title}
+        </h3>
+        <p>${linkKeys(r.body)}</p>
+        ${
+          r.rationale &&
+          html`<p class="small">
+            <strong>Why: </strong>
+            <span>${linkKeys(r.rationale)}</span>
+          </p>`
+        }
+        ${
+          r.source &&
+          html`<p class="small muted">
+            <strong>Sources: </strong>
+            ${r.source}
+          </p>`
+        }
+      </section>`
+  )}
+`
+  );
+}

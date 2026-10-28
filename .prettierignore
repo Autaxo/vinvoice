@@ -1,6 +1,5 @@
 node_modules/
 dist/
-.astro/
 .cache/
 package-lock.json
 # Written by scripts (import-json, generate, checker --update); formatting is part of the output

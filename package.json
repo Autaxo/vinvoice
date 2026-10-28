@@ -14,10 +14,10 @@
   "scripts": {
     "validate": "node scripts/validate.mjs",
     "generate": "node scripts/generate.mjs",
-    "dev": "npm run generate && astro dev --root site",
-    "build": "npm run validate && npm run generate && astro build --root site",
-    "preview": "astro preview --root site",
-    "check": "prettier --check . && astro check --root site",
+    "dev": "npm run generate && node --watch-path=site --watch-path=generated --watch-path=corpus --watch-preserve-output site/serve.mjs --build",
+    "build": "npm run validate && npm run generate && node site/build.mjs",
+    "preview": "node site/serve.mjs",
+    "check": "prettier --check . && node site/test.mjs",
     "format": "prettier --write .",
     "test:checker": "python3 -I -m unittest discover -s checker -v",
     "test:schematron": "sh scripts/schematron-test.sh",
@@ -25,12 +25,8 @@
     "import:release": "node scripts/import-release.mjs"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.9",
     "ajv": "^8.17.1",
-    "astro": "^6.2.2",
     "prettier": "^3.7.4",
-    "prettier-plugin-astro": "^0.14.1",
-    "typescript": "^5.7.0",
     "yaml": "^2.9.1"
   },
   "keywords": [

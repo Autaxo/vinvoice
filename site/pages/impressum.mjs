@@ -1,0 +1,69 @@
+import { Base } from '../layouts/base.mjs';
+import { PageHead } from '../components/page-head.mjs';
+import { html } from '../lib/html.mjs';
+
+export function render({ path }) {
+  return Base(
+    {
+      path,
+      title: 'Impressum',
+      description: 'Anbieterkennzeichnung für vinvoice.org gemäß § 5 DDG: Autaxo GmbH.',
+      lang: 'de',
+    },
+    html`
+  ${PageHead(
+    { title: 'Impressum', lead: 'Angaben gemäß § 5 DDG' },
+    html`
+    <p class="small muted" lang="en">Legal notice of the operator of this website, in German.</p>
+  `
+  )}
+
+  <div class="prose">
+    <h2>Anbieter</h2>
+    <p>
+      <strong>Autaxo GmbH</strong><br />
+      vormals firmierend als GOBERU Solutions UG (haftungsbeschränkt)<br />
+      c/o Julian Alessio Goßen<br />
+      Kiefernstraße 25<br />
+      45525 Hattingen<br />
+      Deutschland
+    </p>
+    <p>
+      Dieses Impressum gilt für die Website <strong>vinvoice.org</strong>. Die Autaxo GmbH betreibt
+      die Website als Förderer der Initiative VINvoice.
+    </p>
+
+    <h2>Vertreten durch</h2>
+    <p>Geschäftsführer: Julian Alessio Goßen</p>
+
+    <h2>Kontakt</h2>
+    <p>
+      E-Mail: <a href="mailto:kontakt@autaxo.de">kontakt@autaxo.de</a><br />
+      Telefon: <a href="tel:+4915565128070">+49 155 65128070</a>
+    </p>
+
+    <h2>Registereintrag</h2>
+    <p>
+      Eintragung im Handelsregister.<br />
+      Registergericht: Amtsgericht Essen<br />
+      Registernummer: HRB 36889
+    </p>
+
+    <h2>Umsatzsteuer-Identifikationsnummer</h2>
+    <p>Gemäß § 27a Umsatzsteuergesetz: DE454764286</p>
+
+    <h2>Verantwortlich für den Inhalt</h2>
+    <p>
+      Gemäß § 18 Abs. 2 MStV: Julian Alessio Goßen, erreichbar unter der oben genannten Anschrift.
+    </p>
+
+    <h2>Streitbeilegung</h2>
+    <p>
+      Die EU-Plattform zur Online-Streitbeilegung (OS/ODR) wurde zum 20.07.2025 eingestellt. Wir
+      sind zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle
+      weder verpflichtet noch bereit.
+    </p>
+  </div>
+`
+  );
+}
