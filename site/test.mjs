@@ -202,8 +202,8 @@ for (const page of pages) {
   const html = fs.readFileSync(path.join(root, page), 'utf8');
   const where = page;
   // Script bodies are data, not markup: look at tags outside them.
-  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
-  const markup = html.replace(/(<script\b[^>]*>)[\s\S]*?<\/script>/gi, '$1</script>');
+  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script[^>]*>/gi)];
+  const markup = html.replace(/(<script\b[^>]*>)[\s\S]*?<\/script[^>]*>/gi, '$1</script>');
   const all = tags(markup);
   const unbalanced = balanced(markup);
   if (unbalanced) fail(where, `unbalanced tags: ${unbalanced}`);
