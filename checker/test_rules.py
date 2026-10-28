@@ -144,7 +144,10 @@ class CheckDigit(unittest.TestCase):
         xml = variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT)
         xml = re.sub(r'<ram:ApplicableProductCharacteristic>\s*<ram:Description>[^<]*\[vehicle\.firstRegistrationDate\]</ram:Description>.*?</ram:ApplicableProductCharacteristic>\s*', '', xml, count=1, flags=re.S)
         self.assertNotIn('[vehicle.firstRegistrationDate]', xml)
-        self.assertEqual([s for s, m in rules(findings(xml), 'V-05')], ['info'])
+        found = rules(findings(xml), 'V-05')
+        self.assertEqual([s for s, m in found], ['info'])
+        self.assertNotIn('not required', found[0][1])           # Art. 12(2) also covers vehicles placed on the market
+        self.assertIn('cannot tell', found[0][1])
 
     def test_unknown_category_after_the_due_date_is_a_warning(self):
         xml = variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT, reg_date='2026-08-01')

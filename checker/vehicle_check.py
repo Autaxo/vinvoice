@@ -259,10 +259,17 @@ def check(registry, path):
         elif vin and not check_digit_ok(vin):
             due = latest_day(rec.get('vehicle.firstRegistrationDate') or '')
             cat_v = rec.get('vehicle.categoryCode')
-            if due and due >= CHECK_DIGIT_DUE and (cat_v is None or cat_v[0] in CHECK_DIGIT_CATEGORIES):
-                F('warning', 'V-05', lid, f'VIN {vin} has an invalid check digit and the vehicle is first registered on or after {CHECK_DIGIT_DUE}: required for registration by Reg. (EU) 2021/535 Art. 12(2)')
+            in_scope = cat_v is None or cat_v[0] in CHECK_DIGIT_CATEGORIES
+            if in_scope and due and due >= CHECK_DIGIT_DUE:
+                F('warning', 'V-05', lid, f'VIN {vin} has an invalid check digit; the first registration date ({rec["vehicle.firstRegistrationDate"]}) is not before {CHECK_DIGIT_DUE}, from when Reg. (EU) 2021/535 Art. 12(2) requires a correct check digit for M, N and O vehicles')
             else:
-                F('info', 'V-05', lid, f'VIN {vin} has an invalid check digit; not required for a vehicle first registered before {CHECK_DIGIT_DUE}, without a registration date, or outside categories M, N and O (Reg. (EU) 2021/535 Art. 1(1), 12(2))')
+                if not in_scope:
+                    why = f'category {cat_v} is outside M, N and O (Reg. (EU) 2021/535 Art. 1(1))'
+                elif due:
+                    why = f'the vehicle was first registered before {CHECK_DIGIT_DUE} (Art. 12(2))'
+                else:
+                    why = f'there is no usable first registration date, so the checker cannot tell whether Art. 12(2) applies (it also covers a vehicle placed on the market from {CHECK_DIGIT_DUE}, which this checker cannot see)'
+                F('info', 'V-05', lid, f'VIN {vin} has an invalid check digit; no warning because {why}')
         if abz:                                                   # step 7
             if rec.get('vehicle.registrationNumber') and re.sub('[ -]', '', abz) != re.sub('[ -]', '', rec['vehicle.registrationNumber']):
                 F('warning', 'V-18', lid, 'BT-128 ABZ registration number differs from vehicle.registrationNumber')
