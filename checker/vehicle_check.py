@@ -55,11 +55,30 @@ def grammar_ok(grammar, value):
     return re.fullmatch(grammar, value) is not None
 
 
+VIN_FORM = re.compile(r'[A-HJ-NPR-Z0-9]{17}')
+
+
+def vin_form_ok(v):
+    """ISO 3779 form: 17 characters, no I, O or Q."""
+    return VIN_FORM.fullmatch(v) is not None
+
+
 def vin_ok(v):
-    if not re.fullmatch(r'[A-HJ-NPR-Z0-9]{17}', v):
+    if not vin_form_ok(v):
         return False
     s = sum(TR[c] * w for c, w in zip(v, W)) % 11
     return v[8] == ('X' if s == 10 else str(s))
+
+
+def vt_vin(refs):
+    """BT-128 with scheme VT counts as a VIN only if the value has the VIN form. UNTDID 1153 VT is the
+    "motor vehicle identification number, normally the vehicle registration number": a plate is ignored."""
+    return next((i for i, s in refs if s == 'VT' and i and vin_form_ok(i)), None)
+
+
+def vin_from_refs(refs):
+    """The VIN a list of (value, scheme) pairs carries: scheme AKG, else a VT value of VIN form."""
+    return next((i for i, s in refs if s == 'AKG'), None) or vt_vin(refs)
 
 
 def real_date(v):
@@ -138,7 +157,7 @@ def check(registry, path):
     def F(sev, rule, line, msg):
         out['findings'].append({'severity': sev, 'rule': rule, 'line': line, 'msg': msg})
 
-    hdr_vin = next((i for i, s in doc['bt18'] if s in ('AKG', 'VT')), None)
+    hdr_vin = vin_from_refs(doc['bt18'])
     pending = []
     for ln in doc['lines']:
         lid = ln['id']
@@ -167,7 +186,9 @@ def check(registry, path):
             if nm and NAME.match(nm.strip()):
                 F('error', 'V-14', lid, f'ValueMeasure/ValueQuantity used for {nm!r}; BT-161 must stay in Value')
         bt128 = [(i, s) for i, s in ln['refs']]
-        vin128 = next((i for i, s in bt128 if s in ('AKG', 'VT')), None)
+        akg = next((i for i, s in bt128 if s == 'AKG'), None)
+        vt = vt_vin(bt128)
+        vin128 = akg or vt
         abz = next((i for i, s in bt128 if s == 'ABZ'), None)
         if MARKER not in kv:                                      # step 2: Level 0 / unmarked
             if any(k.startswith('vehicle.') for k in kv):
@@ -209,9 +230,12 @@ def check(registry, path):
             F('error', 'V-01', lid, f'marker without {ROLE}')
         if len(ln['refs']) > 1:
             F('error', 'V-12', lid, 'more than one BT-128 on the line')
-        vin = vin128 or rec.get('vehicle.vin') or hdr_vin         # step 5
-        if vin128 and rec.get('vehicle.vin') and vin128 != rec['vehicle.vin']:
-            F('warning', 'V-04', lid, f'BT-128 {vin128} differs from vehicle.vin {rec["vehicle.vin"]}; BT-128 wins')
+        row_vin = rec.get('vehicle.vin')
+        vin = akg or row_vin or vt or hdr_vin                     # step 5: AKG wins over the row, the row over VT
+        if akg and row_vin and akg != row_vin:
+            F('warning', 'V-04', lid, f'BT-128 {akg} differs from vehicle.vin {row_vin}; BT-128 wins')
+        elif not akg and vt and row_vin and vt != row_vin:
+            F('warning', 'V-04', lid, f'BT-128 (scheme VT) {vt} differs from vehicle.vin {row_vin}; vehicle.vin wins')
         if vin and not vin_ok(vin):
             F('warning', 'V-05', lid, f'VIN {vin} is not 17 ISO 3779 characters or its check digit fails')
         if abz:                                                   # step 7

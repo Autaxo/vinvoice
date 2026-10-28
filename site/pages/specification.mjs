@@ -217,7 +217,10 @@ export function render({ path }) {
     <p>
       The VIN is written twice: as the row ${Key({ t: REF.vin })}, which every invoice viewer shows,
       and in the line object identifier BT-128 with the scheme identifier BT-128-1 = <code>AKG</code> and the document type code <code>130</code>. Both MUST hold the same value. Receivers SHOULD
-      also accept <code>VT</code> as scheme on input.
+      also accept <code>VT</code> as scheme on input, but only when the value has the form of a
+      VIN (<code>^[A-HJ-NPR-Z0-9]{17}$</code>): UNTDID 1153 defines <code>VT</code> as the motor vehicle
+      identification number, "normally the vehicle registration number", and a registration number
+      is ignored there, never read as a VIN.
     </p>
     <p>
       BT-157 (item standard identifier) and BT-158 (item classification) MUST NOT be used for the
@@ -336,9 +339,11 @@ export function render({ path }) {
       </li>
       <li>If a key that is not repeatable appears twice, keep the first value.</li>
       <li>
-        Take the VIN from BT-128 (scheme <code>AKG</code> or <code>VT</code>); if it is absent, from
-        the row ${Key({ t: REF.vin })}; if that is absent too, from BT-18. If BT-128 and the row
-        differ, BT-128 wins.
+        Take the VIN from BT-128 with scheme <code>AKG</code>; if it is absent, from the row
+        ${Key({ t: REF.vin })}; if that is absent too, from BT-128 with scheme <code>VT</code> (only a
+        value of VIN form, <code>^[A-HJ-NPR-Z0-9]{17}$</code>; any other value is ignored), and
+        last from BT-18 (the same two schemes). If an <code>AKG</code> value and the row differ,
+        BT-128 wins; against a <code>VT</code> value the row wins.
       </li>
       <li>
         A line without a marker whose BT-128 equals the VIN of a vehicle line belongs to that

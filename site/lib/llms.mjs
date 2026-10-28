@@ -161,7 +161,7 @@ ${firstLine(featured.ubl)}
 3. If the major version in the marker is unknown, skip that line's rows. Never reject the invoice.
 4. Check each value against its key's grammar and drop values that do not match. Ignore unknown keys.
 5. A key that is not repeatable and appears twice: keep the first value.
-6. VIN: BT-128 (scheme \`AKG\` or \`VT\`) wins over the row \`${REF.vin.key}\`, which wins over BT-18.
+6. VIN: BT-128 with scheme \`AKG\` wins over the row \`${REF.vin.key}\`; the row wins over BT-128 with scheme \`VT\`, which is taken only if the value matches \`^[A-HJ-NPR-Z0-9]{17}$\` (UNTDID 1153 VT is normally a registration number; any other value is ignored); BT-18 comes last.
 7. A line without the marker whose BT-128 equals the VIN of a vehicle line belongs to that vehicle.
 
 ## VAT notes (provisional until a written tax sign-off)

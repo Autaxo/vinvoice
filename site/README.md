@@ -97,7 +97,7 @@ Never type a key name into a template: use `REF` or iterate over `terms` (`lib/r
 The text of a rule exists in the checker, in the Schematron generator and on the pages. Change
 them in one commit:
 
-1. `checker/vehicle_check.py` (the reference); refresh
+1. `checker/vehicle_check.py` (the reference) and `checker/test_rules.py`; refresh
    `corpus/checker-expected.json` with `python3 -I checker/test_corpus.py --update`.
 2. `scripts/lib/schematron.mjs`, then `npm run generate` and `npm run test:schematron`.
 3. `pages/specification.mjs` (the rule, and the reader steps in section 9), `pages/validation.mjs`
