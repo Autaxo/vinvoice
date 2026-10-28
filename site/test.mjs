@@ -182,7 +182,13 @@ const VOID = new Set(
 function balanced(markup) {
   /** @type {string[]} */
   const open = [];
-  const text = markup.replace(/<!--[\s\S]*?-->/g, '').replace(/<!doctype[^>]*>/i, '');
+  // Strip comments until none is left, so that no nested '<!--' survives one pass.
+  let text = markup;
+  for (let previous = ''; previous !== text;) {
+    previous = text;
+    text = text.replace(/<!--[\s\S]*?-->/g, '');
+  }
+  text = text.replace(/<!doctype[^>]*>/i, '');
   for (const m of text.matchAll(/<(\/?)([a-zA-Z][a-zA-Z0-9-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>/g)) {
     const [, closing, name] = m;
     const tag = name.toLowerCase();
