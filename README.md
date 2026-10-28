@@ -59,6 +59,15 @@ npm run preview           # serve an existing dist/
 npm run check             # Prettier, then link and structure test of the built website
 ```
 
+`npm run test:schematron` runs Java locally if there is a Java 17+ and otherwise calls Docker for
+each Saxon run. To run the whole script in one container instead, give the container what the
+script needs: `python3`, `perl` (for `shasum`), `curl` and `unzip`:
+
+```bash
+docker run --rm -v "$PWD":/w -w /w eclipse-temurin:21-jdk sh -c \
+  'apt-get update -qq && apt-get install -y -qq python3 perl curl unzip >/dev/null && sh scripts/schematron-test.sh'
+```
+
 A change to a key is: edit `registry/keys/<key>.yaml`, run `npm run generate`, commit both the
 YAML and `generated/`. CI fails if `generated/` is out of date. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for proposals and reviews, [GOVERNANCE.md](GOVERNANCE.md) for

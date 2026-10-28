@@ -8,10 +8,13 @@ V-22). It never rejects an invoice. Python standard library only.
 python3 -I checker/vehicle_check.py generated/registry.json invoice.xml [more.xml ...]
 ```
 
-Grammars, labels, the statutory flag and the reserved names come from `registry.json`. The file is
-the reference checker of the registry release, imported unchanged by `npm run import:release`;
-update it there rather than editing it here. Vendor rows (reverse-DNS names outside `vehicle.`)
-are listed under `ignored` and never produce findings.
+Grammars, labels, the statutory flag and the reserved names come from `registry.json`. This
+repository is the source of `vehicle_check.py`: change the checker here, together with
+`test_rules.py`, the Schematron generator and the pages (see "When a rule changes" in
+[site/README.md](../site/README.md)). `npm run import:release` copies a `vehicle_check.py` from an
+external release folder over this file if the folder has one, and would overwrite local edits to
+the checker, so do not run it for a checker change. Vendor rows (reverse-DNS names outside
+`vehicle.`) are listed under `ignored` and never produce findings.
 
 - `test_corpus.py`: regression test against `corpus/checker-expected.json`
   (`python3 -I -m unittest discover -s checker -v`).
