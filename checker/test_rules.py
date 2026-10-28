@@ -42,6 +42,14 @@ def variant(ref_scheme='AKG', ref_value=VIN, row_vin=VIN, reg_date=REG_DATE):
     return xml.replace(f'<ram:Value>{REG_DATE}</ram:Value>', f'<ram:Value>{reg_date}</ram:Value>')
 
 
+def with_category(xml, code):
+    """Add a vehicle.categoryCode row after the role row."""
+    role = '<ram:Value>supply</ram:Value>\n        </ram:ApplicableProductCharacteristic>'
+    row = f'\n        <ram:ApplicableProductCharacteristic>\n          <ram:Description>Fahrzeugklasse [vehicle.categoryCode]</ram:Description>\n          <ram:Value>{code}</ram:Value>\n        </ram:ApplicableProductCharacteristic>'
+    assert role in xml
+    return xml.replace(role, role + row, 1)
+
+
 def rules(out, rule):
     return [(f['severity'], f['msg']) for f in out['findings'] if f['rule'] == rule]
 
@@ -124,6 +132,24 @@ class CheckDigit(unittest.TestCase):
         self.assertEqual([s for s, m in rules(out, 'V-05')], ['warning'])
         out = findings(variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT, reg_date='2026-06'))
         self.assertEqual([s for s, m in rules(out, 'V-05')], ['info'])
+
+    def test_bad_check_digit_after_the_due_date_depends_on_the_category(self):
+        xml = variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT, reg_date='2026-08-01')
+        for category, severity in (('M1', 'warning'), ('N2', 'warning'), ('O3', 'warning'), ('L3e-A1', 'info'), ('T1', 'info')):
+            with self.subTest(category=category):
+                out = findings(with_category(xml, category))
+                self.assertEqual([s for s, m in rules(out, 'V-05')], [severity])
+
+    def test_bad_check_digit_without_a_registration_date_is_info(self):
+        xml = variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT)
+        xml = re.sub(r'<ram:ApplicableProductCharacteristic>\s*<ram:Description>[^<]*\[vehicle\.firstRegistrationDate\]</ram:Description>.*?</ram:ApplicableProductCharacteristic>\s*', '', xml, count=1, flags=re.S)
+        self.assertNotIn('[vehicle.firstRegistrationDate]', xml)
+        self.assertEqual([s for s, m in rules(findings(xml), 'V-05')], ['info'])
+
+    def test_unknown_category_after_the_due_date_is_a_warning(self):
+        xml = variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT, reg_date='2026-08-01')
+        self.assertNotIn('[vehicle.categoryCode]', xml)
+        self.assertEqual([s for s, m in rules(findings(xml), 'V-05')], ['warning'])
 
     def test_valid_check_digit_has_no_finding(self):
         self.assertEqual(rules(findings(BASE), 'V-05'), [])

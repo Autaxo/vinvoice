@@ -334,7 +334,7 @@
     "severity": "info",
     "rule": "V-05",
     "line": "1",
-    "msg": "VIN TSTVEH016N0000002 has an invalid check digit; not required for vehicles first registered before 2026-07-07"
+    "msg": "VIN TSTVEH016N0000002 has an invalid check digit; not required for a vehicle first registered before 2026-07-07, without a registration date, or outside categories M, N and O (Reg. (EU) 2021/535 Art. 1(1), 12(2))"
    },
    {
     "severity": "error",

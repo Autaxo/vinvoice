@@ -224,12 +224,18 @@ export function render({ path }) {
         <tr>
           <th scope="row" class="nowrap">V-05</th><td class="warn">warning</td>
           <td>
-            The VIN does not have the ISO 3779 form (17 characters, no <code>I</code>, <code>O</code>,
-            <code>Q</code>) (warning). A wrong check digit is a warning only where
-            ${Key({ t: REF.firstRegistrationDate })} is on or after 2026-07-07 and information otherwise: older
-            vehicles do not need a check digit (Regulation (EU) 2021/535, Art. 12(2); the check digit is
-            required for new types from 2022-07-06 and for registration from 2026-07-07), and some
-            carry a <code>Z</code> in position 9. A partial date counts as its last day. Never an error.
+            <strong>Form</strong> (warning): the VIN is not 17 characters from <code>A</code> to <code>Z</code>
+            and <code>0</code> to <code>9</code> without <code>I</code>, <code>O</code> and <code>Q</code>
+            (Regulation (EU) 2021/535, Annex II Part 2, points 2.1 to 2.8).
+            <strong>Check digit</strong>: position 9 fails the formula of Section C (point 2.4). This is a
+            warning when ${Key({ t: REF.firstRegistrationDate })} is on or after 2026-07-07 and the category
+            is M, N, O or not given, and information in every other case. Since 7 July 2026 Art. 12(2) of
+            the regulation makes a correct check digit a condition for the registration, placing on the
+            market and entry into service of M, N and O vehicles; before that it was required only for new
+            types approved from 6 July 2022 (Art. 12(1)). Vehicles registered earlier, L-category vehicles
+            and vehicles first registered outside the EU can therefore carry a wrong digit legitimately. The
+            first registration date is a proxy, not proof; a partial date counts as its last day. Never an
+            error.
           </td>
         </tr>
         <tr>
