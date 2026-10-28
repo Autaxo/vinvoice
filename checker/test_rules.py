@@ -7,6 +7,7 @@ Run: python3 -I -m unittest discover -s checker -v
 """
 import json
 import pathlib
+import re
 import sys
 import tempfile
 import unittest
@@ -67,6 +68,33 @@ class SchemeVT(unittest.TestCase):
         out = findings(variant('AKG', ref_value=other))
         self.assertEqual(out['vehicles'][0]['vin'], other)
         self.assertIn('BT-128 wins', rules(out, 'V-04')[0][1])
+
+
+    def test_vt_registration_number_never_becomes_the_vin(self):
+        # no vehicle.vin row either: the plate must not turn into the VIN, and V-04/V-05 stay silent
+        xml = variant('VT', ref_value='M-AB 1234')
+        xml = re.sub(r'<ram:ApplicableProductCharacteristic>\s*<ram:Description>[^<]*\[vehicle\.vin\]</ram:Description>.*?</ram:ApplicableProductCharacteristic>\s*', '', xml, count=1, flags=re.S)
+        self.assertNotIn('[vehicle.vin]', xml)
+        out = findings(xml)
+        self.assertIsNone(out['vehicles'][0]['vin'])
+        self.assertEqual(out['vehicles'][0]['level'], 1)
+        self.assertEqual(rules(out, 'V-04') + rules(out, 'V-05'), [])
+
+    def test_vt_with_a_differing_registration_number_does_not_warn(self):
+        out = findings(variant('VT', ref_value='B-XY 99'))
+        self.assertEqual(out['vehicles'][0]['vin'], VIN)
+        self.assertEqual(rules(out, 'V-04'), [])
+
+    def test_vt_with_i_o_or_q_is_not_a_vin(self):
+        out = findings(variant('VT', ref_value='TSTVEH016N000000O'))
+        self.assertEqual(out['vehicles'][0]['vin'], VIN)
+        self.assertEqual(out['vehicles'][0]['level'], 1)
+        self.assertEqual(rules(out, 'V-04'), [])
+
+    def test_vt_in_bt18_follows_the_same_rule(self):
+        self.assertEqual(vehicle_check.vin_from_refs([('M-AB 1234', 'VT')]), None)
+        self.assertEqual(vehicle_check.vin_from_refs([(VIN, 'VT')]), VIN)
+        self.assertEqual(vehicle_check.vin_from_refs([(VIN, 'VT'), ('M-AB 1234', 'AKG')]), 'M-AB 1234')
 
 
 if __name__ == '__main__':
