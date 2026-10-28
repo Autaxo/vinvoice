@@ -21,7 +21,7 @@ Website: <https://vinvoice.org> (built from this repository).
 | `corpus/`                 | 19 test invoices (CII and UBL), their scenarios, the validation evidence and the checker's expected findings.                                                                                                                          | CC0-1.0                                  |
 | `checker/`                | Reference reader and checker (Python, no dependencies) and its tests.                                                                                                                                                                  | Apache-2.0                               |
 | `scripts/`                | Validation, generation, import and test scripts.                                                                                                                                                                                       | Apache-2.0                               |
-| `site/`                   | The website (Astro, static HTML, no tracking).                                                                                                                                                                                         | text CC-BY-4.0, code Apache-2.0          |
+| `site/`                   | The website: a Node script that writes static HTML (no framework, no tracking).                                                                                                                                                        | text CC-BY-4.0, code Apache-2.0          |
 
 See [LICENSE.md](LICENSE.md) for the details.
 
@@ -48,8 +48,10 @@ npm run validate          # check registry/ against schemas/ and the cross-file 
 npm run generate          # rebuild generated/ from registry/
 npm test                  # validate, check generated/ against the JSON Schemas, run the checker tests
 npm run test:schematron   # compile the Schematron and compare it with the checker on the corpus
-npm run dev               # website at http://localhost:4321
+npm run dev               # website at http://localhost:4321, rebuilt when site/, generated/ or corpus/ change
 npm run build             # website into dist/
+npm run preview           # serve an existing dist/
+npm run check             # Prettier, then link and structure test of the built website
 ```
 
 A change to a key is: edit `registry/keys/<key>.yaml`, run `npm run generate`, commit both the

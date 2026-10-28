@@ -37,6 +37,8 @@ New keys start with `status: provisional` and stay provisional for 12 months.
 ## Code
 
 - `scripts/` and `site/` are formatted with Prettier: `npm run format`.
+- The website is built by `site/build.mjs` from the registry and the corpus; `npm run check` also
+  builds it and tests every link and fragment. It has no runtime dependencies beyond Node.
 - `checker/` uses the Python standard library only. Keep it that way.
 - `generated/` is never edited by hand.
 - Check before pushing: `npm test`, `npm run check`, `npm run build`, and

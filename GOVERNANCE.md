@@ -2,7 +2,7 @@
 
 The rules for VINvoice (neutrality charter, change process, how to propose a key, licences) are
 published at <https://vinvoice.org/governance/>. Their source is
-[`site/pages/governance.astro`](site/pages/governance.astro); change them there, by pull request,
+[`site/pages/governance.mjs`](site/pages/governance.mjs); change them there, by pull request,
 under the same rules.
 
 In short:

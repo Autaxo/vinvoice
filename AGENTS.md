@@ -34,11 +34,17 @@ Rules that are easy to get wrong:
   `npm run generate` and commit both.
 - A release delivered as JSON comes in with `npm run import:release -- <dir>`; it also replaces
   `corpus/` and `checker/vehicle_check.py`.
-- `site/` renders everything from `generated/` and `corpus/`. Never type a key name into a
-  template or into prose: iterate over the registry, or use `REF` (`site/lib/registry.ts`), whose
-  roles are named in `registry/registry.yaml` → `refs`.
+- `site/` is a dependency-free Node generator (`node site/build.mjs`, see `site/README.md`). It
+  renders everything from `generated/` and `corpus/`. Never type a key name into a template or into
+  prose: iterate over the registry, or use `REF` (`site/lib/registry.mjs`), whose roles are named
+  in `registry/registry.yaml` → `refs`.
+- Templates use the `html` tag from `site/lib/html.mjs`, which escapes every interpolated value.
+  `raw()` marks trusted markup built by a helper (`linkKeys`, `codeSpans`); never pass it text that
+  comes from a data file.
 - The site loads nothing from third parties, sets no cookies and has no tracking. Keep it that way;
-  the only script is `site/public/vocabulary-filter.js`.
+  the only script is `site/public/vocabulary-filter.js`. `node site/test.mjs` (part of
+  `npm run check`) fails on external loads, inline scripts and handlers, broken links and
+  missing fragments.
 - Write regular expressions with `\uXXXX` escapes, never with literal invisible characters.
 - Before committing: `npm test`, `npm run check`, `npm run build`, and `npm run test:schematron`
   when rules change. Conventional Commits.
