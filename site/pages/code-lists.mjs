@@ -104,8 +104,9 @@ export function render({ path }) {
   <div class="prose">
     <p>
       Each quantity has exactly one unit, fixed by its key and named with its UN/ECE Recommendation
-      20 code. The value is a bare number. If EN 16931-1:2026 adds a unit to item attributes
-      (BT-212; assumed, not yet checked against the standard), the code below is the one to use.
+      20 code. The value is a bare number. If EN 16931-1:2026 adds a unit to item attributes (BT-212, UN/ECE
+      Recommendations 20 and 21; documented in the XRechnung 4.0.0 pre-release, section 3.23, PDF pp. 51 to 52, but an
+      assumption until DIN EN 16931-1:2026 has been checked), the code below is the one to use.
     </p>
   </div>
   <div class="table-wrap">

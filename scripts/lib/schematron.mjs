@@ -117,7 +117,7 @@ export function schematron({ meta, keys, refs, reserved }) {
     ['V-17', 'error', `not($current and $odometer and $noReading)`, `An odometer reading is given although ${K.odometerStatus} says no reading is available.`],
     ['V-06', 'error', `not($current and $role = ('supply', 'trade-in') and $qty != '') or number($qty) = 1`, `A line with role '<value-of select="$role"/>' has quantity <value-of select="$qty"/>; one vehicle per line.`],
     ['V-07-K', 'error', `not($current and $margin) or $category != 'K'`, `${K.marginScheme} on a line with VAT category K: Art. 139(3) of Directive 2006/112/EC and § 25a(7) no. 3 UStG exclude the intra-community exemption.`],
-    ['V-07-category', 'warning', `not($current and $margin) or $category = ('E', 'F', 'G', 'K')`, `${K.marginScheme} with VAT category '<value-of select="$category"/>'; expected E (2017 model), F (assumed for the 2026 model) or G (export).`],
+    ['V-07-category', 'warning', `not($current and $margin) or $category = ('E', 'F', 'G', 'K')`, `${K.marginScheme} with VAT category '<value-of select="$category"/>'; expected E (EN 16931:2017), F (EN 16931-1:2026, assumption to be confirmed) or G (export).`],
     ['V-07-note', 'warning', `not($current and $margin) or $marginNote`, `Margin-scheme line, but no invoice note (BG-1) with the Art. 226(14) wording.`],
     ['V-07-new', 'warning', `not($current and $margin) or ${val('condition')} != 'new'`, `${K.marginScheme} together with ${K.condition} = new is unusual.`],
     ['V-08-power', 'error', `not($current and $newMeans) or ${has('power')} or ${has('engineCapacity')}`, `A new means of transport needs ${K.power} or ${K.engineCapacity}.`],

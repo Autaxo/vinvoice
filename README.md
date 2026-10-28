@@ -9,6 +9,11 @@ and every other fact is one item attribute (BG-32) named `Label [key]` with a pl
 
 Website: <https://vinvoice.org> (built from this repository).
 
+The text of EN 16931-1:2026 is not freely available (CEN and DIN sell it). What the specification says about it (margin-scheme VAT
+categories, BT-211, BT-212, category `N`) cites the XRechnung 4.0.0 pre-release of 15 September
+2026 with section and page, or is marked as an assumption to be confirmed against DIN EN
+16931-1:2026 (specification, section 12).
+
 ## What is in this repository
 
 | Path                      | Content                                                                                                                                                                                                                                | Licence                                  |

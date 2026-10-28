@@ -393,10 +393,12 @@ export function render({ path }) {
         VAT Directive; § 25a(7) no. 3 UStG).
       </li>
       <li>
-        Under EN 16931-1:2026 the revision is expected to give the margin scheme its own VAT category,
-        assumed here to be <code>F</code> (margin scheme, second-hand goods), in place of the
-        <code>E</code> workaround (assumption, see <a href="#versioning">section 12</a>). The flag MAY
-        still be given.
+        EN 16931-1:2026 is expected to give the margin schemes their own VAT categories: <code>F</code>
+        for second-hand goods, besides <code>D</code> (travel agents), <code>I</code> (works of art),
+        <code>J</code> (collectors' items and antiques), and <code>N</code> for national schemes (source:
+        XRechnung 4.0.0 pre-release, section 4.4.8, PDF pp. 98 to 99; see <a href="#versioning">section 12</a>). That
+        <code>F</code> replaces the <code>E</code> encoding, and from when, is an assumption to be
+        confirmed against DIN EN 16931-1:2026. The flag MAY still be given.
       </li>
     </ul>
     <h3>New means of transport</h3>
@@ -445,22 +447,106 @@ export function render({ path }) {
       redefined, only deprecated. The full rules are under <a href="/governance/#change-process">Governance</a>.
     </p>
     <p>
-      EN 16931-1:2026 runs in parallel with the 2017 model during a migration period. It adds no
-      vehicle terms. VINvoice rows stay unchanged under both models.
+      econnect.eu reports that CEN approved the revision EN 16931-1:2026 on 13 March 2026 and that it
+      is not backward compatible
+      (<a href="https://econnect.eu/en/docs/knowledge/document-formats/formats/en-16931-2026-wijzigingen">secondary source</a>).
+      It adds no vehicle terms that we know of. VINvoice rows stay unchanged under both models.
     </p>
-    <div class="note draft">
-      <p>
-        <strong>What is established and what is assumed.</strong> Publicly documented about the
-        revision: it supports the margin scheme, it adds a VAT category <code>N</code>, and it allows
-        exemption reasons outside category <code>E</code>. Everything else this site says about it is
-        an assumption until DIN EN 16931-1:2026 has been read, and nothing in it is a normative
-        requirement of VINvoice: the VAT category <code>F</code> for the margin scheme, an attribute
-        code (BT-211) and a unit (BT-212) in BG-32. If BT-212 exists, a row MAY repeat the unit code
-        that its key already fixes. The checker and the Schematron accept <code>F</code> next to
-        <code>E</code> and <code>G</code> for a margin-scheme line, so they work under either outcome.
-        Each assumption is replaced by a section number of the standard once it has been checked.
-      </p>
+    <p>
+      The text of DIN EN 16931-1:2026 is not freely available (it is sold by CEN and DIN) and has not
+      been read for this specification.
+      Every statement about it on this site therefore cites a public source or is marked as an
+      assumption "to be confirmed against DIN EN 16931-1:2026". The public source is the pre-release
+      of the XRechnung standard 4.0.0 of
+      <a href="https://xeinkauf.de/app/uploads/2026/09/XRechnung-4.0.0-Vorversion-2026-09-15.pdf">15 September 2026</a>
+      (KoSIT, 108 pages), which is built on EN 16931:2026: its identifier for the CIUS XRechnung is
+      <code>urn:cen.eu:en16931:2026#compliant#urn:xeinkauf.de:kosit:xrechnung_4.0</code> (PDF p. 2), and
+      the hint on BT-24 names <code>urn:cen.eu:en16931:2026</code> as the reference to the standard
+      (section 3.34, PDF p. 62). Page numbers below are PDF pages; the printed page is the PDF page minus 4. That
+      document is a national specification, not the standard itself.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Statement about EN 16931-1:2026</th>
+            <th scope="col">Source</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              VAT categories for margin schemes: <code>D</code> travel agents, <code>F</code> second-hand
+              goods, <code>I</code> works of art, <code>J</code> collectors' items and antiques, and
+              <code>N</code> for national schemes (for example used car parts).
+            </td>
+            <td>XRechnung 4.0.0 pre-release, section 4.4.8 (PDF pp. 98 to 99), rules BR-N-2 to BR-N-4</td>
+            <td>Public source (pre-release), not the standard's own clause</td>
+          </tr>
+          <tr>
+            <td>The applicable scheme can be specified in the exemption reason text and code (BT-120, BT-121).</td>
+            <td>XRechnung 4.0.0 pre-release, section 4.4.8 (PDF p. 99)</td>
+            <td>Public source (pre-release)</td>
+          </tr>
+          <tr>
+            <td>
+              XRechnung (the German CIUS, not the standard) uses category <code>N</code> for the German
+              Altteilsteuer on exchanges with a cash top-up; BT-116 then holds the taxable amount for the
+              VAT on the old part. The German rules for <code>N</code> (BR-DE-N-1) are still a placeholder.
+            </td>
+            <td>
+              XRechnung 4.0.0 pre-release, hint on BT-116 in section 3.40 (PDF p. 69); section 4.5.2, rule
+              BR-DE-N-1 (PDF p. 105)
+            </td>
+            <td>Public source (national CIUS pre-release), not a statement about EN 16931-1:2026</td>
+          </tr>
+          <tr>
+            <td>
+              BG-32 gets an item attribute code BT-211 (UNTDID 6313, 0..1) and a unit of measure code BT-212
+              (UN/ECE Recommendations 20 and 21, 0..1); the name BT-160 becomes 0..1; a BG-32 needs a name or
+              a code, and a value.
+            </td>
+            <td>
+              XRechnung 4.0.0 pre-release, section 3.23 (PDF pp. 51 to 52), rule BR-54 (PDF p. 75), Annex A
+              (PDF p. 107)
+            </td>
+            <td>Public source (pre-release). For the standard itself: assumption, to be confirmed against DIN EN 16931-1:2026</td>
+          </tr>
+          <tr>
+            <td>
+              The revision will allow the margin-scheme categories <code>D</code>, <code>F</code>,
+              <code>I</code> and <code>J</code> and the national category <code>N</code>; the date is yet
+              to be determined. The note's own summary table swaps <code>I</code> and <code>F</code>,
+              which contradicts its text; the text is followed here.
+            </td>
+            <td>
+              <a href="https://einvoice.belgium.be/sites/default/files/uploads/e-invoicing-scenario-9.pdf">FPS Finance Belgium, 25 February 2026</a>
+              (preamble, p. 1, and section 1, p. 2; summary table, p. 5)
+            </td>
+            <td>Public source (secondary)</td>
+          </tr>
+          <tr>
+            <td>
+              Category <code>F</code> replaces the <code>E</code> encoding for the margin scheme, and from when.
+            </td>
+            <td>none</td>
+            <td>Assumption, to be confirmed against DIN EN 16931-1:2026</td>
+          </tr>
+          <tr>
+            <td>The 2026 model runs in parallel with the 2017 model during a migration period.</td>
+            <td>none</td>
+            <td>Assumption, to be confirmed against DIN EN 16931-1:2026</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <p>
+      Nothing in this table is a normative requirement of VINvoice. The checker and the Schematron
+      accept <code>F</code> next to <code>E</code> and <code>G</code> for a margin-scheme line, so they
+      work under either outcome. If BT-212 exists, a row MAY repeat the unit code that its key already
+      fixes. Each assumption is replaced by a section number of the standard once it has been checked.
+    </p>
 
     <h2 id="personal-data">13. Personal data</h2>
     <p>
