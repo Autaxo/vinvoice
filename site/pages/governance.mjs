@@ -112,13 +112,13 @@ export function render({ path }) {
         REPO
           ? html`<li>
             Open a <a href="${REPO.issue('propose-key.yml')}">key proposal</a> on GitHub. Once the
-            editors agree, the key is added as a pull request with one new file under 
-            <a href="${REPO.tree('registry/keys')}">registry/keys/</a>; see 
+            editors agree, the key is added as a pull request with one new file under
+            <a href="${REPO.tree('registry/keys')}">registry/keys/</a>; see
             <a href="${REPO.file('CONTRIBUTING.md')}">CONTRIBUTING.md</a>.
           </li>`
           : html`<li>
             Send the proposal to the editors. Until the public repository opens, use the contact
-            address in the 
+            address in the
             <a href="/impressum/" hreflang="de">
               Impressum
             </a>

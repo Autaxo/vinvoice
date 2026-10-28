@@ -15,11 +15,12 @@ import {
   crosswalkFor,
   crosswalkHeader,
   registry,
+  localName,
 } from '../../lib/registry.mjs';
 import { corpusValues } from '../../lib/corpus.mjs';
 import { SITE, REPO } from '../../lib/site.mjs';
 
-/** One page per key (what getStaticPaths was): the term and its neighbours in registry order. */
+/** One page per key: the term and its neighbours in registry order. */
 export function paths() {
   return terms.map((t, i) => ({
     params: { slug: slug(t) },
@@ -41,13 +42,13 @@ export function render({ path, props: { t, prev, next } }) {
   const crosswalk = crosswalkFor(t);
   const crosswalkNote = crosswalkHeader[1]?.match(/\(([^)]*)\)/)?.[1];
   // One source file per key: registry/keys/<key without the root>.yaml
-  const keyFile = `registry/keys/${t.key.replace(/^vehicle\./, '')}.yaml`;
+  const keyFile = `registry/keys/${localName(t.key)}.yaml`;
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'DefinedTerm',
     '@id': SITE.url + termUrl(t),
-    identifier: registry.iriBase + t.key.slice(registry.root.length + 1),
+    identifier: registry.iriBase + localName(t.key),
     termCode: t.key,
     name: t.labelEn,
     alternateName: { '@language': 'de', '@value': t.labelDe },
@@ -74,7 +75,7 @@ export function render({ path, props: { t, prev, next } }) {
     <p class="lead">
       ${t.labelEn}
       <span class="muted">·</span>
-      <span lang="de">${t.labelDe}</span> 
+      <span lang="de">${t.labelDe}</span>
       ${t.statutory && html`<span class="tag statutory">statutory</span>`}
       ${t.status !== 'draft' && html`<span class="tag provisional">${t.status}</span>`}
     </p>
@@ -106,7 +107,7 @@ export function render({ path, props: { t, prev, next } }) {
     </dd>
 
     <dt>Tier</dt>
-    <dd><a href="${`/vocabulary/#tier-${t.tier}`}">${tierLabel(t.tier)}</a></dd>
+    <dd><a href="/vocabulary/#tier-${t.tier}">${tierLabel(t.tier)}</a></dd>
 
     <dt>Status</dt>
     <dd>${t.status}</dd>
@@ -139,7 +140,7 @@ export function render({ path, props: { t, prev, next } }) {
             ${unit.name}${
               unit.code &&
               html`<span class="muted">
-                 
+
                 (UN/ECE Rec. 20 code <code>${unit.code}</code>)
               </span>`
             }${unit.note && html`<span class="muted"> (${unit.note})</span>`}
@@ -159,7 +160,7 @@ export function render({ path, props: { t, prev, next } }) {
           ? lists.map(
               (l) =>
                 html`<p class="flush">
-              <a href="${`/code-lists/#${l.anchor}`}">${l.title}</a>
+              <a href="/code-lists/#${l.anchor}">${l.title}</a>
             </p>`
             )
           : html`<span>${linkKeys(t.codeList)}</span>`
@@ -235,9 +236,9 @@ export function render({ path, props: { t, prev, next } }) {
           <dd>
             <a href="${REPO.file(keyFile)}">
               <code>${keyFile}</code>
-            </a> 
-            · 
-            <a href="${`${REPO.issue('change-key.yml')}&key=${encodeURIComponent(t.key)}`}">
+            </a>
+            ·
+            <a href="${REPO.issue('change-key.yml')}&key=${encodeURIComponent(t.key)}">
               Propose a change
             </a>
           </dd>

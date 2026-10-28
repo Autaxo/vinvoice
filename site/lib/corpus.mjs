@@ -30,8 +30,10 @@ const corpusDir = path.join(ROOT, 'corpus');
 
 /** @type {CorpusFile[]} */
 export const corpus = fs
-  .readdirSync(corpusDir)
-  .filter((name) => name.endsWith('.xml'))
+  .readdirSync(corpusDir, { withFileTypes: true })
+  // Plain files only: a symlink must not pull a file from outside the repository into the site.
+  .filter((e) => e.isFile() && e.name.endsWith('.xml'))
+  .map((e) => e.name)
   .map((name) => {
     const xml = fs.readFileSync(path.join(corpusDir, name), 'utf8');
     const parts = name.replace(/\.xml$/, '').split('.');
@@ -52,7 +54,7 @@ export const corpus = fs
   .sort((a, b) => Number(a.negative) - Number(b.negative) || a.name.localeCompare(b.name));
 
 /** @param {string} name */
-export const corpusFile = (name) => corpus.find((f) => f.name === name);
+const corpusFile = (name) => corpus.find((f) => f.name === name);
 export const featured = {
   cii: /** @type {CorpusFile} */ (
     corpusFile(examples.featured.cii) ?? corpus.find((f) => f.syntax === 'CII')
@@ -209,6 +211,12 @@ export const validation = validationJson;
  */
 /** @type {Record<string, CheckerFile>} */
 export const checker = checkerJson;
+
+/**
+ * Number of problems one validator found in one file (XSD errors, or failed asserts and reports).
+ * @param {SvrlResult | XsdResult} r
+ */
+export const problemsOf = (r) => ('errors' in r ? r.errors : r.failedAsserts + r.reports);
 
 /**
  * Conformance levels found by the reference checker in a file.

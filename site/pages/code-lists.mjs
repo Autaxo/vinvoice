@@ -39,7 +39,7 @@ export function render({ path }) {
       ${own.map(
         (l) =>
           html`<li>
-            <a href="${`#${l.anchor}`}">${l.title}</a>
+            <a href="#${l.anchor}">${l.title}</a>
           </li>`
       )}
       <li><a href="#external">External code lists</a></li>
@@ -64,7 +64,7 @@ export function render({ path }) {
           <code>${l.title}</code>
         </h3>
         ${l.terms.length > 0 && html`<p>${usedBy(l)}</p>`}
-        <ul class="tokens" aria-label="${`Tokens of ${l.title}`}">
+        <ul class="tokens" aria-label="Tokens of ${l.title}">
           ${l.tokens.map(
             (tok) =>
               html`<li>
@@ -88,7 +88,7 @@ export function render({ path }) {
       html`<section aria-labelledby="${l.anchor}">
         <h3 id="${l.anchor}">${l.title}</h3>
         ${l.terms.length > 0 && html`<p>${usedBy(l)}</p>`}
-        <ul class="tokens" aria-label="${`Codes of ${l.title}`}">
+        <ul class="tokens" aria-label="Codes of ${l.title}">
           ${l.tokens.map(
             (tok) =>
               html`<li>

@@ -144,7 +144,7 @@ export const termUrl = (t) => `/vocabulary/${slug(t)}/`;
 /** @param {string} key */
 export const findTerm = (key) => terms.find((t) => t.key === key);
 /** @param {string} key */
-export const findReserved = (key) => reserved.find((r) => r.key === key);
+const findReserved = (key) => reserved.find((r) => r.key === key);
 
 /**
  * National keys carry a two-letter country scope after the root (naming rule NR-02).
@@ -219,10 +219,10 @@ export function linkKeys(text) {
   return raw(
     escape(text).replace(KEY_RE, (key) => {
       const t = findTerm(key);
-      if (t) return html`<a href="${termUrl(t)}"><code>${key}</code></a>`.value;
+      if (t) return String(html`<a href="${termUrl(t)}"><code>${key}</code></a>`);
       if (findReserved(key))
-        return html`<a href="/vocabulary/#reserved"><code>${key}</code></a>`.value;
-      return html`<code>${key}</code>`.value;
+        return String(html`<a href="/vocabulary/#reserved"><code>${key}</code></a>`);
+      return String(html`<code>${key}</code>`);
     })
   );
 }

@@ -3,7 +3,7 @@ import { PageHead } from '../components/page-head.mjs';
 import { Key } from '../components/key.mjs';
 import { html } from '../lib/html.mjs';
 import { REF, linkKeys, registry, prefix } from '../lib/registry.mjs';
-import { corpus, validation, checker, levels } from '../lib/corpus.mjs';
+import { corpus, validation, checker, levels, problemsOf } from '../lib/corpus.mjs';
 import { REPO } from '../lib/site.mjs';
 
 /** @type {Record<string, string>} */
@@ -21,8 +21,6 @@ const SHORT = {
 const validators = validation.validators.filter((v) =>
   Object.values(validation.files).some((r) => r[v.id])
 );
-/** @param {import('../lib/corpus.mjs').SvrlResult | import('../lib/corpus.mjs').XsdResult} r */
-const problemsOf = (r) => ('errors' in r ? r.errors : r.failedAsserts + r.reports);
 
 const summary = validators.map((v) => {
   const results = corpus.map((f) => validation.files[f.name]?.[v.id]).filter(Boolean);
@@ -83,7 +81,7 @@ export function render({ path }) {
               <th scope="row">${s.name}</th>
               <td class="num">${s.files}</td>
               <td class="num">${s.kind === 'svrl' ? s.fired : '–'}</td>
-              <td class="${`num ${s.problems ? 'err' : 'ok'}`}">${s.problems}</td>
+              <td class="num ${s.problems ? 'err' : 'ok'}">${s.problems}</td>
             </tr>`
         )}
       </tbody>
@@ -116,14 +114,14 @@ export function render({ path }) {
           (f) =>
             html`<tr>
               <th scope="row">
-                <a href="${`/examples/#${f.name}`}">
+                <a href="/examples/#${f.name}">
                   <code>${f.name}</code>
                 </a>
               </th>
               ${validators.map((v) => {
                 const r = validation.files[f.name]?.[v.id];
                 return r
-                  ? html`<td class="${`num ${problemsOf(r) ? 'err' : 'ok'}`}">${problemsOf(r)}</td>`
+                  ? html`<td class="num ${problemsOf(r) ? 'err' : 'ok'}">${problemsOf(r)}</td>`
                   : html`<td class="num muted">–</td>`;
               })}
               <td class="small">
@@ -172,7 +170,7 @@ export function render({ path }) {
       without dependencies, licensed under Apache-2.0${
         REPO
           ? html`
-             
+
             (<a href="${REPO.file('checker/vehicle_check.py')}">checker/vehicle_check.py</a>)
           `
           : ''
@@ -328,7 +326,7 @@ export function render({ path }) {
     (f) =>
       html`<details>
         <summary>
-          <code>${f.name}</code> 
+          <code>${f.name}</code>
           <span class="muted small">(${findings(f.name).length} findings)</span>
         </summary>
         <p class="small">${f.description}</p>

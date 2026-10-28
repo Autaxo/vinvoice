@@ -1,6 +1,6 @@
 import { Base } from '../layouts/base.mjs';
 import { PageHead } from '../components/page-head.mjs';
-import { html } from '../lib/html.mjs';
+import { html, httpUrl } from '../lib/html.mjs';
 import { readJson } from '../lib/paths.mjs';
 import { corpus } from '../lib/corpus.mjs';
 import { REPO } from '../lib/site.mjs';
@@ -53,7 +53,7 @@ export function render({ path }) {
               (i) =>
                 html`<tr>
                 <td>
-                  <a href="${i.url}">${i.name}</a>
+                  <a href="${httpUrl(i.url)}">${i.name}</a>
                 </td>
                 <td>${i.organisation}</td>
                 <td>${i.role}</td>
@@ -89,14 +89,14 @@ export function render({ path }) {
       <li>
         Send the editors the name of the software, your organisation, whether it writes or reads,
         the conformance level (0, 1 or 2), the syntaxes (CII, UBL), the registry version you
-        implement and a public link to your documentation. 
+        implement and a public link to your documentation.
         ${
           REPO
             ? html`
               Use the <a href="${REPO.issue('list-implementation.yml')}">listing form</a> on GitHub.
             `
             : html`
-              Until the public repository opens, use the contact address in the 
+              Until the public repository opens, use the contact address in the
               <a href="/impressum/" hreflang="de">
                 Impressum
               </a>

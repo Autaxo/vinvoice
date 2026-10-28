@@ -9,7 +9,6 @@ import { registry, terms } from '../../lib/registry.mjs';
 
 const positive = corpus.filter((f) => !f.negative);
 const negative = corpus.filter((f) => f.negative);
-const bytes = (/** @type {string} */ s) => new TextEncoder().encode(s).length;
 /** @type {Record<string, string>} */
 const LICENCE_URL = {
   'CC0 1.0': 'https://creativecommons.org/publicdomain/zero/1.0/',
@@ -85,7 +84,7 @@ export function render({ path }) {
           (d) =>
             html`<tr>
               <td>
-                <a href="${`/downloads/${d.file}`}" download>
+                <a href="/downloads/${d.file}" download>
                   <code>${d.file}</code>
                 </a>
               </td>
@@ -93,7 +92,7 @@ export function render({ path }) {
               <td class="nowrap">
                 <a href="/governance/#licences">${d.licence}</a>
               </td>
-              <td class="num">${formatBytes(bytes(d.body))}</td>
+              <td class="num">${formatBytes(d.bytes)}</td>
             </tr>`
         )}
       </tbody>
@@ -125,7 +124,7 @@ export function render({ path }) {
     ([id, title, files]) =>
       html`<div class="table-wrap">
         <table>
-          <caption id="${`corpus-${id}`}">${title}</caption>
+          <caption id="corpus-${id}">${title}</caption>
           <thead>
             <tr>
               <th scope="col">File</th>
@@ -142,7 +141,7 @@ export function render({ path }) {
               (f) =>
                 html`<tr id="${f.name}">
                 <td>
-                  <a href="${`/examples/${f.name}`}">
+                  <a href="/examples/${f.name}">
                     <code>${f.name}</code>
                   </a>
                 </td>

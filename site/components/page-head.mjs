@@ -2,7 +2,7 @@ import { html } from '../lib/html.mjs';
 
 /**
  * Breadcrumbs, the page title and a lead paragraph. `children` is further html`` that follows the
- * lead (what the default slot was in PageHead.astro).
+ * lead.
  * @param {object} props
  * @param {string} props.title
  * @param {string} [props.lead]

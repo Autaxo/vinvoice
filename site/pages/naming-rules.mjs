@@ -96,7 +96,7 @@ export function render({ path }) {
       ${rules.map(
         (r) =>
           html`<li>
-            <a href="${`#${r.anchor}`}">
+            <a href="#${r.anchor}">
               ${r.id} ${r.title}
             </a>
           </li>`

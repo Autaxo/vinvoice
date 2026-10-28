@@ -1,5 +1,5 @@
 // The page shell: head, header with navigation, status banner, footer. Pages call Base(meta, body)
-// where body is the html`` of the page's content (what <slot /> was in Base.astro).
+// where body is the html`` of the page's content.
 import { attr, html, raw } from '../lib/html.mjs';
 import { SITE, NAV, REPO } from '../lib/site.mjs';
 import { registry, markerValue } from '../lib/registry.mjs';
@@ -27,7 +27,7 @@ const jsonLdText = (data) => raw(JSON.stringify(data).replace(/</g, '\\u003c'));
 export function Base({ path, title, description, jsonLd, lang = 'en', noindex = false }, body) {
   const canonical = new URL(path, SITE.url).href;
   const fullTitle = path === '/' ? `${SITE.name}: ${SITE.tagline}` : `${title} · ${SITE.name}`;
-  const current = (/** @type {string} */ href) => path === href || path.startsWith(href);
+  const current = (/** @type {string} */ href) => path.startsWith(href);
   return html`<!doctype html>
 <html lang="en">
   <head>
@@ -59,7 +59,7 @@ export function Base({ path, title, description, jsonLd, lang = 'en', noindex = 
     <a class="skip" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="wrap">
-        <a class="brand" href="/" aria-label="${`${SITE.name} home`}">
+        <a class="brand" href="/" aria-label="${SITE.name} home">
           <img src="/favicon.svg" alt="" width="34" height="34" />
           <div>
             <strong class="wordmark"><span>VIN</span>voice</strong>

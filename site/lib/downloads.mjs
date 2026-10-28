@@ -6,13 +6,14 @@ import { readText } from './paths.mjs';
  * @typedef {object} Download
  * @property {string} file
  * @property {string} body
+ * @property {number} bytes size of body in bytes
  * @property {string} type
  * @property {string} licence
  * @property {string} description
  */
 
-/** @type {Download[]} */
-export const downloads = [
+/** @type {Omit<Download, 'bytes'>[]} */
+const sources = [
   {
     file: 'registry.json',
     body: readText('generated/registry.json'),
@@ -61,3 +62,9 @@ export const downloads = [
       'Informative mapping of each key to related vocabularies and message standards, such as schema.org and VDA 4938, with sources.',
   },
 ];
+
+/** @type {Download[]} */
+export const downloads = sources.map((d) => ({
+  ...d,
+  bytes: new TextEncoder().encode(d.body).length,
+}));

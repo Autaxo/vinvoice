@@ -3,14 +3,11 @@ import { Rows } from '../components/rows.mjs';
 import { Key } from '../components/key.mjs';
 import { html } from '../lib/html.mjs';
 import { REF, markerValue, terms, tiers, tierLabel, termsByTier } from '../lib/registry.mjs';
-import { corpus, featured, validation } from '../lib/corpus.mjs';
+import { corpus, featured, validation, problemsOf } from '../lib/corpus.mjs';
 import { SITE } from '../lib/site.mjs';
 
 const runs = Object.values(validation.files).flatMap((r) => Object.values(r));
-const problems = runs.reduce(
-  (n, r) => n + ('errors' in r ? r.errors : r.failedAsserts + r.reports),
-  0
-);
+const problems = runs.reduce((n, r) => n + problemsOf(r), 0);
 
 const sections = [
   {
@@ -99,7 +96,7 @@ export function render({ path }) {
     <h2 id="example">Example: a used car on one invoice line</h2>
     <p>
       The rows of a dealer-to-dealer sale under the margin scheme, as they appear in the Factur-X
-      invoice <a href="${`/examples/#${featured.cii.name}`}"><code>${featured.cii.name}</code></a>. A
+      invoice <a href="/examples/#${featured.cii.name}"><code>${featured.cii.name}</code></a>. A
       viewer shows the readable label; software reads only the key in brackets.
     </p>
   </div>

@@ -5,6 +5,8 @@
 //
 // A page module is one file below site/pages and exports
 //   render({ path, params, props })  the page: html`` for a page, a string for a file
+// Every .mjs file below site/pages is a page. Shared helpers belong in site/lib or
+// site/components.
 //   paths()                          only for dynamic routes ([name] in the file name): a list of
 //                                    { params, props }, one entry per output
 //   kind = 'file'                    only for files that are not HTML pages (llms.txt, sitemap.xml,
@@ -19,7 +21,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { DIST, SITE_DIR } from './lib/paths.mjs';
-import { text } from './lib/html.mjs';
+import { isHtml, toHtmlString } from './lib/html.mjs';
 import { STYLESHEET } from './layouts/base.mjs';
 
 const PAGES_DIR = path.join(SITE_DIR, 'pages');
@@ -35,6 +37,14 @@ function pageModules(dir = PAGES_DIR) {
   }
   return found.sort();
 }
+
+/**
+ * What a page module's render() is given.
+ * @typedef {object} PageContext
+ * @property {string} path URL path of the page, e.g. "/vocabulary/make/"
+ * @property {Record<string, string>} params values of the [name] parts of the file name
+ * @property {any} props whatever paths() returned for this output
+ */
 
 /**
  * Where an output goes: the file in dist and the URL path pages see as their own.
@@ -86,6 +96,8 @@ export async function build(outDir = DIST) {
   let pages = 0;
   for (const rel of pageModules()) {
     const mod = await import(pathToFileURL(path.join(PAGES_DIR, rel)).href);
+    if (typeof mod.render !== 'function')
+      throw new Error(`[build] site/pages/${rel} must export a function render()`);
     const isFile = mod.kind === 'file';
     const stem = rel.slice(0, -'.mjs'.length).split(path.sep).join('/');
     const entries = mod.paths ? mod.paths() : [{ params: {}, props: {} }];
@@ -97,7 +109,11 @@ export async function build(outDir = DIST) {
       });
       const { file, urlPath } = target(route, isFile);
       const out = mod.render({ path: urlPath, params, props });
-      write(file, isFile ? String(out) : text(out), `site/pages/${rel}`);
+      if (isFile ? typeof out !== 'string' : !isHtml(out))
+        throw new Error(
+          `[build] site/pages/${rel}: render() must return ${isFile ? 'a string' : 'html``'}`
+        );
+      write(file, isFile ? out : toHtmlString(out), `site/pages/${rel}`);
       if (!isFile) pages++;
     }
   }

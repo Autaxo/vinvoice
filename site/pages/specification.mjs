@@ -83,7 +83,7 @@ export function render({ path }) {
       ${toc.map(
         ([id, label]) =>
           html`<li>
-            <a href="${`#${id}`}">${label}</a>
+            <a href="#${id}">${label}</a>
           </li>`
       )}
     </ol>

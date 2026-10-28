@@ -42,8 +42,28 @@ and `null`, `undefined`, `false` and `true` print nothing:
 html`<ul>${items.map((i) => html`<li>${i.name}</li>`)}</ul>`;
 ```
 
+Guard optional markup with a boolean (`items.length > 0 && html...`), never with a number or a
+string: `0` and `''` are values and print. An object that is not `html`, `raw()` or an array throws,
+so a mixed-up argument fails the build. A link to an address from a data file goes through
+`httpUrl()` (only http and https), for example `<a href="${httpUrl(i.url)}">`.
+
 Registry text that contains key names goes through `linkKeys()`, which returns trusted markup.
 Never type a key name into a template: use `REF` or iterate over `terms` (`lib/registry.mjs`).
+
+## Common tasks
+
+- **Change text:** edit the module in `pages/` (for example `pages/specification.mjs`), then
+  `npm run check`.
+- **Add a page:** create `pages/foo.mjs` with `export function render({ path })` that returns
+  `Base({ path, title, description }, html`...`)`. To show it in the header, add it to `NAV` in
+  `lib/site.mjs`; to list it in the sitemap, add it in `pages/sitemap.xml.mjs` unless `NAV` has it.
+  `npm run check` reports a page that is missing from the sitemap and every broken link.
+- **Change a term page:** `pages/vocabulary/[slug].mjs`. The data comes from `registry/`; edit the
+  YAML there and run `npm run generate`, not the page.
+- **Add a helper:** in `lib/` or `components/`. Every `.mjs` file in `pages/` is built as a page.
+
+The `@param` and `@type` comments in the code are documentation. Nothing checks them: no type
+checker is installed. An editor with TypeScript support shows them as hints.
 
 ## Rules
 

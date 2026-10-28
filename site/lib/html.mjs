@@ -4,6 +4,10 @@
 //   html`<a href="${url}">${label}</a>`      -> escaped
 //   html`<ul>${items.map((i) => html`<li>${i}</li>`)}</ul>`   -> arrays are flattened
 //   html`${cond && html`<b>yes</b>`}`        -> null, undefined, false and true print nothing
+//
+// Guard with a boolean (`n > 0 && html...`), never with a number or a string: 0 and '' are values
+// and print as "0" and "". A plain object (not html``, raw() or an array) throws, so a mixed-up
+// argument fails the build instead of printing [object Object].
 //   raw('<b>x</b>')                          -> inserted as written
 //
 // html`` returns a Raw value, so nesting one template in another does not escape it twice. The
@@ -35,10 +39,12 @@ export const escape = (s) => String(s).replace(/[&<>"']/g, (c) => ESCAPES[c]);
 export const raw = (s) => new Raw(String(s));
 
 /** @param {unknown} v */
-function render(v) {
+function renderValue(v) {
   if (v === null || v === undefined || v === false || v === true) return '';
   if (v instanceof Raw) return v.value;
-  if (Array.isArray(v)) return v.map(render).join('');
+  if (Array.isArray(v)) return v.map(renderValue).join('');
+  if (typeof v === 'object')
+    throw new TypeError(`html: cannot print an object (${v.constructor?.name ?? 'object'})`);
   return escape(v);
 }
 
@@ -50,7 +56,7 @@ function render(v) {
  */
 export function html(strings, ...values) {
   let out = strings[0];
-  for (let i = 0; i < values.length; i++) out += render(values[i]) + strings[i + 1];
+  for (let i = 0; i < values.length; i++) out += renderValue(values[i]) + strings[i + 1];
   return new Raw(out);
 }
 
@@ -66,6 +72,26 @@ export const attr = (name, value) =>
     : raw(` ${name}="${escape(value)}"`);
 
 /** The finished string of a template, raw value or plain text. */
-export const text = (/** @type {unknown} */ v) => render(v);
+export const toHtmlString = (/** @type {unknown} */ v) => renderValue(v);
+
+/** True for the result of html`` and raw(). */
+export const isHtml = (/** @type {unknown} */ v) => v instanceof Raw;
+
+/**
+ * A web address from a data file, for an href. Throws unless it is an http(s) URL, so data cannot
+ * put a javascript: or data: link on a page. The result is still escaped by html``.
+ * @param {string} value
+ */
+export function httpUrl(value) {
+  let u;
+  try {
+    u = new URL(value);
+  } catch {
+    throw new Error(`not a URL: ${value}`);
+  }
+  if (u.protocol !== 'https:' && u.protocol !== 'http:')
+    throw new Error(`only http(s) URLs may be linked, got ${value}`);
+  return value;
+}
 
 /** @typedef {ReturnType<typeof html>} Html */

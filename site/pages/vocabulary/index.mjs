@@ -68,8 +68,8 @@ export function render({ path }) {
 
   ${tiers.map(
     (tier) =>
-      html`<section aria-labelledby="${`tier-${tier}`}" data-tier>
-        <h2 id="${`tier-${tier}`}">
+      html`<section aria-labelledby="tier-${tier}" data-tier>
+        <h2 id="tier-${tier}">
           ${tierLabel(tier)} <span class="muted">(${termsByTier(tier).length})</span>
         </h2>
         ${tierText[tier] && html`<p class="prose">${tierText[tier]}</p>`}
@@ -107,7 +107,7 @@ export function render({ path }) {
                     <td class="small">${valueSummary(t)}</td>
                     <td class="small">${unit ? unit.name : ''}</td>
                     <td>
-                      ${t.statutory && html`<span class="tag statutory">statutory</span>`} 
+                      ${t.statutory && html`<span class="tag statutory">statutory</span>`}
                       ${t.status !== 'draft' && html`<span class="tag provisional">${t.status}</span>`}
                     </td>
                   </tr>`;
