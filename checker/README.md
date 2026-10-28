@@ -8,7 +8,7 @@ V-22). It never rejects an invoice. Python standard library only.
 python3 -I checker/vehicle_check.py generated/registry.json invoice.xml [more.xml ...]
 ```
 
-Grammars, labels, the statutory flag, `labelRequiredWhen` and the reserved names come from `registry.json`. This
+Grammars, labels, the statutory flag, the `labelRequired*` fields and the reserved names come from `registry.json`. This
 repository is the source of `vehicle_check.py`: change the checker here, together with
 `test_rules.py`, the Schematron generator and the pages (see "When a rule changes" in
 [site/README.md](../site/README.md)). `npm run import:release` copies a `vehicle_check.py` from an
@@ -19,7 +19,7 @@ the checker, so do not run it for a checker change. Vendor rows (reverse-DNS nam
 - `test_corpus.py`: regression test against `corpus/checker-expected.json`
   (`python3 -I -m unittest discover -s checker -v`).
 - `test_rules.py`: rule tests on small variants of corpus files (BT-128 scheme `VT`, V-04, V-05,
-  V-11 for `labelRequiredWhen`).
+  V-11 for `labelRequiredWhen`, `labelRequiredVatCategory` and `labelRequiredSellerCountry`).
 - `compare_schematron.py`: checks that `generated/vinvoice.sch` reports the same errors and
   warnings on the corpus (run through `npm run test:schematron`).
 

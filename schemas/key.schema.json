@@ -48,6 +48,16 @@
       "type": "string",
       "pattern": "^[a-z]+(\\.[a-z][A-Za-z0-9]*)+$"
     },
+    "labelRequiredVatCategory": {
+      "description": "Optional, only with labelRequiredWhen. VAT category code (BT-151, line level) that narrows the case: the labelled form is mandatory only on a line of this category, for example K (intra-Community supply) for the particulars of DE UStG §14a(4).",
+      "type": "string",
+      "pattern": "^[A-Z]{1,2}$"
+    },
+    "labelRequiredSellerCountry": {
+      "description": "Optional, only with labelRequiredWhen. ISO 3166-1 alpha-2 country of the seller's postal address (BT-40) that narrows the case: a national particular binds only the issuer in its state (naming rule NR-27), for example DE for DE UStG §14a(4).",
+      "type": "string",
+      "pattern": "^[A-Z]{2}$"
+    },
     "repeatable": {
       "description": "True if the key may appear more than once on a line.",
       "type": "boolean"

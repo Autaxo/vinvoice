@@ -85,19 +85,40 @@ export function schematron({ meta, keys, refs, reserved }) {
   const K = refs; // role -> full key
   const keyRe = meta.keyGrammar.replace(/^\^/, '').replace(/\$$/, '');
   const statutory = keys.filter((k) => k.statutory).map((k) => k.key);
-  // labelRequiredWhen: condition key -> keys that must be labelled while the condition is true
+  // labelRequiredWhen (with the optional VAT category and seller country): the keys that must be
+  // labelled in a case, one group and one assert per case
+  const caseOf = (k) =>
+    [
+      k.labelRequiredWhen,
+      k.labelRequiredVatCategory ?? '',
+      k.labelRequiredSellerCountry ?? '',
+    ].join('|');
   const conditional = [
     ...Map.groupBy(
       keys.filter((k) => k.labelRequiredWhen),
-      (k) => k.labelRequiredWhen
+      caseOf
     ),
-  ];
-  const conditionalTest = conditional
-    .map(
-      ([cond, ks]) =>
-        `($key = ${seq(ks.map((k) => k.key))} and vv:fact($line, ${str(cond)}) = 'true')`
-    )
-    .join(' or ');
+  ].map(([id, ks]) => {
+    const {
+      labelRequiredWhen: cond,
+      labelRequiredVatCategory: cat,
+      labelRequiredSellerCountry: ctry,
+    } = ks[0];
+    const test = [
+      `$key = ${seq(ks.map((k) => k.key))}`,
+      `vv:fact($line, ${str(cond)}) = 'true'`,
+      ...(cat ? [`$lineCategory = ${str(cat)}`] : []),
+      ...(ctry ? [`$sellerCountry = ${str(ctry)}`] : []),
+    ].join(' and ');
+    const where = [
+      `${cond} is true`,
+      cat && `VAT category ${cat}`,
+      ctry && `seller country ${ctry}`,
+    ]
+      .filter(Boolean)
+      .join(', ');
+    return { id, cond, test, where };
+  });
   const repeatable = keys.filter((k) => k.repeatable).map((k) => k.key);
   const known = keys.map((k) => k.key);
   const reservedKeys = reserved.map((r) => r.key);
@@ -150,9 +171,7 @@ export function schematron({ meta, keys, refs, reserved }) {
     ['V-02', 'error', `not($current) or $key = '' or not($key = ${seq(known)}) or vv:valid($key, $value)`, `<value-of select="$key"/> = '<value-of select="$value"/>' does not match its grammar; readers drop the value.`],
     ['V-14', 'error', `$key = '' or not(ram:ValueMeasure or cbc:ValueQuantity)`, `Row '<value-of select="$name"/>' uses a measure or quantity element; BT-161 stays in the text value.`],
     ['V-11-statutory', 'error', `not($current and $bare and $key = ${seq(statutory)})`, `The statutory key <value-of select="$key"/> must be written with its label.`],
-    ...(conditional.length
-      ? [['V-11-conditional', 'error', `not($current and $bare and (${conditionalTest}))`, `<value-of select="$key"/> must be written with its label on a line where the condition key of its registry entry (labelRequiredWhen) is true.`]]
-      : []),
+    ...conditional.map((c, i) => [conditional.length > 1 ? `V-11-conditional-${i + 1}` : 'V-11-conditional', 'error', `not($current and $bare and ${c.test})`, `<value-of select="$key"/> must be written with its label on a line where ${c.where} (labelRequiredWhen).`]),
     ['V-11-key-length', 'information', `not($current) or string-length($key) le ${meta.keyCap}`, `Key <value-of select="$key"/> is longer than ${meta.keyCap} characters.`],
     ['V-11-name-length', 'information', `not($current) or $key = '' or string-length($name) le ${meta.nameCap}`, `Row name '<value-of select="$name"/>' is longer than ${meta.nameCap} characters.`],
     ['V-11-label', 'information', `not($current) or $bare or $key = '' or not($key = ${seq(known)}) or concat($key, '|', $label) = ${seq(labels)}`, `Label '<value-of select="$label"/>' is not a registry label of <value-of select="$key"/>.`],
@@ -259,6 +278,8 @@ ${lineAsserts.map(assert).join('\n')}
     <rule context="ram:ApplicableProductCharacteristic | cac:AdditionalItemProperty">
       <let name="line" value="(ancestor::ram:IncludedSupplyChainTradeLineItem | ancestor::cac:InvoiceLine | ancestor::cac:CreditNoteLine)[1]"/>
       <let name="current" value="exists($line) and vv:current($line)"/>
+      <let name="lineCategory" value="normalize-space(string(($line/ram:SpecifiedLineTradeSettlement/ram:ApplicableTradeTax/ram:CategoryCode, $line/cac:Item/cac:ClassifiedTaxCategory/cbc:ID)[1]))"/>
+      <let name="sellerCountry" value="normalize-space(string((/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:SellerTradeParty/ram:PostalTradeAddress/ram:CountryID, /*/cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode)[1]))"/>
       <let name="name" value="vv:name(.)"/>
       <let name="key" value="vv:key(.)"/>
       <let name="bare" value="$name = $key"/>

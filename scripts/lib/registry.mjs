@@ -31,12 +31,18 @@ export const SOURCE_ORDER = [
   'conditionality',
   'statutory',
   'labelRequiredWhen',
+  'labelRequiredVatCategory',
+  'labelRequiredSellerCountry',
   'repeatable',
   'carrier',
   'anchors',
 ];
 /** Fields a key file may leave out (they are then absent, not null, in the source and in the JSON). */
-export const OPTIONAL_FIELDS = ['labelRequiredWhen'];
+export const OPTIONAL_FIELDS = [
+  'labelRequiredWhen',
+  'labelRequiredVatCategory',
+  'labelRequiredSellerCountry',
+];
 /** Field order of a key in generated/registry.json. */
 export const JSON_ORDER = [
   'key',
@@ -44,6 +50,8 @@ export const JSON_ORDER = [
   'status',
   'statutory',
   'labelRequiredWhen',
+  'labelRequiredVatCategory',
+  'labelRequiredSellerCountry',
   'repeatable',
   'unit',
   'representationTerm',
@@ -188,6 +196,17 @@ export function check({ meta, byLocal, tokenLists, reserved, naming, crosswalk }
       err(`${where}: labelRequiredWhen must name an indicator with the token true`);
     }
     if (k.statutory) err(`${where}: a statutory key is always labelled; drop labelRequiredWhen`);
+  }
+  // The case narrowing fields only qualify labelRequiredWhen.
+  for (const [local, k] of byLocal) {
+    const where = `registry/keys/${local}.yaml`;
+    for (const f of ['labelRequiredVatCategory', 'labelRequiredSellerCountry']) {
+      if (k[f] === undefined) continue;
+      if (k.labelRequiredWhen === undefined) err(`${where}: ${f} needs labelRequiredWhen`);
+      if (typeof k[f] !== 'string' || !/^[A-Z]{1,2}$/.test(k[f])) {
+        err(`${where}: ${f} must be one or two upper-case letters`);
+      }
+    }
   }
 
   // Every key mentioned in a key's text must exist or be reserved (catches stale names).

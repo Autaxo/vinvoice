@@ -15,10 +15,14 @@ tokens: []
 codeList: "unit fixed: cubic centimetre (Rec 20 CMQ)"
 conditionality: SHOULD for vehicles with a combustion engine; with newMeansOfTransportIndicator =
   true this key or maximumNetPowerKw MUST be present (V-08; more-than-48-cm3 threshold of Art.
-  2(2)(a)(i)) and, as a national invoice particular (DE UStG §14a(4) with §1b(2)), MUST then be
-  written with its label (V-11)
+  2(2)(a)(i)). On a line with that indicator = true and VAT category K (intra-Community supply)
+  from a German seller (BT-40 = DE), the row MUST be written with its label as a national invoice
+  particular for a motorised land vehicle (DE UStG §14a(4) with §1b(2) no. 1; V-11); on other
+  lines it MAY be bare
 statutory: false
 labelRequiredWhen: vehicle.newMeansOfTransportIndicator
+labelRequiredVatCategory: K
+labelRequiredSellerCountry: DE
 repeatable: false
 carrier: "BG-32: BT-160 'Hubraum (cm3) [vehicle.engineCapacityCm3]', BT-161 '1968'"
 anchors: "Directive 1999/37/EC code P.1 'capacity (in cm3)'; CoC item 25 'Engine capacity' (DE

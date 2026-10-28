@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Rule tests on small variants of corpus files: the VIN rules (BT-128 scheme VT, V-04, V-05) and V-11 (labelRequiredWhen).
+"""Rule tests on small variants of corpus files: the VIN rules (BT-128 scheme VT, V-04, V-05) and V-11 (labelRequiredWhen, with its VAT category and seller country).
 
 The corpus itself is covered by test_corpus.py; these cases would need new corpus files with
 validator results, so they are derived in memory from sale-25a.fx.cii.xml instead.
@@ -214,6 +214,26 @@ class NewVehicleNationalParticulars(unittest.TestCase):
         self.assertEqual(rules(out, 'V-11'), [])
         self.assertEqual([f for f in out['findings'] if f['severity'] in ('error', 'warning')], [])
 
+    def test_bare_power_from_a_seller_in_another_state_is_no_error(self):
+        xml = bare(NEW_VEHICLE, POWER_LABEL, 'vehicle.maximumNetPowerKw')
+        seller = xml.index('<ram:SellerTradeParty>')
+        xml = xml[:seller] + xml[seller:].replace('<ram:CountryID>DE</ram:CountryID>', '<ram:CountryID>FR</ram:CountryID>', 1)
+        self.assertIn('<ram:CountryID>FR</ram:CountryID>', xml)
+        self.assertEqual(rules(findings(xml), 'V-11'), [])
+
+    def test_bare_power_on_a_line_outside_category_k_is_no_error(self):
+        xml = bare(NEW_VEHICLE, POWER_LABEL, 'vehicle.maximumNetPowerKw')
+        xml = xml.replace('<ram:CategoryCode>K</ram:CategoryCode>', '<ram:CategoryCode>S</ram:CategoryCode>', 1)
+        self.assertEqual(rules(findings(xml), 'V-11'), [])
+
+    def test_one_labelled_row_next_to_a_bare_one_is_still_an_error(self):
+        xml = bare(NEW_VEHICLE, CAPACITY_LABEL, 'vehicle.engineCapacityCm3')
+        self.assertEqual([s for s, m in rules(findings(xml), 'V-11')], ['error'])
+
+    def test_seller_country_is_read_from_ubl(self):
+        ubl = vehicle_check.parse(str(ROOT / 'corpus/sale-25a.peppol.ubl.xml'))
+        self.assertEqual(ubl['seller'], 'DE')
+
     def test_statutory_key_is_still_an_error_when_bare(self):
         xml = bare(NEW_VEHICLE, 'Neues Fahrzeug (USt) [vehicle.newMeansOfTransportIndicator]', 'vehicle.newMeansOfTransportIndicator')
         self.assertEqual([s for s, m in rules(findings(xml), 'V-11')], ['error'])
@@ -224,6 +244,11 @@ class RegistryField(unittest.TestCase):
         conditional = {k['key']: k['labelRequiredWhen'] for k in REGISTRY['keys'] if 'labelRequiredWhen' in k}
         self.assertEqual(conditional, {'vehicle.maximumNetPowerKw': 'vehicle.newMeansOfTransportIndicator',
                                        'vehicle.engineCapacityCm3': 'vehicle.newMeansOfTransportIndicator'})
+
+    def test_the_case_is_german_intra_community_supply(self):
+        for k in REGISTRY['keys']:
+            if 'labelRequiredWhen' in k:
+                self.assertEqual((k['labelRequiredVatCategory'], k['labelRequiredSellerCountry']), ('K', 'DE'), k['key'])
 
     def test_they_stay_non_statutory(self):
         statutory = {k['key'] for k in REGISTRY['keys'] if k['statutory']}

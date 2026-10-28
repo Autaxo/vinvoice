@@ -126,6 +126,7 @@ def parse(path):
         doc['notes'] = [n.text or '' for n in root.findall('rsm:ExchangedDocument/ram:IncludedNote/ram:Content', NS)]
         d = t(root, './/ram:ApplicableHeaderTradeDelivery/ram:ActualDeliverySupplyChainEvent/ram:OccurrenceDateTime/udt:DateTimeString') \
             or t(root, 'rsm:ExchangedDocument/ram:IssueDateTime/udt:DateTimeString')
+        doc['seller'] = t(root, 'rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:SellerTradeParty/ram:PostalTradeAddress/ram:CountryID')
         doc['refDate'] = datetime.date(int(d[:4]), int(d[4:6]), int(d[6:8])) if d else None
         doc['bt18'] = [(t(x, 'ram:IssuerAssignedID'), t(x, 'ram:ReferenceTypeCode'))
                        for x in root.findall('.//ram:ApplicableHeaderTradeAgreement/ram:AdditionalReferencedDocument', NS)
@@ -147,6 +148,7 @@ def parse(path):
         doc['typeCode'] = t(root, 'cbc:InvoiceTypeCode') or t(root, 'cbc:CreditNoteTypeCode')
         doc['notes'] = [n.text or '' for n in root.findall('cbc:Note', NS)]
         d = t(root, 'cac:Delivery/cbc:ActualDeliveryDate') or t(root, 'cbc:IssueDate')
+        doc['seller'] = t(root, 'cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode')
         doc['refDate'] = datetime.date.fromisoformat(d) if d else None
         doc['bt18'] = [(t(x, 'cbc:ID'), x.find('cbc:ID', NS).get('schemeID'))
                        for x in root.findall('cac:AdditionalDocumentReference', NS) if t(x, 'cbc:DocumentTypeCode') == '130']
@@ -247,9 +249,14 @@ def check(registry, path):
             if good:
                 rec[k] = good if R[k]['repeatable'] else good[0]
         for k in dict.fromkeys(bare):                             # labelRequiredWhen: a national particular in a case (V-11)
-            cond = R.get(k, {}).get('labelRequiredWhen')
-            if cond and rec.get(cond) == 'true':
-                F('error', 'V-11', lid, f'{k} in bare form on a line with {cond} = true; the labelled form is mandatory (national invoice particular)')
+            kr = R.get(k, {})
+            cond = kr.get('labelRequiredWhen')
+            if (cond and rec.get(cond) == 'true'
+                    and kr.get('labelRequiredVatCategory', ln['cat']) == ln['cat']
+                    and kr.get('labelRequiredSellerCountry', doc['seller']) == doc['seller']):
+                case = ''.join(f', {name} {kr[f]}' for f, name in (('labelRequiredVatCategory', 'VAT category'),
+                                                                   ('labelRequiredSellerCountry', 'seller country')) if f in kr)
+                F('error', 'V-11', lid, f'{k} in bare form on a line with {cond} = true{case}; the labelled form is mandatory (national invoice particular)')
         role = rec.get(ROLE)
         if ROLE not in kv:
             F('error', 'V-01', lid, f'marker without {ROLE}')
