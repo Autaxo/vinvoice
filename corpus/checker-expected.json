@@ -331,10 +331,10 @@
     "msg": "vehicle.firstRegistrationDate='2022-02-30' violates the registry grammar; value dropped by the reader"
    },
    {
-    "severity": "warning",
+    "severity": "info",
     "rule": "V-05",
     "line": "1",
-    "msg": "VIN TSTVEH016N0000002 is not 17 ISO 3779 characters or its check digit fails"
+    "msg": "VIN TSTVEH016N0000002 has an invalid check digit; not required for vehicles first registered before 2026-07-07"
    },
    {
     "severity": "error",

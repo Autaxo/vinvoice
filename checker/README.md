@@ -15,7 +15,7 @@ are listed under `ignored` and never produce findings.
 
 - `test_corpus.py`: regression test against `corpus/checker-expected.json`
   (`python3 -I -m unittest discover -s checker -v`).
-- `test_rules.py`: rule tests on small variants of one corpus file (BT-128 scheme `VT`, V-04).
+- `test_rules.py`: rule tests on small variants of one corpus file (BT-128 scheme `VT`, V-04, V-05).
 - `compare_schematron.py`: checks that `generated/vinvoice.sch` reports the same errors and
   warnings on the corpus (run through `npm run test:schematron`).
 

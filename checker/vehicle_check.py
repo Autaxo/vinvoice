@@ -56,6 +56,9 @@ def grammar_ok(grammar, value):
 
 
 VIN_FORM = re.compile(r'[A-HJ-NPR-Z0-9]{17}')
+# Reg. (EU) 2021/535 Art. 12(2): registration of vehicles is refused from this date if the VIN lacks
+# the check digit; older vehicles need not have one (some older VW show a Z in position 9).
+CHECK_DIGIT_DUE = datetime.date(2026, 7, 7)
 
 
 def vin_form_ok(v):
@@ -63,11 +66,22 @@ def vin_form_ok(v):
     return VIN_FORM.fullmatch(v) is not None
 
 
-def vin_ok(v):
-    if not vin_form_ok(v):
-        return False
+def check_digit_ok(v):
+    """Position-9 check digit of a VIN that has the ISO 3779 form."""
     s = sum(TR[c] * w for c, w in zip(v, W)) % 11
     return v[8] == ('X' if s == 10 else str(s))
+
+
+def latest_day(v):
+    """The last day a (possibly partial) ISO date can mean, or None if it is not a real date."""
+    d = real_date(v)
+    if not d:
+        return None
+    if len(v) == 4:
+        return datetime.date(d.year, 12, 31)
+    if len(v) == 7:
+        return (d.replace(day=28) + datetime.timedelta(days=4)).replace(day=1) - datetime.timedelta(days=1)
+    return d
 
 
 def vt_vin(refs):
@@ -236,8 +250,14 @@ def check(registry, path):
             F('warning', 'V-04', lid, f'BT-128 {akg} differs from vehicle.vin {row_vin}; BT-128 wins')
         elif not akg and vt and row_vin and vt != row_vin:
             F('warning', 'V-04', lid, f'BT-128 (scheme VT) {vt} differs from vehicle.vin {row_vin}; vehicle.vin wins')
-        if vin and not vin_ok(vin):
-            F('warning', 'V-05', lid, f'VIN {vin} is not 17 ISO 3779 characters or its check digit fails')
+        if vin and not vin_form_ok(vin):
+            F('warning', 'V-05', lid, f'VIN {vin} is not 17 ISO 3779 characters (no I, O or Q)')
+        elif vin and not check_digit_ok(vin):
+            due = latest_day(rec.get('vehicle.firstRegistrationDate') or '')
+            if due and due >= CHECK_DIGIT_DUE:
+                F('warning', 'V-05', lid, f'VIN {vin} has an invalid check digit and the vehicle is first registered on or after {CHECK_DIGIT_DUE}')
+            else:
+                F('info', 'V-05', lid, f'VIN {vin} has an invalid check digit; not required for vehicles first registered before {CHECK_DIGIT_DUE}')
         if abz:                                                   # step 7
             if rec.get('vehicle.registrationNumber') and re.sub('[ -]', '', abz) != re.sub('[ -]', '', rec['vehicle.registrationNumber']):
                 F('warning', 'V-18', lid, 'BT-128 ABZ registration number differs from vehicle.registrationNumber')

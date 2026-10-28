@@ -1,7 +1,7 @@
 // Generates generated/vinvoice.sch, an ISO Schematron (queryBinding xslt2) version of the reference
 // checker's rules (checker/vehicle_check.py), so that VINvoice checks can run in the same
 // validators as EN 16931, XRechnung and Peppol. Rule ids follow the checker (V-01 ... V-22).
-// Checker only: V-05 (VIN check digit), the 6,000 km / six months test of V-08, V-18
+// Checker only: V-05 (VIN check digit, due by first registration date), the 6,000 km / six months test of V-08, V-18
 // (registration number in BT-128 vs row), V-19 and V-20 (reader notes).
 //
 // Like the reference reader, the rules first drop values that fail their grammar and then judge the

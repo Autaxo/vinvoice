@@ -224,8 +224,12 @@ export function render({ path }) {
         <tr>
           <th scope="row" class="nowrap">V-05</th><td class="warn">warning</td>
           <td>
-            The VIN is not 17 characters long or its check digit fails. Older and non-EU vehicles
-            can legitimately deviate, so this is never an error.
+            The VIN does not have the ISO 3779 form (17 characters, no <code>I</code>, <code>O</code>,
+            <code>Q</code>) (warning). A wrong check digit is a warning only where
+            ${Key({ t: REF.firstRegistrationDate })} is on or after 2026-07-07 and information otherwise: older
+            vehicles do not need a check digit (Regulation (EU) 2021/535, Art. 12(2); the check digit is
+            required for new types from 2022-07-06 and for registration from 2026-07-07), and some
+            carry a <code>Z</code> in position 9. A partial date counts as its last day. Never an error.
           </td>
         </tr>
         <tr>
