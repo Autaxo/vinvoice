@@ -18,7 +18,7 @@ import {
   type Term,
 } from '../../lib/registry';
 import { corpusValues } from '../../lib/corpus';
-import { SITE } from '../../lib/site';
+import { SITE, REPO } from '../../lib/site';
 
 export function getStaticPaths() {
   return terms.map((t, i) => ({
@@ -40,6 +40,8 @@ const anchors = splitList(t.anchors);
 const examples = corpusValues(t.key).slice(0, 5);
 const crosswalk = crosswalkFor(t);
 const crosswalkNote = crosswalkHeader[1]?.match(/\(([^)]*)\)/)?.[1];
+// One source file per key: registry/keys/<key without the root>.yaml
+const keyFile = `registry/keys/${t.key.replace(/^vehicle\./, '')}.yaml`;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -231,6 +233,23 @@ const jsonLd = {
               <p class="flush">{c}</p>
             ))}
             {crosswalkNote && <p class="small muted dd-note">{crosswalkNote}</p>}
+          </dd>
+        </>
+      )
+    }
+
+    {
+      REPO && (
+        <>
+          <dt>Source and changes</dt>
+          <dd>
+            <a href={REPO.file(keyFile)}>
+              <code>{keyFile}</code>
+            </a>{' '}
+            ·{' '}
+            <a href={`${REPO.issue('change-key.yml')}&key=${encodeURIComponent(t.key)}`}>
+              Propose a change
+            </a>
           </dd>
         </>
       )

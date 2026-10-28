@@ -5,9 +5,9 @@ export const SITE = {
   sponsor: { name: 'Autaxo GmbH', url: 'https://www.autaxo.de' },
 };
 
-// Public repository. Replace __GITHUB_ORG__ once the GitHub organisation exists; until then the
-// site leaves out every repository link and points to the contact address instead.
-const REPO_URL = 'https://github.com/__GITHUB_ORG__/vinvoice';
+// Public repository. A fork that has no public repository yet sets the __GITHUB_ORG__ placeholder
+// here; the site then leaves out every repository link and points to the contact address instead.
+const REPO_URL = 'https://github.com/Autaxo/vinvoice';
 export const REPO = REPO_URL.includes('__GITHUB_ORG__')
   ? null
   : {

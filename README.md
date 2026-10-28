@@ -63,23 +63,25 @@ A registry release delivered as JSON (for example from a naming review) comes in
 AI coding agents: see [AGENTS.md](AGENTS.md). The website publishes `llms.txt` and
 `llms-full.txt` for language models.
 
-## Before the first public push
+## Hosting
 
-1. Create the GitHub organisation (neutral name, not a vendor's) and the repository `vinvoice`.
-2. Replace the placeholder `__GITHUB_ORG__` everywhere: `grep -rl __GITHUB_ORG__ --exclude-dir=node_modules .`
-   (`package.json` and `site/lib/site.ts`).
-   The website shows repository links only once the placeholder is gone.
-3. Settings → Pages → Source: **GitHub Actions**. Custom domain `vinvoice.org` (the `CNAME` file
-   is in `site/public/`), then **Enforce HTTPS**.
-4. DNS at the registrar: `A` records for `vinvoice.org` to `185.199.108.153`, `185.199.109.153`,
-   `185.199.110.153`, `185.199.111.153`; `AAAA` to `2606:50c0:8000::153`, `2606:50c0:8001::153`,
-   `2606:50c0:8002::153`, `2606:50c0:8003::153`; `CNAME` for `www` to `<org>.github.io`.
-   Verify the domain for the organisation (Settings → Pages → Verified domains) to prevent takeover.
-5. Protect `main`: pull requests only, CI must pass.
-6. Repository description and topics, so that people and agents find it: description
-   "Open convention for vehicle data in EN 16931 e-invoices (ZUGFeRD, Factur-X, XRechnung, Peppol)";
-   website `https://vinvoice.org`; topics `e-invoicing`, `en16931`, `zugferd`, `factur-x`,
-   `xrechnung`, `peppol`, `vin`, `automotive`, `schematron`, `json-schema`, `open-standard`.
+The website is deployed by `.github/workflows/pages.yml` on every push to `main` and served by
+GitHub Pages at <https://vinvoice.org> (custom domain; the `CNAME` file is in `site/public/`). DNS:
+`A` records for `vinvoice.org` to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`,
+`185.199.111.153`; `AAAA` to `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`,
+`2606:50c0:8003::153`; `CNAME` for `www` to `autaxo.github.io`.
+
+Still open for the maintainers:
+
+- [ ] Verify `vinvoice.org` for the organisation (Settings → Pages → Verified domains) to prevent
+      takeover.
+- [ ] **Enforce HTTPS** once GitHub has issued the certificate.
+- [ ] Protect `main`: pull requests only, CI must pass.
+- [ ] Repository description and topics, so that people and agents find it: description
+      "Open convention for vehicle data in EN 16931 e-invoices (ZUGFeRD, Factur-X, XRechnung,
+      Peppol)"; website `https://vinvoice.org`; topics `e-invoicing`, `en16931`, `zugferd`,
+      `factur-x`, `xrechnung`, `peppol`, `vin`, `automotive`, `schematron`, `json-schema`,
+      `open-standard`.
 
 ---
 
