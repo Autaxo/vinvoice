@@ -166,7 +166,7 @@ ${firstLine(featured.ubl)}
 
 ## VAT notes (provisional until a written tax sign-off)
 
-- Margin scheme for second-hand goods: every margin-scheme vehicle line carries \`${REF.marginScheme.key}\` = \`true\`. Under the EN 16931:2017 model the line uses VAT category \`E\` with an exemption reason text and the invoice note "Gebrauchtgegenstände/Sonderregelung" or the Art. 226(14) wording in BG-1; an export uses \`G\` with \`VATEX-EU-G\`; never \`K\`. Under EN 16931-1:2026, category \`F\` replaces the \`E\` workaround.
+- Margin scheme for second-hand goods: every margin-scheme vehicle line carries \`${REF.marginScheme.key}\` = \`true\`. Under the EN 16931:2017 model the line uses VAT category \`E\` with an exemption reason text and the invoice note "Gebrauchtgegenstände/Sonderregelung" or the Art. 226(14) wording in BG-1; an export uses \`G\` with \`VATEX-EU-G\`; never \`K\`. EN 16931-1:2026 is assumed to give the margin scheme its own category \`F\` instead of the \`E\` workaround (an assumption until DIN EN 16931-1:2026 has been checked; only support for the margin scheme, a new category \`N\` and exemption reasons outside \`E\` are documented publicly).
 - New means of transport supplied intra-EU: \`${REF.newMeansOfTransport.key}\` = \`true\`, plus \`${REF.power.key}\` or \`${REF.engineCapacity.key}\`, and an odometer reading or \`${REF.firstEntryIntoService.key}\`; never together with \`${REF.marginScheme.key}\` = \`true\` (Art. 313(2); § 25a(7) no. 1(b) UStG).
 
 ## Keys (${terms.length})

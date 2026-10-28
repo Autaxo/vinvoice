@@ -393,8 +393,10 @@ export function render({ path }) {
         VAT Directive; § 25a(7) no. 3 UStG).
       </li>
       <li>
-        Under EN 16931-1:2026, category <code>F</code> (margin scheme, second-hand goods) replaces the
-        <code>E</code> workaround. The flag MAY still be given.
+        Under EN 16931-1:2026 the revision is expected to give the margin scheme its own VAT category,
+        assumed here to be <code>F</code> (margin scheme, second-hand goods), in place of the
+        <code>E</code> workaround (assumption, see <a href="#versioning">section 12</a>). The flag MAY
+        still be given.
       </li>
     </ul>
     <h3>New means of transport</h3>
@@ -443,11 +445,22 @@ export function render({ path }) {
       redefined, only deprecated. The full rules are under <a href="/governance/#change-process">Governance</a>.
     </p>
     <p>
-      EN 16931-1:2026 runs in parallel with the 2017 model during a migration period. It adds an
-      attribute code (BT-211) and a unit (BT-212) to BG-32, and margin-scheme VAT categories. It
-      adds no vehicle terms. VINvoice rows stay unchanged under both models; once BT-212 is
-      available it MAY repeat the unit code that the key already fixes.
+      EN 16931-1:2026 runs in parallel with the 2017 model during a migration period. It adds no
+      vehicle terms. VINvoice rows stay unchanged under both models.
     </p>
+    <div class="note draft">
+      <p>
+        <strong>What is established and what is assumed.</strong> Publicly documented about the
+        revision: it supports the margin scheme, it adds a VAT category <code>N</code>, and it allows
+        exemption reasons outside category <code>E</code>. Everything else this site says about it is
+        an assumption until DIN EN 16931-1:2026 has been read, and nothing in it is a normative
+        requirement of VINvoice: the VAT category <code>F</code> for the margin scheme, an attribute
+        code (BT-211) and a unit (BT-212) in BG-32. If BT-212 exists, a row MAY repeat the unit code
+        that its key already fixes. The checker and the Schematron accept <code>F</code> next to
+        <code>E</code> and <code>G</code> for a margin-scheme line, so they work under either outcome.
+        Each assumption is replaced by a section number of the standard once it has been checked.
+      </p>
+    </div>
 
     <h2 id="personal-data">13. Personal data</h2>
     <p>

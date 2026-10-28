@@ -290,7 +290,7 @@ def check(registry, path):
             if cat == 'K':
                 F('error', 'V-07', lid, 'margin scheme on an intra-EU supply (category K): excluded by Art. 139(3) Directive 2006/112/EC and § 25a(7) no. 3 UStG')
             elif cat not in ('E', 'F', 'G'):
-                F('warning', 'V-07', lid, f'margin scheme with VAT category {cat}; expected E (2017), F (2026) or G (export)')
+                F('warning', 'V-07', lid, f'margin scheme with VAT category {cat}; expected E (2017), F (assumed for 2026) or G (export)')
             if not any(MARGIN_NOTE.search(n) for n in doc['notes']):
                 F('warning', 'V-07', lid, "margin line but no BG-1 note with the Art. 226(14) mention (for example 'Margin scheme - Second-hand goods' or 'Gebrauchtgegenstände/Sonderregelung')")
             if rec.get(COND) == 'new':
