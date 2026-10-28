@@ -11,6 +11,7 @@ import {
   carrierValue,
   unitInfo,
   statutoryTerms,
+  conditionalLabelTerms,
   prefix,
 } from './registry.mjs';
 import { corpus, featured, firstLine } from './corpus.mjs';
@@ -91,7 +92,7 @@ function keyBlock(t) {
   const facts = [
     `German label: ${t.labelDe}`,
     `Tier: ${t.tier}; status: ${t.status}; representation term: ${t.representationTerm}`,
-    `Statutory: ${t.statutory ? 'yes (always write the labelled name)' : 'no'}; repeatable: ${t.repeatable ? 'yes' : 'no'}`,
+    `Statutory: ${t.statutory ? 'yes (always write the labelled name)' : 'no'}${t.labelRequiredWhen ? `; labelled name required while \`${t.labelRequiredWhen}\` = \`true\`` : ''}; repeatable: ${t.repeatable ? 'yes' : 'no'}`,
     ...(unit ? [`Unit: ${unit.name}${unit.code ? ` (UN/ECE Rec. 20 ${unit.code})` : ''}`] : []),
     `Grammar: \`${t.grammar}\``,
     ...(t.tokens.length ? [`Tokens: ${t.tokens.map((x) => `\`${x}\``).join(', ')}`] : []),
@@ -123,7 +124,7 @@ Licences: registry data CC0-1.0; specification text CC BY 4.0; code and Schematr
 2. First row, the marker: \`${rowName(REF.marker)}\` = \`${markerValue}\`. Exactly once per vehicle line, never on other lines.
 3. Second row, the role: \`${rowName(REF.role)}\` = one of ${REF.role.tokens.map((x) => `\`${x}\``).join(', ')}.
 4. Every other fact is one BG-32 row. BT-160 is the German or English registry label, one space and the key in brackets (\`${rowName(REF.make)}\` or \`${rowName(REF.make, REF.make.labelEn)}\`), or the bare key. BT-160 is at most ${registry.nameCap} characters.
-5. Statutory keys MUST use the labelled name: ${keys(statutoryTerms)}.
+5. Statutory keys MUST use the labelled name: ${keys(statutoryTerms)}. So MUST ${keys(conditionalLabelTerms)} on a line where \`${REF.newMeansOfTransport.key}\` = \`true\` (national invoice particulars, § 14a(4) UStG with § 1b(2); registry field \`labelRequiredWhen\`; a bare row there is a V-11 error); on other lines they MAY be bare.
 6. BT-161 is a plain value that matches the key's grammar: ISO dates (\`YYYY-MM-DD\`), integers without group separators, a full stop as decimal mark, no unit text (the unit is part of the key), registry tokens in lower case, codes from EU lists (vehicle categories, bodywork codes, countries) verbatim. Never translate tokens. Keep BT-161 in the text value element, never in a measure or quantity element.
 7. Write the VIN twice: as the row \`${REF.vin.key}\` and in BT-128 of every line about the vehicle with scheme \`AKG\` and document type code \`130\` (conformance level 2). If no VIN exists, BT-128 may carry the registration number with scheme \`ABZ\`.
 8. Workshop invoices: put the rows on one vehicle reference line with value 0.00; labour and parts lines carry the VIN in BT-128; a single-vehicle document may also carry it in BT-18.
@@ -167,7 +168,7 @@ ${firstLine(featured.ubl)}
 ## VAT notes (provisional until a written tax sign-off)
 
 - Margin scheme for second-hand goods: every margin-scheme vehicle line carries \`${REF.marginScheme.key}\` = \`true\`. Under the EN 16931:2017 model the line uses VAT category \`E\` with an exemption reason text and the invoice note "Gebrauchtgegenstände/Sonderregelung" or the Art. 226(14) wording in BG-1; an export uses \`G\` with \`VATEX-EU-G\`; never \`K\`. EN 16931-1:2026 is expected to add VAT categories for the margin schemes (\`F\` for second-hand goods, besides \`D\`, \`I\` and \`J\`, and \`N\` for national schemes; source: KoSIT, XRechnung 4.0.0 pre-release of 2026-09-15, section 4.4.8, PDF pp. 98 to 99); that \`F\` replaces the \`E\` encoding, and from when, is an assumption to be confirmed against DIN EN 16931-1:2026, whose text is not freely available (it is sold by CEN and DIN). BT-211 (item attribute code) and BT-212 (unit): the only public source we found is that pre-release (section 3.23, PDF pp. 51 to 52); for the standard itself they are assumptions too.
-- New means of transport supplied intra-EU: \`${REF.newMeansOfTransport.key}\` = \`true\`, plus \`${REF.power.key}\` or \`${REF.engineCapacity.key}\`, and an odometer reading or \`${REF.firstEntryIntoService.key}\`; never together with \`${REF.marginScheme.key}\` = \`true\` (Art. 313(2); § 25a(7) no. 1(b) UStG).
+- New means of transport supplied intra-EU: \`${REF.newMeansOfTransport.key}\` = \`true\`, plus \`${REF.power.key}\` or \`${REF.engineCapacity.key}\` (written with their labels: § 14a(4) UStG requires the § 1b(2) characteristics, engine capacity or power, on the invoice besides the § 1b(3) ones; Art. 2(2)(a) Directive 2006/112/EC defines the thresholds), and an odometer reading or \`${REF.firstEntryIntoService.key}\`; never together with \`${REF.marginScheme.key}\` = \`true\` (Art. 313(2); § 25a(7) no. 1(b) UStG).
 
 ## Keys (${terms.length})
 

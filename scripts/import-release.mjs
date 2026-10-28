@@ -19,6 +19,7 @@ import { parseCsv } from './lib/csv.mjs';
 import {
   ROOT,
   SOURCE_ORDER,
+  OPTIONAL_FIELDS,
   META_ORDER,
   POLICY_FIELDS,
   INVISIBLE,
@@ -64,7 +65,12 @@ const keysDir = path.join(ROOT, 'registry/keys');
 fs.mkdirSync(keysDir, { recursive: true });
 for (const f of fs.readdirSync(keysDir)) fs.unlinkSync(path.join(keysDir, f));
 for (const k of release.keys) {
-  const value = Object.fromEntries(SOURCE_ORDER.map((f) => [f, k[f] ?? null]));
+  const value = Object.fromEntries(
+    SOURCE_ORDER.filter((f) => k[f] !== undefined || !OPTIONAL_FIELDS.includes(f)).map((f) => [
+      f,
+      k[f] ?? null,
+    ])
+  );
   value.grammar = escapeInvisible(value.grammar);
   const local = localName(k.key, release.root);
   fs.writeFileSync(keyFile(local), yamlDoc(value, CC0, [['grammar']]));

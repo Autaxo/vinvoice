@@ -12,6 +12,7 @@ import { readJson, readText } from './paths.mjs';
  * @property {string} tier
  * @property {string} status
  * @property {boolean} statutory
+ * @property {string} [labelRequiredWhen]
  * @property {boolean} repeatable
  * @property {string | null} unit
  * @property {string} representationTerm
@@ -256,3 +257,5 @@ const crosswalk = new Map(crosswalkRows.slice(1).map((r) => [r[0], r.slice(1)]))
 export const crosswalkFor = (t) => (crosswalk.get(t.key) ?? []).filter((c) => c.trim());
 
 export const statutoryTerms = terms.filter((t) => t.statutory);
+/** Keys whose label is mandatory only while another indicator key is true (labelRequiredWhen). */
+export const conditionalLabelTerms = terms.filter((t) => t.labelRequiredWhen);

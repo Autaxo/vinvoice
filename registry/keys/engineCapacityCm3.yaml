@@ -14,11 +14,14 @@ unit: CMQ
 tokens: []
 codeList: "unit fixed: cubic centimetre (Rec 20 CMQ)"
 conditionality: SHOULD for vehicles with a combustion engine; with newMeansOfTransportIndicator =
-  true this key or maximumNetPowerKw SHOULD be present (more-than-48-cm3 threshold of Art.
-  2(2)(a)(i)), and MUST where national law makes it an invoice particular (DE)
+  true this key or maximumNetPowerKw MUST be present (V-08; more-than-48-cm3 threshold of Art.
+  2(2)(a)(i)) and, as a national invoice particular (DE UStG §14a(4) with §1b(2)), MUST then be
+  written with its label (V-11)
 statutory: false
+labelRequiredWhen: vehicle.newMeansOfTransportIndicator
 repeatable: false
 carrier: "BG-32: BT-160 'Hubraum (cm3) [vehicle.engineCapacityCm3]', BT-161 '1968'"
 anchors: "Directive 1999/37/EC code P.1 'capacity (in cm3)'; CoC item 25 'Engine capacity' (DE
-  'Hubraum'); Directive 2006/112/EC Art. 2(2)(a)(i) (48 cubic centimetres threshold); national
-  invoice particular: DE UStG §14a(4) with §1b(2); HU NAV engineCapacity; UN/ECE Rec 20 CMQ"
+  'Hubraum'); Directive 2006/112/EC Art. 2(2)(a)(i) (48 cubic centimetres threshold, defines the vehicle);
+  national invoice particular on the invoice for a new means of transport: DE UStG §14a(4) with
+  §1b(2); HU NAV engineCapacity; UN/ECE Rec 20 CMQ"

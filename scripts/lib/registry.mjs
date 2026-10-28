@@ -30,16 +30,20 @@ export const SOURCE_ORDER = [
   'codeList',
   'conditionality',
   'statutory',
+  'labelRequiredWhen',
   'repeatable',
   'carrier',
   'anchors',
 ];
+/** Fields a key file may leave out (they are then absent, not null, in the source and in the JSON). */
+export const OPTIONAL_FIELDS = ['labelRequiredWhen'];
 /** Field order of a key in generated/registry.json. */
 export const JSON_ORDER = [
   'key',
   'tier',
   'status',
   'statutory',
+  'labelRequiredWhen',
   'repeatable',
   'unit',
   'representationTerm',
@@ -171,6 +175,19 @@ export function check({ meta, byLocal, tokenLists, reserved, naming, crosswalk }
       INVISIBLE.lastIndex = 0;
     }
     known.add(k.key);
+  }
+
+  // labelRequiredWhen names an indicator key (token true) other than the key itself.
+  for (const [local, k] of byLocal) {
+    if (k.labelRequiredWhen === undefined) continue;
+    const cond = [...byLocal.values()].find((x) => x.key === k.labelRequiredWhen);
+    const where = `registry/keys/${local}.yaml`;
+    if (!cond) err(`${where}: labelRequiredWhen names unknown key ${k.labelRequiredWhen}`);
+    else if (cond === k) err(`${where}: labelRequiredWhen must not name the key itself`);
+    else if (!cond.tokens.includes('true')) {
+      err(`${where}: labelRequiredWhen must name an indicator with the token true`);
+    }
+    if (k.statutory) err(`${where}: a statutory key is always labelled; drop labelRequiredWhen`);
   }
 
   // Every key mentioned in a key's text must exist or be reserved (catches stale names).

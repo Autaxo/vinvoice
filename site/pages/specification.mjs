@@ -11,6 +11,7 @@ import {
   markerValue,
   markerVersion,
   statutoryTerms,
+  conditionalLabelTerms,
   linkKeys,
   rowName,
 } from '../lib/registry.mjs';
@@ -183,6 +184,14 @@ export function render({ path }) {
         that carry a feature required by VAT law MUST always be written with their label, because
         the mandatory particulars of an invoice have to be readable in the structured data:
         ${KeyList({ terms: statutoryTerms })}.
+      </li>
+      <li>
+        One national invoice particular is treated the same way, but only in its case: on a line
+        where ${Key({ t: REF.newMeansOfTransport, value: 'true' })}, ${KeyList({ terms: conditionalLabelTerms })} MUST be written with their label as well, because § 14a(4) UStG, with
+        § 1b(2) UStG, makes them particulars of the invoice for the intra-Community supply of a new
+        vehicle (see <a href="#vat">new means of transport</a>). They are not statutory in the sense
+        above, since Art. 226 VAT Directive does not require them. On every other line the bare form
+        stays allowed.
       </li>
       <li>
         A key appears at most once per line. ${repeatableNote}
@@ -408,6 +417,16 @@ export function render({ path }) {
       states the features that make the vehicle new: ${Key({ t: REF.power })} or ${Key({ t: REF.engineCapacity })}, and an odometer reading or ${Key({ t: REF.firstEntryIntoService })}. A land vehicle counts as
       new if it was first put into service at most six months before the supply or has travelled at
       most 6,000 km.
+    </p>
+    <p>
+      Under § 14a(4) UStG the invoice for the intra-Community supply of a new vehicle states the
+      characteristics of § 1b(2) UStG (engine capacity or power) as well as those of § 1b(3) UStG
+      (distance travelled, first entry into service). Art. 2(2)(a) VAT Directive defines the engine
+      capacity and power thresholds; Art. 226(12) requires only the characteristics of Art. 2(2)(b).
+      The engine capacity and power are therefore a national invoice particular. On a line with
+      ${Key({ t: REF.newMeansOfTransport, value: 'true' })}, their rows MUST use the labelled form
+      (V-11), so that the particulars are readable in the structured data. A bare row is an error
+      there.
     </p>
     <p>
       Supplies of new vehicles to buyers in another member state who have no VAT identification

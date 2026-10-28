@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Rule tests on small variants of one corpus file: the VIN rules (BT-128 scheme VT, V-04, V-05).
+"""Rule tests on small variants of corpus files: the VIN rules (BT-128 scheme VT, V-04, V-05) and V-11 (labelRequiredWhen).
 
 The corpus itself is covered by test_corpus.py; these cases would need new corpus files with
 validator results, so they are derived in memory from sale-25a.fx.cii.xml instead.
@@ -156,6 +156,78 @@ class CheckDigit(unittest.TestCase):
 
     def test_valid_check_digit_has_no_finding(self):
         self.assertEqual(rules(findings(BASE), 'V-05'), [])
+
+
+NEW_VEHICLE = (ROOT / 'corpus/new-intra-eu.fx.cii.xml').read_text(encoding='utf-8')
+POWER_LABEL = 'Höchste Nutzleistung (kW) [vehicle.maximumNetPowerKw]'
+CAPACITY_LABEL = 'Hubraum (cm3) [vehicle.engineCapacityCm3]'
+INDICATOR_ROW = re.compile(r'<ram:ApplicableProductCharacteristic>\s*<ram:Description>[^<]*\[vehicle\.newMeansOfTransportIndicator\]</ram:Description>.*?</ram:ApplicableProductCharacteristic>\s*', re.S)
+
+
+def bare(xml, label, key):
+    assert f'<ram:Description>{label}</ram:Description>' in xml
+    return xml.replace(f'<ram:Description>{label}</ram:Description>', f'<ram:Description>{key}</ram:Description>')
+
+
+class NewVehicleNationalParticulars(unittest.TestCase):
+    """V-11 with labelRequiredWhen: power and capacity are labelled on a new-vehicle line (DE UStG 14a(4) with 1b(2))."""
+
+    def test_base_is_clean(self):
+        out = findings(NEW_VEHICLE)
+        self.assertEqual([f for f in out['findings'] if f['severity'] in ('error', 'warning')], [])
+
+    def test_labelled_power_and_capacity_are_fine(self):
+        self.assertEqual(rules(findings(NEW_VEHICLE), 'V-11'), [])
+
+    def test_bare_power_on_a_new_vehicle_line_is_an_error(self):
+        out = findings(bare(NEW_VEHICLE, POWER_LABEL, 'vehicle.maximumNetPowerKw'))
+        self.assertEqual([s for s, m in rules(out, 'V-11')], ['error'])
+        self.assertIn('vehicle.maximumNetPowerKw', rules(out, 'V-11')[0][1])
+        self.assertEqual(out['vehicles'][0]['facts']['vehicle.maximumNetPowerKw'], '110')   # still read
+
+    def test_bare_capacity_on_a_new_vehicle_line_is_an_error(self):
+        out = findings(bare(NEW_VEHICLE, CAPACITY_LABEL, 'vehicle.engineCapacityCm3'))
+        self.assertEqual([s for s, m in rules(out, 'V-11')], ['error'])
+        self.assertIn('vehicle.engineCapacityCm3', rules(out, 'V-11')[0][1])
+
+    def test_both_bare_give_two_errors(self):
+        xml = bare(bare(NEW_VEHICLE, POWER_LABEL, 'vehicle.maximumNetPowerKw'), CAPACITY_LABEL, 'vehicle.engineCapacityCm3')
+        self.assertEqual([s for s, m in rules(findings(xml), 'V-11')], ['error', 'error'])
+
+    def test_english_label_is_a_label(self):
+        xml = NEW_VEHICLE.replace(POWER_LABEL, 'Maximum net power (kW) [vehicle.maximumNetPowerKw]')
+        self.assertEqual(rules(findings(xml), 'V-11'), [])
+
+    def test_bare_power_without_the_indicator_is_no_error(self):
+        xml = INDICATOR_ROW.sub('', bare(NEW_VEHICLE, POWER_LABEL, 'vehicle.maximumNetPowerKw'), count=1)
+        self.assertNotIn('[vehicle.newMeansOfTransportIndicator]', xml)
+        self.assertEqual(rules(findings(xml), 'V-11'), [])
+
+    def test_bare_power_with_indicator_false_is_no_error(self):
+        xml = bare(NEW_VEHICLE, POWER_LABEL, 'vehicle.maximumNetPowerKw')
+        xml = re.sub(r'(\[vehicle\.newMeansOfTransportIndicator\]</ram:Description>\s*<ram:Value>)true', r'\1false', xml)
+        self.assertEqual(rules(findings(xml), 'V-11'), [])
+
+    def test_bare_power_on_a_used_sale_line_is_no_error(self):
+        xml = bare(BASE, POWER_LABEL, 'vehicle.maximumNetPowerKw')
+        out = findings(xml)
+        self.assertEqual(rules(out, 'V-11'), [])
+        self.assertEqual([f for f in out['findings'] if f['severity'] in ('error', 'warning')], [])
+
+    def test_statutory_key_is_still_an_error_when_bare(self):
+        xml = bare(NEW_VEHICLE, 'Neues Fahrzeug (USt) [vehicle.newMeansOfTransportIndicator]', 'vehicle.newMeansOfTransportIndicator')
+        self.assertEqual([s for s, m in rules(findings(xml), 'V-11')], ['error'])
+
+
+class RegistryField(unittest.TestCase):
+    def test_only_power_and_capacity_depend_on_the_indicator(self):
+        conditional = {k['key']: k['labelRequiredWhen'] for k in REGISTRY['keys'] if 'labelRequiredWhen' in k}
+        self.assertEqual(conditional, {'vehicle.maximumNetPowerKw': 'vehicle.newMeansOfTransportIndicator',
+                                       'vehicle.engineCapacityCm3': 'vehicle.newMeansOfTransportIndicator'})
+
+    def test_they_stay_non_statutory(self):
+        statutory = {k['key'] for k in REGISTRY['keys'] if k['statutory']}
+        self.assertFalse({'vehicle.maximumNetPowerKw', 'vehicle.engineCapacityCm3'} & statutory)
 
 
 if __name__ == '__main__':

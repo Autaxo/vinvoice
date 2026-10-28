@@ -100,7 +100,13 @@ export function render({ path, props: { t, prev, next } }) {
             The labelled form is mandatory: VAT law requires the feature to be readable in the
             invoice.
           </p>`
-          : html`<p class="small muted dd-note">
+          : t.labelRequiredWhen
+            ? html`<p class="small muted dd-note">
+            The labelled form is mandatory on a line where ${linkKeys(t.labelRequiredWhen)} is
+            <code>true</code> (a national invoice particular, not a feature of Art. 226 VAT
+            Directive); elsewhere the bare key <code>${t.key}</code> is also accepted.
+          </p>`
+            : html`<p class="small muted dd-note">
             The bare key <code>${t.key}</code> is also accepted.
           </p>`
       }

@@ -334,7 +334,11 @@ rules:
       (marginSchemeIndicator). A particular required only by national law (for example power and
       capacity under DE UStG §14a(4)) is false and is named in anchors as 'national invoice
       particular'. Spec R3 then requires the labelled name for statutory keys and, in the issuer's
-      state, for that state's national particulars."
+      state, for that state's national particulars. A national particular that an invoice must carry
+      only in one case, such as power and capacity on the invoice for a new means of transport
+      (DE UStG §14a(4) with §1b(2)), stays statutory = false and names its case in
+      labelRequiredWhen (a registry key whose value true triggers the labelled form, checker rule
+      V-11)."
     rationale: The draft flagged the seven particulars of one national guidance table as statutory,
       which told implementers in other states that a duty exists where it does not. Power and
       capacity are thresholds of the definition in Art. 2(2)(a), not Art. 226(12) characteristics.

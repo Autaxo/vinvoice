@@ -43,6 +43,11 @@
       "description": "True if the key carries a feature that VAT law requires on the invoice. Statutory keys are always written with their label.",
       "type": "boolean"
     },
+    "labelRequiredWhen": {
+      "description": "Optional. Full key of an indicator (token true) on the same line: while that indicator is true, this key MUST be written with its label, as a statutory key is (rule V-11). For a particular that national law requires only in a case, such as the engine capacity and power of a new means of transport (DE UStG §14a(4) with §1b(2)). It does not make the key statutory (naming rule NR-27).",
+      "type": "string",
+      "pattern": "^[a-z]+(\\.[a-z][A-Za-z0-9]*)+$"
+    },
     "repeatable": {
       "description": "True if the key may appear more than once on a line.",
       "type": "boolean"
