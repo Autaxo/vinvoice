@@ -29,6 +29,10 @@ def findings(xml):
         return vehicle_check.check(REGISTRY, str(p))
 
 
+def without_vin_row(xml):
+    return re.sub(r'<ram:ApplicableProductCharacteristic>\s*<ram:Description>[^<]*\[vehicle\.vin\]</ram:Description>.*?</ram:ApplicableProductCharacteristic>\s*', '', xml, count=1, flags=re.S)
+
+
 def variant(ref_scheme='AKG', ref_value=VIN, row_vin=VIN):
     xml = BASE.replace('<ram:ReferenceTypeCode>AKG</ram:ReferenceTypeCode>', f'<ram:ReferenceTypeCode>{ref_scheme}</ram:ReferenceTypeCode>')
     xml = xml.replace(f'<ram:IssuerAssignedID>{VIN}</ram:IssuerAssignedID>', f'<ram:IssuerAssignedID>{ref_value}</ram:IssuerAssignedID>')
@@ -47,6 +51,10 @@ class SchemeVT(unittest.TestCase):
     def test_vt_with_vin_form_is_taken_as_a_vin(self):
         out = findings(variant('VT'))
         self.assertEqual(out['vehicles'][0]['vin'], VIN)
+        self.assertEqual(out['vehicles'][0]['level'], 1)          # Level 2 needs scheme AKG
+
+    def test_akg_is_level_2(self):
+        out = findings(variant('AKG'))
         self.assertEqual(out['vehicles'][0]['level'], 2)
 
     def test_vt_with_registration_number_is_ignored(self):
@@ -69,21 +77,19 @@ class SchemeVT(unittest.TestCase):
         self.assertEqual(out['vehicles'][0]['vin'], other)
         self.assertIn('BT-128 wins', rules(out, 'V-04')[0][1])
 
-
     def test_vt_registration_number_never_becomes_the_vin(self):
         # no vehicle.vin row either: the plate must not turn into the VIN, and V-04/V-05 stay silent
-        xml = variant('VT', ref_value='M-AB 1234')
-        xml = re.sub(r'<ram:ApplicableProductCharacteristic>\s*<ram:Description>[^<]*\[vehicle\.vin\]</ram:Description>.*?</ram:ApplicableProductCharacteristic>\s*', '', xml, count=1, flags=re.S)
+        xml = without_vin_row(variant('VT', ref_value='M-AB 1234'))
         self.assertNotIn('[vehicle.vin]', xml)
         out = findings(xml)
         self.assertIsNone(out['vehicles'][0]['vin'])
         self.assertEqual(out['vehicles'][0]['level'], 1)
         self.assertEqual(rules(out, 'V-04') + rules(out, 'V-05'), [])
 
-    def test_vt_with_a_differing_registration_number_does_not_warn(self):
-        out = findings(variant('VT', ref_value='B-XY 99'))
-        self.assertEqual(out['vehicles'][0]['vin'], VIN)
-        self.assertEqual(rules(out, 'V-04'), [])
+    def test_vt_in_vin_form_with_surrounding_spaces_is_read(self):
+        out = findings(without_vin_row(variant('VT', ref_value=f' {VIN} ')))
+        self.assertEqual(out['vehicles'][0]['vin'], VIN)          # no row: the VIN can only come from VT
+        self.assertEqual(out['vehicles'][0]['level'], 1)
 
     def test_vt_with_i_o_or_q_is_not_a_vin(self):
         out = findings(variant('VT', ref_value='TSTVEH016N000000O'))
@@ -91,10 +97,10 @@ class SchemeVT(unittest.TestCase):
         self.assertEqual(out['vehicles'][0]['level'], 1)
         self.assertEqual(rules(out, 'V-04'), [])
 
-    def test_vt_in_bt18_follows_the_same_rule(self):
+    def test_vin_from_refs_reads_vt_only_in_vin_form(self):
         self.assertEqual(vehicle_check.vin_from_refs([('M-AB 1234', 'VT')]), None)
         self.assertEqual(vehicle_check.vin_from_refs([(VIN, 'VT')]), VIN)
-        self.assertEqual(vehicle_check.vin_from_refs([(VIN, 'VT'), ('M-AB 1234', 'AKG')]), 'M-AB 1234')
+        self.assertEqual(vehicle_check.vin_from_refs([(VIN, 'VT'), (VIN, 'AKG')]), VIN)
 
 
 if __name__ == '__main__':

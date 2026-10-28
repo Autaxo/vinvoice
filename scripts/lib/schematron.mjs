@@ -221,11 +221,11 @@ export function schematron({ meta, keys, refs, reserved }) {
       <let name="current" value="vv:current(.)"/>
       <let name="single" value="$keys[. != '' and not(. = ${seq(repeatable.length ? repeatable : [''])})]"/>
       <let name="bt128" value="ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument | ram:AdditionalReferencedDocument | cac:DocumentReference"/>
-      <let name="vinAkg" value="string((ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = 'AKG']/ram:IssuerAssignedID, cac:DocumentReference/cbc:ID[@schemeID = 'AKG'])[1])"/>
-      <let name="vinVt" value="string((ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = 'VT'][matches(ram:IssuerAssignedID, '${VIN_FORM}')]/ram:IssuerAssignedID, cac:DocumentReference/cbc:ID[@schemeID = 'VT'][matches(., '${VIN_FORM}')])[1])"/>
+      <let name="vinAkg" value="normalize-space(string((ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = 'AKG']/ram:IssuerAssignedID, cac:DocumentReference/cbc:ID[@schemeID = 'AKG'])[1]))"/>
+      <let name="vinVt" value="normalize-space(string((ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = 'VT'][matches(normalize-space(ram:IssuerAssignedID), '${VIN_FORM}')]/ram:IssuerAssignedID, cac:DocumentReference/cbc:ID[@schemeID = 'VT'][matches(normalize-space(.), '${VIN_FORM}')])[1]))"/>
       <let name="vin128" value="if ($vinAkg != '') then $vinAkg else $vinVt"/>
       <let name="abz" value="exists(ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = 'ABZ'] | cac:DocumentReference/cbc:ID[@schemeID = 'ABZ'])"/>
-      <let name="vin18" value="exists(/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:AdditionalReferencedDocument[ram:TypeCode = '130'][ram:ReferenceTypeCode = 'AKG' or (ram:ReferenceTypeCode = 'VT' and matches(ram:IssuerAssignedID, '${VIN_FORM}'))] | /*/cac:AdditionalDocumentReference[cbc:DocumentTypeCode = '130']/cbc:ID[@schemeID = 'AKG' or (@schemeID = 'VT' and matches(., '${VIN_FORM}'))])"/>
+      <let name="vin18" value="exists(/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:AdditionalReferencedDocument[ram:TypeCode = '130'][ram:ReferenceTypeCode = 'AKG' or (ram:ReferenceTypeCode = 'VT' and matches(normalize-space(ram:IssuerAssignedID), '${VIN_FORM}'))] | /*/cac:AdditionalDocumentReference[cbc:DocumentTypeCode = '130']/cbc:ID[@schemeID = 'AKG' or (@schemeID = 'VT' and matches(normalize-space(.), '${VIN_FORM}'))])"/>
       <let name="role" value="${val('role')}"/>
       <let name="odometer" value="${has('odometerKm')} or ${has('odometerMi')}"/>
       <let name="noReading" value="${val('odometerStatus')} = ('inoperative', 'unknown')"/>

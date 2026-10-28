@@ -295,7 +295,7 @@ def check(registry, path):
                 F('warning', 'V-16', lid, 'vehicle.batteryStateOfHealthPercent without vehicle.batteryStateOfHealthDate')
             if 'vehicle.batteryStateOfHealthMethodCode' not in rec:
                 F('warning', 'V-16', lid, 'vehicle.batteryStateOfHealthPercent without vehicle.batteryStateOfHealthMethodCode')
-        out['vehicles'].append({'line': lid, 'level': 2 if vin128 else 1, 'vin': vin, 'registrationNumber': rec.get('vehicle.registrationNumber') or abz,
+        out['vehicles'].append({'line': lid, 'level': 2 if akg else 1, 'vin': vin, 'registrationNumber': rec.get('vehicle.registrationNumber') or abz,
                                 'specification': kv[MARKER][0], 'facts': rec})
     known = {v['vin'] for v in out['vehicles'] if v['vin']}
     for lid, vin128, abz in pending:                              # step 6

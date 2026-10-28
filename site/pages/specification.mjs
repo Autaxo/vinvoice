@@ -216,11 +216,11 @@ export function render({ path }) {
     <h2 id="identification">6. Identifying the vehicle</h2>
     <p>
       The VIN is written twice: as the row ${Key({ t: REF.vin })}, which every invoice viewer shows,
-      and in the line object identifier BT-128 with the scheme identifier BT-128-1 = <code>AKG</code> and the document type code <code>130</code>. Both MUST hold the same value. Writers MUST use <code>AKG</code> and MUST NOT use <code>VT</code>
-      for the VIN: UNTDID 1153 names <code>VT</code> "Motor vehicle identification number" but describes
+      and in the line object identifier BT-128 with the scheme identifier BT-128-1 = <code>AKG</code> and the document type code <code>130</code>. Both MUST hold the same value. A writer that puts the VIN in BT-128 or BT-18 MUST use <code>AKG</code> and MUST NOT use <code>VT</code>
+      for it: UNTDID 1153 names <code>VT</code> "Motor vehicle identification number" but describes
       it as normally the vehicle registration number. Receivers MAY read a <code>VT</code> value as a
       VIN only if it matches <code>^[A-HJ-NPR-Z0-9]{17}$</code> and ignore it otherwise, so that a
-      registration number never becomes a VIN. The registration number belongs in
+      registration number never becomes a VIN. A line whose VIN comes only from a <code>VT</code> value is Level 1, not Level 2. The registration number belongs in
       ${Key({ t: REF.registrationNumber })} or in BT-128 with the scheme <code>ABZ</code>.
     </p>
     <p>
@@ -341,9 +341,10 @@ export function render({ path }) {
       <li>If a key that is not repeatable appears twice, keep the first value.</li>
       <li>
         Take the VIN from BT-128 with scheme <code>AKG</code>; if it is absent, from the row
-        ${Key({ t: REF.vin })}; if that is absent too, from BT-128 with scheme <code>VT</code> (only a
-        value of VIN form, <code>^[A-HJ-NPR-Z0-9]{17}$</code>; any other value is ignored), and
-        last from BT-18 (under the same two rules). If an <code>AKG</code> value and the row differ,
+        ${Key({ t: REF.vin })}; if that is absent too, a receiver that reads <code>VT</code> (section
+        6) takes it from BT-128 with scheme <code>VT</code> (only a value of VIN form,
+        <code>^[A-HJ-NPR-Z0-9]{17}$</code>; any other value is ignored), and last from BT-18 (scheme
+        <code>AKG</code>, or scheme <code>VT</code> with a value of VIN form). If an <code>AKG</code> value and the row differ,
         BT-128 wins; a <code>VT</code> value never overrides the row.
       </li>
       <li>
@@ -463,7 +464,7 @@ export function render({ path }) {
         electronic invoice; CEN/TS 16931-3-2 and 3-3 (UBL and CII syntax bindings).
       </li>
       <li>
-        <a href="https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL1153/">UNTDID 1153 Reference code qualifier</a> (scheme <code>AKG</code> for the VIN, <code>ABZ</code> for the vehicle licence number; <code>VT</code> is normally the registration number and is read as a VIN only in the form above).
+        <a href="https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL1153/">UNTDID 1153 Reference code qualifier</a> (scheme <code>AKG</code> for the VIN, <code>ABZ</code> for the vehicle licence number; <code>VT</code> is normally the registration number).
       </li>
       <li>UN/ECE Recommendation 20, codes for units of measure used in international trade.</li>
       <li>
