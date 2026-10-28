@@ -73,12 +73,13 @@ GitHub Pages at <https://vinvoice.org> (custom domain; the `CNAME` file is in `s
 `185.199.111.153`; `AAAA` to `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`,
 `2606:50c0:8003::153`; `CNAME` for `www` to `autaxo.github.io`.
 
+Done: `vinvoice.org` is verified for the organisation (Settings → Pages → Verified domains), and
+**Enforce HTTPS** is on (http redirects with a 301).
+
 Still open for the maintainers:
 
-- [ ] Verify `vinvoice.org` for the organisation (Settings → Pages → Verified domains) to prevent
-      takeover.
-- [ ] **Enforce HTTPS** once GitHub has issued the certificate.
-- [ ] Protect `main`: pull requests only, CI must pass.
+- [ ] Protect `main`: pull requests only, CI must pass. The Pages workflow repeats the CI checks
+      before it deploys, but only a protected `main` keeps unreviewed changes out.
 - [ ] Repository description and topics, so that people and agents find it: description
       "Open convention for vehicle data in EN 16931 e-invoices (ZUGFeRD, Factur-X, XRechnung,
       Peppol)"; website `https://vinvoice.org`; topics `e-invoicing`, `en16931`, `zugferd`,
