@@ -5,6 +5,8 @@
 //   html`<ul>${items.map((i) => html`<li>${i}</li>`)}</ul>`   -> arrays are flattened
 //   html`${cond && html`<b>yes</b>`}`        -> null, undefined, false and true print nothing
 //
+// Write every attribute value in quotes, and keep values out of <script> and <style> bodies: the
+// escaping is for text and quoted attributes only.
 // Guard with a boolean (`n > 0 && html...`), never with a number or a string: 0 and '' are values
 // and print as "0" and "". A plain object (not html``, raw() or an array) throws, so a mixed-up
 // argument fails the build instead of printing [object Object].
@@ -43,8 +45,10 @@ function renderValue(v) {
   if (v === null || v === undefined || v === false || v === true) return '';
   if (v instanceof Raw) return v.value;
   if (Array.isArray(v)) return v.map(renderValue).join('');
-  if (typeof v === 'object')
-    throw new TypeError(`html: cannot print an object (${v.constructor?.name ?? 'object'})`);
+  if (typeof v === 'object' || typeof v === 'function')
+    throw new TypeError(
+      `html: cannot print ${typeof v === 'function' ? 'a function' : `an object (${v.constructor?.name ?? 'object'})`}`
+    );
   return escape(v);
 }
 

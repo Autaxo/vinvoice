@@ -28,6 +28,25 @@ const scenarios = examples.scenarios;
 
 const corpusDir = path.join(ROOT, 'corpus');
 
+/**
+ * The corpus files are published unchanged as /examples/<name>.xml, and a browser that opens one
+ * renders it as XML on the site's origin, without the CSP the HTML pages carry. A file that brings
+ * XHTML or SVG elements (which can run script) or a stylesheet instruction is therefore refused.
+ * @param {string} name
+ * @param {string} xml
+ */
+function assertPassive(name, xml) {
+  const active = [
+    [/http:\/\/www\.w3\.org\/1999\/xhtml/i, 'the XHTML namespace'],
+    [/http:\/\/www\.w3\.org\/2000\/svg/i, 'the SVG namespace'],
+    [/<\?\s*xml-stylesheet/i, 'an xml-stylesheet instruction'],
+    [/<!DOCTYPE/i, 'a DOCTYPE'],
+  ];
+  for (const [re, what] of active)
+    if (re.test(xml))
+      throw new Error(`[corpus] corpus/${name} uses ${what}; test invoices must not`);
+}
+
 /** @type {CorpusFile[]} */
 export const corpus = fs
   .readdirSync(corpusDir, { withFileTypes: true })
@@ -36,6 +55,7 @@ export const corpus = fs
   .map((e) => e.name)
   .map((name) => {
     const xml = fs.readFileSync(path.join(corpusDir, name), 'utf8');
+    assertPassive(name, xml);
     const parts = name.replace(/\.xml$/, '').split('.');
     const syntax = parts.at(-1) === 'ubl' ? 'UBL' : 'CII';
     const carrierId = parts.length > 2 ? /** @type {string} */ (parts.at(-2)) : '';
@@ -227,5 +247,5 @@ export function levels(name) {
   if (!c) return [];
   const found = new Set(c.vehicles.map((v) => v.level));
   if (c.level0.length) found.add(0);
-  return [...found].sort();
+  return [...found].sort((a, b) => a - b);
 }
