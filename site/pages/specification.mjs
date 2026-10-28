@@ -405,10 +405,11 @@ export function render({ path }) {
       ${markerVersion}.
     </p>
     <p>
-      The opposite case is excluded by law as well: a new means of transport supplied to another
-      member state under Art. 138(1) or (2)(a) is never a margin-scheme supply (Art. 313(2) VAT
-      Directive; § 25a(7) no. 1 b UStG), so such a line does not carry
-      ${Key({ t: REF.marginScheme, value: 'true' })}.
+      Conversely to the category <code>K</code> rule in the margin-scheme list above, a new means of
+      transport supplied to another member state under Art. 138(1) or (2)(a) is never a margin-scheme
+      supply (Art. 313(2) VAT Directive; § 25a(7) no. 1(b) UStG). Such a line MUST NOT carry
+      ${Key({ t: REF.marginScheme, value: 'true' })}; V-07 reports it when the line uses category
+      <code>K</code>.
     </p>
 
     <h2 id="never-in-rows">11. What never goes into rows</h2>
