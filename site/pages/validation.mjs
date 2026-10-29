@@ -216,7 +216,10 @@ export function render({ path }) {
         </tr>
         <tr>
           <th scope="row" class="nowrap">V-04</th><td class="warn">warning</td>
-          <td>BT-128 and the row ${Key({ t: REF.vin })} differ; BT-128 wins.</td>
+          <td>
+            BT-128 and the row ${Key({ t: REF.vin })} differ. With scheme <code>AKG</code> BT-128 wins; with
+            scheme <code>VT</code> (read only when the value has the form of a VIN) the row wins.
+          </td>
         </tr>
         <tr>
           <th scope="row" class="nowrap">V-05</th><td class="warn">warning</td>

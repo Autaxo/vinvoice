@@ -120,9 +120,11 @@
       <let name="current" value="vv:current(.)"/>
       <let name="single" value="$keys[. != '' and not(. = ('vehicle.energySourceCode', 'vehicle.basicColourCode', 'vehicle.catalogueId'))]"/>
       <let name="bt128" value="ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument | ram:AdditionalReferencedDocument | cac:DocumentReference"/>
-      <let name="vin128" value="string((ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = ('AKG', 'VT')]/ram:IssuerAssignedID, cac:DocumentReference/cbc:ID[@schemeID = ('AKG', 'VT')])[1])"/>
+      <let name="vinAkg" value="normalize-space(string((ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = 'AKG']/ram:IssuerAssignedID, cac:DocumentReference/cbc:ID[@schemeID = 'AKG'])[1]))"/>
+      <let name="vinVt" value="normalize-space(string((ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = 'VT'][matches(normalize-space(ram:IssuerAssignedID), '^[A-HJ-NPR-Z0-9]{17}$')]/ram:IssuerAssignedID, cac:DocumentReference/cbc:ID[@schemeID = 'VT'][matches(normalize-space(.), '^[A-HJ-NPR-Z0-9]{17}$')])[1]))"/>
+      <let name="vin128" value="if ($vinAkg != '') then $vinAkg else $vinVt"/>
       <let name="abz" value="exists(ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = 'ABZ'] | cac:DocumentReference/cbc:ID[@schemeID = 'ABZ'])"/>
-      <let name="vin18" value="exists(/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:AdditionalReferencedDocument[ram:TypeCode = '130'][ram:ReferenceTypeCode = ('AKG', 'VT')] | /*/cac:AdditionalDocumentReference[cbc:DocumentTypeCode = '130']/cbc:ID[@schemeID = ('AKG', 'VT')])"/>
+      <let name="vin18" value="exists(/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:AdditionalReferencedDocument[ram:TypeCode = '130'][ram:ReferenceTypeCode = 'AKG' or (ram:ReferenceTypeCode = 'VT' and matches(normalize-space(ram:IssuerAssignedID), '^[A-HJ-NPR-Z0-9]{17}$'))] | /*/cac:AdditionalDocumentReference[cbc:DocumentTypeCode = '130']/cbc:ID[@schemeID = 'AKG' or (@schemeID = 'VT' and matches(normalize-space(.), '^[A-HJ-NPR-Z0-9]{17}$'))])"/>
       <let name="role" value="vv:fact(., 'vehicle.roleCode')"/>
       <let name="odometer" value="vv:fact(., 'vehicle.odometerReadingKm') != '' or vv:fact(., 'vehicle.odometerReadingMi') != ''"/>
       <let name="noReading" value="vv:fact(., 'vehicle.odometerReadingStatusCode') = ('inoperative', 'unknown')"/>
@@ -138,7 +140,8 @@
       <assert id="V-01" role="error" test="not($current) or $keys = 'vehicle.roleCode'">A vehicle line needs the role row vehicle.roleCode.</assert>
       <assert id="V-03" role="warning" test="not($current) or count($single) = count(distinct-values($single))">A key that is not repeatable appears more than once; readers keep the first value.</assert>
       <assert id="V-12" role="error" test="not($current) or count($bt128) le 1">More than one line object identifier (BT-128) on a vehicle line.</assert>
-      <assert id="V-04" role="warning" test="not($current and $vin128 != '' and vv:fact(., 'vehicle.vin') != '') or $vin128 = vv:fact(., 'vehicle.vin')">BT-128 (<value-of select="$vin128"/>) differs from vehicle.vin; BT-128 wins.</assert>
+      <assert id="V-04" role="warning" test="not($current and $vinAkg != '' and vv:fact(., 'vehicle.vin') != '') or $vinAkg = vv:fact(., 'vehicle.vin')">BT-128 (<value-of select="$vinAkg"/>) differs from vehicle.vin; BT-128 wins.</assert>
+      <assert id="V-04-VT" role="warning" test="not($current and $vinAkg = '' and $vinVt != '' and vv:fact(., 'vehicle.vin') != '') or $vinVt = vv:fact(., 'vehicle.vin')">BT-128 with scheme VT (<value-of select="$vinVt"/>) differs from vehicle.vin; vehicle.vin wins.</assert>
       <assert id="V-13" role="error" test="not($current and vv:fact(., 'vehicle.odometerReadingKm') != '' and vv:fact(., 'vehicle.odometerReadingMi') != '')">vehicle.odometerReadingKm and vehicle.odometerReadingMi on the same line.</assert>
       <assert id="V-17" role="error" test="not($current and $odometer and $noReading)">An odometer reading is given although vehicle.odometerReadingStatusCode says no reading is available.</assert>
       <assert id="V-06" role="error" test="not($current and $role = ('supply', 'trade-in') and $qty != '') or number($qty) = 1">A line with role '<value-of select="$role"/>' has quantity <value-of select="$qty"/>; one vehicle per line.</assert>

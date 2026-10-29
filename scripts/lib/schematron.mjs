@@ -16,6 +16,8 @@ const xml = (s) =>
     .replace(/"/g, '&quot;');
 const str = (s) => `'${String(s).replace(/'/g, "''")}'`; // XPath string literal
 const seq = (items) => `(${items.map(str).join(', ')})`;
+// A VIN as BT-128 with scheme VT must have the ISO 3779 form; UNTDID 1153 VT is normally a registration number.
+const VIN_FORM = '^[A-HJ-NPR-Z0-9]{17}$';
 const reEscape = (s) => s.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&');
 
 // Negated character class body such as "\x00-\x1F\x7F\u200E" as an XPath expression that builds
@@ -109,7 +111,8 @@ export function schematron({ meta, keys, refs, reserved }) {
     ['V-01', 'error', `not($current) or $keys = ${str(K.role)}`, `A vehicle line needs the role row ${K.role}.`],
     ['V-03', 'warning', `not($current) or count($single) = count(distinct-values($single))`, `A key that is not repeatable appears more than once; readers keep the first value.`],
     ['V-12', 'error', `not($current) or count($bt128) le 1`, `More than one line object identifier (BT-128) on a vehicle line.`],
-    ['V-04', 'warning', `not($current and $vin128 != '' and ${has('vin')}) or $vin128 = ${val('vin')}`, `BT-128 (<value-of select="$vin128"/>) differs from ${K.vin}; BT-128 wins.`],
+    ['V-04', 'warning', `not($current and $vinAkg != '' and ${has('vin')}) or $vinAkg = ${val('vin')}`, `BT-128 (<value-of select="$vinAkg"/>) differs from ${K.vin}; BT-128 wins.`],
+    ['V-04-VT', 'warning', `not($current and $vinAkg = '' and $vinVt != '' and ${has('vin')}) or $vinVt = ${val('vin')}`, `BT-128 with scheme VT (<value-of select="$vinVt"/>) differs from ${K.vin}; ${K.vin} wins.`],
     ['V-13', 'error', `not($current and ${has('odometerKm')} and ${has('odometerMi')})`, `${K.odometerKm} and ${K.odometerMi} on the same line.`],
     ['V-17', 'error', `not($current and $odometer and $noReading)`, `An odometer reading is given although ${K.odometerStatus} says no reading is available.`],
     ['V-06', 'error', `not($current and $role = ('supply', 'trade-in') and $qty != '') or number($qty) = 1`, `A line with role '<value-of select="$role"/>' has quantity <value-of select="$qty"/>; one vehicle per line.`],
@@ -218,9 +221,11 @@ export function schematron({ meta, keys, refs, reserved }) {
       <let name="current" value="vv:current(.)"/>
       <let name="single" value="$keys[. != '' and not(. = ${seq(repeatable.length ? repeatable : [''])})]"/>
       <let name="bt128" value="ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument | ram:AdditionalReferencedDocument | cac:DocumentReference"/>
-      <let name="vin128" value="string((ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = ('AKG', 'VT')]/ram:IssuerAssignedID, cac:DocumentReference/cbc:ID[@schemeID = ('AKG', 'VT')])[1])"/>
+      <let name="vinAkg" value="normalize-space(string((ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = 'AKG']/ram:IssuerAssignedID, cac:DocumentReference/cbc:ID[@schemeID = 'AKG'])[1]))"/>
+      <let name="vinVt" value="normalize-space(string((ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = 'VT'][matches(normalize-space(ram:IssuerAssignedID), '${VIN_FORM}')]/ram:IssuerAssignedID, cac:DocumentReference/cbc:ID[@schemeID = 'VT'][matches(normalize-space(.), '${VIN_FORM}')])[1]))"/>
+      <let name="vin128" value="if ($vinAkg != '') then $vinAkg else $vinVt"/>
       <let name="abz" value="exists(ram:SpecifiedLineTradeSettlement/ram:AdditionalReferencedDocument[ram:ReferenceTypeCode = 'ABZ'] | cac:DocumentReference/cbc:ID[@schemeID = 'ABZ'])"/>
-      <let name="vin18" value="exists(/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:AdditionalReferencedDocument[ram:TypeCode = '130'][ram:ReferenceTypeCode = ('AKG', 'VT')] | /*/cac:AdditionalDocumentReference[cbc:DocumentTypeCode = '130']/cbc:ID[@schemeID = ('AKG', 'VT')])"/>
+      <let name="vin18" value="exists(/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:AdditionalReferencedDocument[ram:TypeCode = '130'][ram:ReferenceTypeCode = 'AKG' or (ram:ReferenceTypeCode = 'VT' and matches(normalize-space(ram:IssuerAssignedID), '${VIN_FORM}'))] | /*/cac:AdditionalDocumentReference[cbc:DocumentTypeCode = '130']/cbc:ID[@schemeID = 'AKG' or (@schemeID = 'VT' and matches(normalize-space(.), '${VIN_FORM}'))])"/>
       <let name="role" value="${val('role')}"/>
       <let name="odometer" value="${has('odometerKm')} or ${has('odometerMi')}"/>
       <let name="noReading" value="${val('odometerStatus')} = ('inoperative', 'unknown')"/>
