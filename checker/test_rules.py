@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Rule tests on small variants of one corpus file: the VIN rules (BT-128 scheme VT, V-04).
+"""Rule tests on small variants of one corpus file: the VIN rules (BT-128 scheme VT, V-04, V-05).
 
 The corpus itself is covered by test_corpus.py; these cases would need new corpus files with
 validator results, so they are derived in memory from sale-25a.fx.cii.xml instead.
@@ -20,6 +20,8 @@ import vehicle_check  # noqa: E402
 REGISTRY = json.loads((ROOT / 'generated/registry.json').read_text(encoding='utf-8'))
 BASE = (ROOT / 'corpus/sale-25a.fx.cii.xml').read_text(encoding='utf-8')
 VIN = 'TSTVEH016N0000001'          # valid check digit
+BAD_DIGIT = 'TSTVEH017N0000001'    # position 9 is wrong
+REG_DATE = '2022-03-18'
 
 
 def findings(xml):
@@ -33,10 +35,19 @@ def without_vin_row(xml):
     return re.sub(r'<ram:ApplicableProductCharacteristic>\s*<ram:Description>[^<]*\[vehicle\.vin\]</ram:Description>.*?</ram:ApplicableProductCharacteristic>\s*', '', xml, count=1, flags=re.S)
 
 
-def variant(ref_scheme='AKG', ref_value=VIN, row_vin=VIN):
+def variant(ref_scheme='AKG', ref_value=VIN, row_vin=VIN, reg_date=REG_DATE):
     xml = BASE.replace('<ram:ReferenceTypeCode>AKG</ram:ReferenceTypeCode>', f'<ram:ReferenceTypeCode>{ref_scheme}</ram:ReferenceTypeCode>')
     xml = xml.replace(f'<ram:IssuerAssignedID>{VIN}</ram:IssuerAssignedID>', f'<ram:IssuerAssignedID>{ref_value}</ram:IssuerAssignedID>')
-    return xml.replace(f'<ram:Value>{VIN}</ram:Value>', f'<ram:Value>{row_vin}</ram:Value>')
+    xml = xml.replace(f'<ram:Value>{VIN}</ram:Value>', f'<ram:Value>{row_vin}</ram:Value>')
+    return xml.replace(f'<ram:Value>{REG_DATE}</ram:Value>', f'<ram:Value>{reg_date}</ram:Value>')
+
+
+def with_category(xml, code):
+    """Add a vehicle.categoryCode row after the role row."""
+    role = '<ram:Value>supply</ram:Value>\n        </ram:ApplicableProductCharacteristic>'
+    row = f'\n        <ram:ApplicableProductCharacteristic>\n          <ram:Description>Fahrzeugklasse [vehicle.categoryCode]</ram:Description>\n          <ram:Value>{code}</ram:Value>\n        </ram:ApplicableProductCharacteristic>'
+    assert role in xml
+    return xml.replace(role, role + row, 1)
 
 
 def rules(out, rule):
@@ -101,6 +112,50 @@ class SchemeVT(unittest.TestCase):
         self.assertEqual(vehicle_check.vin_from_refs([('M-AB 1234', 'VT')]), None)
         self.assertEqual(vehicle_check.vin_from_refs([(VIN, 'VT')]), VIN)
         self.assertEqual(vehicle_check.vin_from_refs([(VIN, 'VT'), (VIN, 'AKG')]), VIN)
+
+
+class CheckDigit(unittest.TestCase):
+    def test_format_failure_is_a_warning(self):
+        out = findings(variant(ref_value='TSTVEH016N000000O', row_vin='TSTVEH016N000000O'))
+        self.assertEqual([s for s, m in rules(out, 'V-05')], ['warning'])
+
+    def test_bad_check_digit_before_the_due_date_is_info(self):
+        out = findings(variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT, reg_date='2026-07-06'))
+        self.assertEqual([s for s, m in rules(out, 'V-05')], ['info'])
+
+    def test_bad_check_digit_from_the_due_date_is_a_warning(self):
+        out = findings(variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT, reg_date='2026-07-07'))
+        self.assertEqual([s for s, m in rules(out, 'V-05')], ['warning'])
+
+    def test_partial_date_counts_as_its_last_day(self):
+        out = findings(variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT, reg_date='2026-07'))
+        self.assertEqual([s for s, m in rules(out, 'V-05')], ['warning'])
+        out = findings(variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT, reg_date='2026-06'))
+        self.assertEqual([s for s, m in rules(out, 'V-05')], ['info'])
+
+    def test_bad_check_digit_after_the_due_date_depends_on_the_category(self):
+        xml = variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT, reg_date='2026-08-01')
+        for category, severity in (('M1', 'warning'), ('N2', 'warning'), ('O3', 'warning'), ('L3e-A1', 'info'), ('T1', 'info')):
+            with self.subTest(category=category):
+                out = findings(with_category(xml, category))
+                self.assertEqual([s for s, m in rules(out, 'V-05')], [severity])
+
+    def test_bad_check_digit_without_a_registration_date_is_info(self):
+        xml = variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT)
+        xml = re.sub(r'<ram:ApplicableProductCharacteristic>\s*<ram:Description>[^<]*\[vehicle\.firstRegistrationDate\]</ram:Description>.*?</ram:ApplicableProductCharacteristic>\s*', '', xml, count=1, flags=re.S)
+        self.assertNotIn('[vehicle.firstRegistrationDate]', xml)
+        found = rules(findings(xml), 'V-05')
+        self.assertEqual([s for s, m in found], ['info'])
+        self.assertNotIn('not required', found[0][1])           # Art. 12(2) also covers vehicles placed on the market
+        self.assertIn('cannot tell', found[0][1])
+
+    def test_unknown_category_after_the_due_date_is_a_warning(self):
+        xml = variant(ref_value=BAD_DIGIT, row_vin=BAD_DIGIT, reg_date='2026-08-01')
+        self.assertNotIn('[vehicle.categoryCode]', xml)
+        self.assertEqual([s for s, m in rules(findings(xml), 'V-05')], ['warning'])
+
+    def test_valid_check_digit_has_no_finding(self):
+        self.assertEqual(rules(findings(BASE), 'V-05'), [])
 
 
 if __name__ == '__main__':

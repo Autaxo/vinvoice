@@ -75,7 +75,7 @@
       "labelDe": "Fahrzeug-Identifizierungsnummer (FIN)",
       "labelEn": "Vehicle identification number (VIN)",
       "definition": "Identification number marked on the vehicle: the 17-character VIN (ISO 3779; Reg. (EU) 2021/535 Annex II Part 2). For a vehicle without a VIN, the identifier printed in registration field E (for example a chassis or product identification number); receivers treat only a 17-character value of the expected form as an ISO 3779 VIN. Same value as BT-128 with scheme AKG when both are present. A VIN can be personal data when the holder can be identified.",
-      "valueFormat": "^[A-Z0-9]{1,17}$, upper case, no blanks or hyphens; expected form ^[A-HJ-NPR-Z0-9]{17}$ with a valid position-9 check digit (Reg. (EU) 2021/535 Annex II Part 2); deviations are warnings only",
+      "valueFormat": "^[A-Z0-9]{1,17}$, upper case, no blanks or hyphens; expected form ^[A-HJ-NPR-Z0-9]{17}$ with a valid position-9 check digit (Reg. (EU) 2021/535 Annex II Part 2 Section A points 2.1-2.8, formula in Section C; a correct check digit is a condition for registration of M, N and O vehicles from 2026-07-07, Art. 12(2)); deviations are warnings or information only, and a wrong check digit is a warning only for a vehicle of category M, N, O or none given first registered on or after 2026-07-07 (Art. 1(1))",
       "grammar": "^[A-Z0-9]{1,17}$",
       "tokens": [],
       "codeList": "none",

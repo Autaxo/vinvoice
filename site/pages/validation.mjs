@@ -222,10 +222,23 @@ export function render({ path }) {
           </td>
         </tr>
         <tr>
-          <th scope="row" class="nowrap">V-05</th><td class="warn">warning</td>
+          <th scope="row" class="nowrap">V-05</th>
+          <td><span class="warn">warning</span>, <span class="muted">info</span></td>
           <td>
-            The VIN is not 17 characters long or its check digit fails. Older and non-EU vehicles
-            can legitimately deviate, so this is never an error.
+            <strong>Form</strong> (warning): the VIN is not 17 characters from <code>A</code> to <code>Z</code>
+            and <code>0</code> to <code>9</code> without <code>I</code>, <code>O</code> and <code>Q</code>
+            (Regulation (EU) 2021/535, Annex II Part 2, Section A, points 2.1 to 2.8).
+            <strong>Check digit</strong>: position 9 fails the check-digit rule of Section A, point 2.4 (formula in Section C). This is a
+            warning when ${Key({ t: REF.firstRegistrationDate })} is on or after 2026-07-07 and the category
+            is M, N, O or not given, and information in every other case. Since 7 July 2026 Art. 12(2) of
+            the regulation makes a correct check digit a condition for the registration, placing on the
+            market and entry into service of M, N and O vehicles; before that it was required only for new
+            types approved from 6 July 2022 (Art. 12(1)). Vehicles registered earlier, L-category vehicles
+            and vehicles first registered outside the EU can therefore carry a wrong digit legitimately. The
+            first registration date is a proxy, not proof; a partial date counts as its last day. A line
+            without a registration date always gets information, even though Art. 12(2) also covers a
+            vehicle placed on the market without a registration, which the checker cannot see. Never an
+            error.
           </td>
         </tr>
         <tr>

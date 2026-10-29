@@ -12,8 +12,10 @@ definition: "Identification number marked on the vehicle: the 17-character VIN (
   when both are present. A VIN can be personal data when the holder can be identified."
 representationTerm: Number (implicit in the listed abbreviation vin)
 valueFormat: ^[A-Z0-9]{1,17}$, upper case, no blanks or hyphens; expected form ^[A-HJ-NPR-Z0-9]{17}$
-  with a valid position-9 check digit (Reg. (EU) 2021/535 Annex II Part 2); deviations are warnings
-  only
+  with a valid position-9 check digit (Reg. (EU) 2021/535 Annex II Part 2 Section A points 2.1-2.8,
+  formula in Section C; a correct check digit is a condition for registration of M, N and O vehicles from 2026-07-07,
+  Art. 12(2)); deviations are warnings or information only, and a wrong check digit is a warning only
+  for a vehicle of category M, N, O or none given first registered on or after 2026-07-07 (Art. 1(1))
 grammar: '^[A-Z0-9]{1,17}$'
 unit: null
 tokens: []
