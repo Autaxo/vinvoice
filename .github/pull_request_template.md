@@ -5,6 +5,6 @@
 ## Checklist
 
 - [ ] `npm run validate` passes and `generated/` is regenerated (`npm run generate`) and committed
-- [ ] `npm test` passes
+- [ ] `npm test` and `npm run check` pass
 - [ ] Key changes: the issue had its consensus period (14 days, 28 for the core tier)
 - [ ] Rule changes: corpus and expectations updated, `npm run test:schematron` passes

@@ -11,17 +11,83 @@
 // its target page; nothing is loaded from a third party (no external src, stylesheet, preload or
 // icon, no @import or url() to another host in the stylesheet); no inline event handlers, style
 // attributes, style elements or javascript: URLs; every script is a file or a JSON-LD block that
-// parses. Across the site: the sitemap lists exactly the indexable pages, and every internal link
-// in llms.txt and llms-full.txt resolves.
+// parses; the tags are balanced (Prettier does not format the markup inside html`` templates, so
+// nothing else would notice a missing </div>). Across the site: the sitemap lists exactly the
+// indexable pages, every internal link in llms.txt and llms-full.txt resolves, and the rules
+// listed on the validation page are the rules the reference checker raises. The html`` tag
+// itself is exercised at the top.
+//
+// The tag reader below is deliberately small. It does not understand comments, CDATA or unquoted
+// attribute values that contain ">"; the generator writes none of them. If a page needs one, extend
+// tags() and balanced() rather than excusing the page.
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { build } from './build.mjs';
+import { attr, escape, html, httpUrl, raw, toHtmlString } from './lib/html.mjs';
+import { ROOT } from './lib/paths.mjs';
 import { SITE } from './lib/site.mjs';
 
 const problems = /** @type {string[]} */ ([]);
 /** @param {string} where @param {string} what */
 const fail = (where, what) => problems.push(`${where}: ${what}`);
+
+// --- the html`` tag ---------------------------------------------------------------------------
+/** @param {string} what @param {unknown} got @param {unknown} want */
+const same = (what, got, want) => {
+  if (got !== want)
+    fail(
+      'site/lib/html.mjs',
+      `${what}: got ${JSON.stringify(got)}, expected ${JSON.stringify(want)}`
+    );
+};
+same(
+  'escaping',
+  toHtmlString(html`<a title="${`"x" & 'y'`}">${'<b>'}</a>`),
+  `<a title="&quot;x&quot; &amp; &#39;y&#39;">&lt;b&gt;</a>`
+);
+same(
+  'nesting is not escaped twice',
+  toHtmlString(html`<p>${html`<b>${'&'}</b>`}</p>`),
+  '<p><b>&amp;</b></p>'
+);
+same('arrays flatten', toHtmlString(html`${[1, [html`<i>${'a'}</i>`, 'b<']]}`), '1<i>a</i>b&lt;');
+same(
+  'null, undefined, false, true',
+  toHtmlString(html`[${null}${undefined}${false}${true}]`),
+  '[]'
+);
+same('zero and empty string are values', toHtmlString(html`[${0}][${''}]`), '[0][]');
+same('raw', toHtmlString(html`${raw('<b>x</b>')}`), '<b>x</b>');
+same(
+  'attr',
+  toHtmlString(html`<a href="/"${attr('lang', 'de')}${attr('hidden', false)}>`),
+  '<a href="/" lang="de">'
+);
+same('escape', escape(`<&>"'`), '&lt;&amp;&gt;&quot;&#39;');
+for (const [what, value] of /** @type {[string, unknown][]} */ ([
+  ['an object', { a: 1 }],
+  ['a Set', new Set([1])],
+  ['an object without prototype', Object.create(null)],
+  ['a function', () => 1],
+])) {
+  try {
+    toHtmlString(html`${value}`);
+    fail('site/lib/html.mjs', `printing ${what} must throw`);
+  } catch {}
+}
+for (const bad of [
+  'javascript:alert(1)',
+  '\tjavascript:alert(1)',
+  'java\nscript:alert(1)',
+  'data:text/html,x',
+  '/relative',
+])
+  try {
+    httpUrl(bad);
+    fail('site/lib/html.mjs', `httpUrl accepted ${JSON.stringify(bad)}`);
+  } catch {}
+same('httpUrl', httpUrl('https://example.org/a?b=c'), 'https://example.org/a?b=c');
 
 // --- the build ------------------------------------------------------------------------------
 let dir = process.argv[2] ? path.resolve(process.argv[2]) : null;
@@ -104,6 +170,36 @@ function resolveRef(from, ref) {
   return { target, fragment };
 }
 
+const VOID = new Set(
+  'area base br col embed hr img input link meta param source track wbr'.split(' ')
+);
+
+/**
+ * Whether the tags of a page are balanced. Returns a description of the first problem, or null.
+ * Every non-void element must be closed explicitly, optional end tags (li, p, td ...) included.
+ * @param {string} markup the page without script bodies
+ */
+function balanced(markup) {
+  /** @type {string[]} */
+  const open = [];
+  // Strip comments until none is left, so that no nested '<!--' survives one pass.
+  let text = markup;
+  for (let previous = ''; previous !== text;) {
+    previous = text;
+    text = text.replace(/<!--[\s\S]*?-->/g, '');
+  }
+  text = text.replace(/<!doctype[^>]*>/i, '');
+  for (const m of text.matchAll(/<(\/?)([a-zA-Z][a-zA-Z0-9-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>/g)) {
+    const [, closing, name] = m;
+    const tag = name.toLowerCase();
+    if (VOID.has(tag) || m[3].endsWith('/')) continue;
+    if (!closing) open.push(tag);
+    else if (open.at(-1) === tag) open.pop();
+    else return `</${tag}> closes <${open.at(-1) ?? 'nothing'}>`;
+  }
+  return open.length ? `<${open.at(-1)}> is never closed` : null;
+}
+
 // --- per page -------------------------------------------------------------------------------
 const RESOURCE_LINK =
   /\b(stylesheet|preload|modulepreload|prefetch|icon|apple-touch-icon|manifest|dns-prefetch|preconnect)\b/i;
@@ -112,9 +208,11 @@ for (const page of pages) {
   const html = fs.readFileSync(path.join(root, page), 'utf8');
   const where = page;
   // Script bodies are data, not markup: look at tags outside them.
-  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
-  const markup = html.replace(/(<script\b[^>]*>)[\s\S]*?<\/script>/gi, '$1</script>');
+  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script[^>]*>/gi)];
+  const markup = html.replace(/(<script\b[^>]*>)[\s\S]*?<\/script[^>]*>/gi, '$1</script>');
   const all = tags(markup);
+  const unbalanced = balanced(markup);
+  if (unbalanced) fail(where, `unbalanced tags: ${unbalanced}`);
 
   const title = markup.match(/<title>([\s\S]*?)<\/title>/)?.[1].trim();
   if (!title) fail(where, 'no <title>');
@@ -217,7 +315,10 @@ const indexable = new Set(
 const listed = new Set(
   [...siteFile('sitemap.xml').matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1])
 );
-for (const u of indexable) if (!listed.has(u)) fail('sitemap.xml', `${u} is missing`);
+const sitemapHint =
+  '(a new page needs an entry in NAV in site/lib/site.mjs, or a line in site/pages/sitemap.xml.mjs)';
+for (const u of indexable)
+  if (!listed.has(u)) fail('sitemap.xml', `${u} is missing ${sitemapHint}`);
 for (const u of listed) if (!indexable.has(u)) fail('sitemap.xml', `${u} is not an indexable page`);
 
 for (const file of ['llms.txt', 'llms-full.txt']) {
@@ -229,6 +330,28 @@ for (const file of ['llms.txt', 'llms-full.txt']) {
       fail(file, `${m[0]}: no such id`);
     }
   }
+}
+
+// --- the rules on the validation page are the checker's rules --------------------------------
+// The rule table is typed by hand in site/pages/validation.mjs; the reference checker
+// (checker/vehicle_check.py) is the source of truth. When a rule is added or removed, edit both.
+{
+  const checker = fs.readFileSync(path.join(ROOT, 'checker/vehicle_check.py'), 'utf8');
+  const raised = new Set(
+    [...checker.matchAll(/F\('(?:error|warning|info)', '(V-\d\d)'/g)].map((m) => m[1])
+  );
+  const shown = new Set(
+    [
+      ...siteFile('validation/index.html').matchAll(/<th scope="row" class="nowrap">(V-\d\d)</g),
+    ].map((m) => m[1])
+  );
+  for (const r of raised)
+    if (!shown.has(r)) fail('validation/', `${r} is raised by the checker but not listed`);
+  for (const r of shown)
+    if (!raised.has(r)) fail('validation/', `${r} is listed but the checker never raises it`);
+  const last = [...raised].sort().at(-1);
+  if (!siteFile('llms.txt').includes(`rules V-01 to ${last}`))
+    fail('llms.txt', `should say "rules V-01 to ${last}" (site/lib/llms.mjs)`);
 }
 
 if (temp) fs.rmSync(temp, { recursive: true, force: true });

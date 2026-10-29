@@ -16,13 +16,13 @@ import {
 } from '../lib/registry.mjs';
 import { featured, firstLine } from '../lib/corpus.mjs';
 import { BINDINGS, codeSpans } from '../lib/bindings.mjs';
-import { formatDate, SITE } from '../lib/site.mjs';
+import { formatDate, LICENCE_URL, SITE } from '../lib/site.mjs';
 
 const roles = REF.role.tokens;
 const repeatable = terms.filter((t) => t.repeatable);
 const markerMajor = markerVersion.split('.')[0];
 const repeatableNote = repeatable.length
-  ? html`Exception: repeatable keys (${linkKeys(repeatable.map((t) => t.key).join(', '))}) take one row per value.`
+  ? html`Exception: repeatable keys (${KeyList({ terms: repeatable })}) take one row per value.`
   : '';
 
 const jsonLd = {
@@ -33,7 +33,7 @@ const jsonLd = {
   version: registry.version,
   dateModified: registry.date,
   inLanguage: 'en',
-  license: 'https://creativecommons.org/licenses/by/4.0/',
+  license: LICENCE_URL['CC BY 4.0'],
   about: ['EN 16931', 'electronic invoicing', 'vehicle identification number', 'vehicle data'],
   isAccessibleForFree: true,
 };

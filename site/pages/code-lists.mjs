@@ -7,7 +7,7 @@ import { terms, tokenLists, unitInfo, linkKeys, registry } from '../lib/registry
 const own = tokenLists.filter((l) => !l.external);
 /** @param {import('../lib/registry.mjs').TokenList} l */
 const usedBy = (l) =>
-  html`Used by ${linkKeys(l.terms.map((t) => t.key).join(', '))}${l.note ? html`; ${linkKeys(l.note)}` : ''}.`;
+  html`Used by ${KeyList({ terms: l.terms })}${l.note ? html`; ${linkKeys(l.note)}` : ''}.`;
 const external = tokenLists.filter((l) => l.external);
 
 /** @type {Map<string, { name: string, code: string | null, note?: string, terms: typeof terms }>} */

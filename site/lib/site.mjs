@@ -28,28 +28,20 @@ export const NAV = [
   { href: '/implementations/', label: 'Implementations' },
 ];
 
-export const LICENCES = [
-  {
-    part: 'Specification text',
-    licence: 'CC BY 4.0',
-    url: 'https://creativecommons.org/licenses/by/4.0/',
-  },
-  {
-    part: 'Registry data (keys, labels, grammars, token lists, examples)',
-    licence: 'CC0 1.0',
-    url: 'https://creativecommons.org/publicdomain/zero/1.0/',
-  },
-  {
-    part: 'Crosswalk to third-party vocabularies',
-    licence: 'CC BY 4.0',
-    url: 'https://creativecommons.org/licenses/by/4.0/',
-  },
-  {
-    part: 'Code: reference checker, reader, generators, test runner',
-    licence: 'Apache-2.0',
-    url: 'https://www.apache.org/licenses/LICENSE-2.0',
-  },
-];
+/** Licence name -> licence text URL. The one place these addresses are written. */
+export const LICENCE_URL = {
+  'CC0 1.0': 'https://creativecommons.org/publicdomain/zero/1.0/',
+  'CC BY 4.0': 'https://creativecommons.org/licenses/by/4.0/',
+  'Apache-2.0': 'https://www.apache.org/licenses/LICENSE-2.0',
+};
+
+/** Which licence covers which part of the repository (the table on the governance page). */
+export const LICENCES = /** @type {const} */ ([
+  ['Specification text', 'CC BY 4.0'],
+  ['Registry data (keys, labels, grammars, token lists, examples)', 'CC0 1.0'],
+  ['Crosswalk to third-party vocabularies', 'CC BY 4.0'],
+  ['Code: reference checker, reader, generators, test runner', 'Apache-2.0'],
+]).map(([part, licence]) => ({ part, licence, url: LICENCE_URL[licence] }));
 
 /** @param {number} n */
 export const formatBytes = (n) =>

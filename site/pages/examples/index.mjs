@@ -4,17 +4,11 @@ import { Rows } from '../../components/rows.mjs';
 import { html } from '../../lib/html.mjs';
 import { corpus, featured, firstLine, levels } from '../../lib/corpus.mjs';
 import { downloads } from '../../lib/downloads.mjs';
-import { formatBytes, SITE } from '../../lib/site.mjs';
+import { formatBytes, LICENCE_URL, SITE } from '../../lib/site.mjs';
 import { registry, terms } from '../../lib/registry.mjs';
 
 const positive = corpus.filter((f) => !f.negative);
 const negative = corpus.filter((f) => f.negative);
-/** @type {Record<string, string>} */
-const LICENCE_URL = {
-  'CC0 1.0': 'https://creativecommons.org/publicdomain/zero/1.0/',
-  'CC BY 4.0': 'https://creativecommons.org/licenses/by/4.0/',
-  'Apache-2.0': 'https://www.apache.org/licenses/LICENSE-2.0',
-};
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Dataset',

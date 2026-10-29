@@ -44,6 +44,17 @@ New keys start with `status: provisional` and stay provisional for 12 months.
 - Check before pushing: `npm test`, `npm run check`, `npm run build`, and
   `npm run test:schematron` if you touched the rules.
 
+## Change the website
+
+The pages are JavaScript modules in `site/pages/`; the text is inside template literals. To fix a
+typo or reword a paragraph, edit the module (for example `site/pages/specification.mjs`), then run
+`npm run check`. Where text lives: prose in `site/pages/*.mjs`, term pages from `registry/keys/*.yaml`
+(edit the YAML, run `npm run generate`), the syntax bindings in `site/lib/bindings.mjs`, the list of
+implementations in `site/data/implementations.json`. In a template write a literal backtick as
+`` \` `` and `${` as `\${`. `npm run dev` serves the site on <http://localhost:4321> and rebuilds on
+every change. [site/README.md](site/README.md) describes the generator, how to add a page, and
+which files to change together when a rule changes.
+
 ## Licences of contributions
 
 You contribute under the licence of the part you change: CC0-1.0 for registry data and test
