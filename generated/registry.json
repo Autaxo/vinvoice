@@ -205,6 +205,9 @@
       "tier": "core",
       "status": "draft",
       "statutory": false,
+      "labelRequiredWhen": "vehicle.newMeansOfTransportIndicator",
+      "labelRequiredVatCategory": "K",
+      "labelRequiredSellerCountry": "DE",
       "repeatable": false,
       "unit": "KWT",
       "representationTerm": "Measure, unit kW (Rec 20 KWT)",
@@ -215,9 +218,9 @@
       "grammar": "^(0|[1-9][0-9]{0,3})([.][0-9])?$",
       "tokens": [],
       "codeList": "unit fixed: kilowatt (Rec 20 KWT)",
-      "conditionality": "MUST whenever known for motor vehicles on supply and trade-in; with newMeansOfTransportIndicator = true this key or engineCapacityCm3 SHOULD be present (more-than-7.2-kW threshold of Art. 2(2)(a)(i)), and MUST where national law makes it an invoice particular (DE)",
+      "conditionality": "MUST whenever known for motor vehicles on supply and trade-in; with newMeansOfTransportIndicator = true this key or engineCapacityCm3 MUST be present (V-08; more-than-7.2-kW threshold of Art. 2(2)(a)(i)). On a line with that indicator = true and VAT category K (intra-Community supply) from a German seller (BT-40 = DE), the row MUST be written with its label as a national invoice particular for a motorised land vehicle (DE UStG §14a(4) with §1b(2) no. 1; V-11); on other lines it MAY be bare",
       "carrier": "BG-32: BT-160 'Höchste Nutzleistung (kW) [vehicle.maximumNetPowerKw]', BT-161 '110'",
-      "anchors": "Directive 1999/37/EC code P.2 'maximum net power (in kW) (if available)'; Reg. (EU) 2020/683 Annex VIII CoC items 27.1, 27.3, 27.4 and footnotes 112 and 159 (DE 'Höchste Nutzleistung'); Reg. (EU) 2017/1151 Art. 2 ('net power', 'maximum 30 minutes power'); Directive 2006/112/EC Art. 2(2)(a)(i) (7.2 kW threshold); national invoice particular: DE UStG §14a(4) with §1b(2); HU NAV enginePower; UN/ECE Rec 20 KWT"
+      "anchors": "Directive 1999/37/EC code P.2 'maximum net power (in kW) (if available)'; Reg. (EU) 2020/683 Annex VIII CoC items 27.1, 27.3, 27.4 and footnotes 112 and 159 (DE 'Höchste Nutzleistung'); Reg. (EU) 2017/1151 Art. 2 ('net power', 'maximum 30 minutes power'); Directive 2006/112/EC Art. 2(2)(a)(i) (7.2 kW threshold, defines the vehicle); national invoice particular on the invoice for a new means of transport: DE UStG §14a(4) with §1b(2); HU NAV enginePower; UN/ECE Rec 20 KWT"
     },
     {
       "key": "vehicle.newMeansOfTransportIndicator",
@@ -389,6 +392,9 @@
       "tier": "recommended",
       "status": "draft",
       "statutory": false,
+      "labelRequiredWhen": "vehicle.newMeansOfTransportIndicator",
+      "labelRequiredVatCategory": "K",
+      "labelRequiredSellerCountry": "DE",
       "repeatable": false,
       "unit": "CMQ",
       "representationTerm": "Measure, unit cm3 (Rec 20 CMQ)",
@@ -399,9 +405,9 @@
       "grammar": "^[1-9][0-9]{0,5}$",
       "tokens": [],
       "codeList": "unit fixed: cubic centimetre (Rec 20 CMQ)",
-      "conditionality": "SHOULD for vehicles with a combustion engine; with newMeansOfTransportIndicator = true this key or maximumNetPowerKw SHOULD be present (more-than-48-cm3 threshold of Art. 2(2)(a)(i)), and MUST where national law makes it an invoice particular (DE)",
+      "conditionality": "SHOULD for vehicles with a combustion engine; with newMeansOfTransportIndicator = true this key or maximumNetPowerKw MUST be present (V-08; more-than-48-cm3 threshold of Art. 2(2)(a)(i)). On a line with that indicator = true and VAT category K (intra-Community supply) from a German seller (BT-40 = DE), the row MUST be written with its label as a national invoice particular for a motorised land vehicle (DE UStG §14a(4) with §1b(2) no. 1; V-11); on other lines it MAY be bare",
       "carrier": "BG-32: BT-160 'Hubraum (cm3) [vehicle.engineCapacityCm3]', BT-161 '1968'",
-      "anchors": "Directive 1999/37/EC code P.1 'capacity (in cm3)'; CoC item 25 'Engine capacity' (DE 'Hubraum'); Directive 2006/112/EC Art. 2(2)(a)(i) (48 cubic centimetres threshold); national invoice particular: DE UStG §14a(4) with §1b(2); HU NAV engineCapacity; UN/ECE Rec 20 CMQ"
+      "anchors": "Directive 1999/37/EC code P.1 'capacity (in cm3)'; CoC item 25 'Engine capacity' (DE 'Hubraum'); Directive 2006/112/EC Art. 2(2)(a)(i) (48 cubic centimetres threshold, defines the vehicle); national invoice particular on the invoice for a new means of transport: DE UStG §14a(4) with §1b(2); HU NAV engineCapacity; UN/ECE Rec 20 CMQ"
     },
     {
       "key": "vehicle.energySourceCode",
@@ -1392,7 +1398,7 @@
     },
     {
       "id": "NR-27",
-      "rule": "Statutory flag. statutory is true only where Directive 2006/112/EC Art. 226 makes the fact an invoice particular in the line's case: the Art. 226(12) characteristics of a new means of transport (odometerReadingKm, odometerReadingMi, firstEntryIntoServiceDate), the condition that triggers them (newMeansOfTransportIndicator), and the Art. 226(14) fact (marginSchemeIndicator). A particular required only by national law (for example power and capacity under DE UStG §14a(4)) is false and is named in anchors as 'national invoice particular'. Spec R3 then requires the labelled name for statutory keys and, in the issuer's state, for that state's national particulars.",
+      "rule": "Statutory flag. statutory is true only where Directive 2006/112/EC Art. 226 makes the fact an invoice particular in the line's case: the Art. 226(12) characteristics of a new means of transport (odometerReadingKm, odometerReadingMi, firstEntryIntoServiceDate), the condition that triggers them (newMeansOfTransportIndicator), and the Art. 226(14) fact (marginSchemeIndicator). A particular required only by national law (for example power and capacity under DE UStG §14a(4)) is false and is named in anchors as 'national invoice particular'. Spec R3 then requires the labelled name for statutory keys and, in the issuer's state, for that state's national particulars. A national particular that an invoice must carry only in one case, such as power and capacity on the invoice for a new motorised land vehicle (DE UStG §14a(4) with §1b(2) no. 1), stays statutory = false and names its case: the indicator key whose value true triggers the labelled form (labelRequiredWhen), the line's VAT category (labelRequiredVatCategory, K for the intra-Community supply) and the seller's country (labelRequiredSellerCountry, BT-40, DE). The labelled form is then required in that case only, for every present row of such a pair, because the rows have to be readable as the particulars (checker rule V-11); this is stricter than the statute, which is met by either capacity or power. Anywhere else the bare form stays allowed.",
       "rationale": "The draft flagged the seven particulars of one national guidance table as statutory, which told implementers in other states that a duty exists where it does not. Power and capacity are thresholds of the definition in Art. 2(2)(a), not Art. 226(12) characteristics.",
       "source": "Directive 2006/112/EC Art. 2(2), 226(12), 226(14); DE UStG §14a(4) with §1b(2) and (3)"
     }

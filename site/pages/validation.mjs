@@ -1,8 +1,9 @@
 import { Base } from '../layouts/base.mjs';
 import { PageHead } from '../components/page-head.mjs';
 import { Key } from '../components/key.mjs';
+import { KeyList } from '../components/key-list.mjs';
 import { html } from '../lib/html.mjs';
-import { REF, linkKeys, registry, prefix } from '../lib/registry.mjs';
+import { REF, linkKeys, registry, prefix, conditionalLabelCases } from '../lib/registry.mjs';
 import { corpus, validation, checker, levels, problemsOf } from '../lib/corpus.mjs';
 import { REPO } from '../lib/site.mjs';
 
@@ -165,7 +166,7 @@ export function render({ path }) {
     <p>
       The format validators above do not know VINvoice. The reference checker reads an invoice (CII
       or UBL), applies the <a href="/specification/#reading">reading rules</a> and reports where a vehicle
-      line departs from the convention. It takes grammars, labels and the statutory flag from <a href="/downloads/registry.json">registry.json</a>, so it follows the registry without code changes. It never rejects an invoice: an error
+      line departs from the convention. It takes grammars, labels and the statutory flag and the <code>labelRequired*</code> fields from <a href="/downloads/registry.json">registry.json</a>, so it follows the registry without code changes. It never rejects an invoice: an error
       means only that the line does not conform to VINvoice. The checker is a single Python file
       without dependencies, licensed under Apache-2.0${
         REPO
@@ -256,7 +257,7 @@ export function render({ path }) {
         <tr>
           <th scope="row" class="nowrap">V-08</th><td><span class="err">error</span>, <span class="warn">warning</span></td>
           <td>
-            ${Key({ t: REF.newMeansOfTransport })} without ${Key({ t: REF.power })} or ${Key({ t: REF.engineCapacity })}, or without any newness feature (errors); without an odometer reading, registered but
+            ${Key({ t: REF.newMeansOfTransport })} without ${Key({ t: REF.power })} or ${Key({ t: REF.engineCapacity })} (§ 14a(4) with § 1b(2) UStG; written bare it is a V-11 error), or without any newness feature (errors); without an odometer reading, registered but
             without ${Key({ t: REF.firstEntryIntoService })}, or beyond both 6,000 km and six months
             (warnings).
           </td>
@@ -279,7 +280,11 @@ export function render({ path }) {
         <tr>
           <th scope="row" class="nowrap">V-11</th><td><span class="err">error</span>, <span class="muted">info</span></td>
           <td>
-            A statutory key written without its label (error); a key longer than ${registry.keyCap}
+            A statutory key written without its label (error); ${conditionalLabelCases.map(
+              (c) =>
+                html`${KeyList({ terms: c.terms })} written without the label on a line with ${Key({ t: c.when, value: 'true' })}${c.category ? html`, VAT category <code>${c.category}</code>` : ''}${c.country ? html`, seller country <code>${c.country}</code>` : ''} (error: a national invoice particular, <code>labelRequiredWhen</code> in the registry);`
+            )}
+            a key longer than ${registry.keyCap}
             or a name longer than ${registry.nameCap} characters, a label that is not in the registry,
             or a marker that is not the first row (info).
           </td>

@@ -12,6 +12,9 @@ import { readJson, readText } from './paths.mjs';
  * @property {string} tier
  * @property {string} status
  * @property {boolean} statutory
+ * @property {string} [labelRequiredWhen]
+ * @property {string} [labelRequiredVatCategory]
+ * @property {string} [labelRequiredSellerCountry]
  * @property {boolean} repeatable
  * @property {string | null} unit
  * @property {string} representationTerm
@@ -256,3 +259,22 @@ const crosswalk = new Map(crosswalkRows.slice(1).map((r) => [r[0], r.slice(1)]))
 export const crosswalkFor = (t) => (crosswalk.get(t.key) ?? []).filter((c) => c.trim());
 
 export const statutoryTerms = terms.filter((t) => t.statutory);
+/** Keys whose label is mandatory only while another indicator key is true (labelRequiredWhen). */
+export const conditionalLabelTerms = terms.filter((t) => t.labelRequiredWhen);
+/**
+ * The cases of conditionalLabelTerms: keys that share an indicator, a VAT category and a seller
+ * country (the last two may be absent).
+ * @type {{ when: Term, category?: string, country?: string, terms: Term[] }[]}
+ */
+export const conditionalLabelCases = [
+  ...Map.groupBy(
+    conditionalLabelTerms,
+    (t) =>
+      `${t.labelRequiredWhen}|${t.labelRequiredVatCategory ?? ''}|${t.labelRequiredSellerCountry ?? ''}`
+  ).values(),
+].map((ts) => ({
+  when: /** @type {Term} */ (findTerm(/** @type {string} */ (ts[0].labelRequiredWhen))),
+  category: ts[0].labelRequiredVatCategory,
+  country: ts[0].labelRequiredSellerCountry,
+  terms: ts,
+}));

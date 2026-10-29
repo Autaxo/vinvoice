@@ -17,7 +17,12 @@ const write = (file, text) => {
 const json = (x) => JSON.stringify(x, null, 2) + '\n';
 
 const keys = meta.keys.map((local) =>
-  Object.fromEntries(JSON_ORDER.map((f) => [f, byLocal.get(local)[f]]))
+  Object.fromEntries(
+    JSON_ORDER.filter((f) => byLocal.get(local)[f] !== undefined).map((f) => [
+      f,
+      byLocal.get(local)[f],
+    ])
+  )
 );
 const refs = Object.fromEntries(
   Object.entries(meta.refs).map(([role, local]) => [role, `${meta.root}.${local}`])

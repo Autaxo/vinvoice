@@ -11,6 +11,7 @@ import {
   markerValue,
   markerVersion,
   statutoryTerms,
+  conditionalLabelCases,
   linkKeys,
   rowName,
 } from '../lib/registry.mjs';
@@ -183,6 +184,19 @@ export function render({ path }) {
         that carry a feature required by VAT law MUST always be written with their label, because
         the mandatory particulars of an invoice have to be readable in the structured data:
         ${KeyList({ terms: statutoryTerms })}.
+      </li>
+      <li>
+        One national invoice particular is treated the same way, but only in its case. ${conditionalLabelCases.map(
+          (c) => html`${KeyList({ terms: c.terms })} MUST be written with their label on a line
+          where ${Key({ t: c.when, value: 'true' })}${c.category ? html` and the VAT category is <code>${c.category}</code>` : ''}${c.country ? html`, if the seller's postal address (BT-40) is in <code>${c.country}</code>` : ''}`
+        )}: § 14a(4) UStG, with § 1b(2) no. 1 UStG, makes engine capacity or power a particular of
+        the invoice for the intra-Community supply of a new motorised land vehicle (see
+        <a href="#vat">new means of transport</a>). They are not statutory in the sense above, since
+        Art. 226 VAT Directive does not require them, and a national particular binds only the
+        issuer in its own state. On every other line the bare form stays allowed. Where both rows
+        are present, both MUST be labelled: the statute is met by either one, but a labelled row
+        next to a bare one would leave the pair unevenly readable (a convention choice, stricter
+        than § 14a(4)).
       </li>
       <li>
         A key appears at most once per line. ${repeatableNote}
@@ -408,6 +422,20 @@ export function render({ path }) {
       states the features that make the vehicle new: ${Key({ t: REF.power })} or ${Key({ t: REF.engineCapacity })}, and an odometer reading or ${Key({ t: REF.firstEntryIntoService })}. A land vehicle counts as
       new if it was first put into service at most six months before the supply or has travelled at
       most 6,000 km.
+    </p>
+    <p>
+      Under § 14a(4) UStG the invoice for the intra-Community supply of a new vehicle states the
+      characteristics of § 1b(2) UStG as well as those of § 1b(3) UStG (distance travelled, first
+      entry into service). For a motorised land vehicle the § 1b(2) characteristic is the engine
+      capacity or the power (§ 1b(2) no. 1 UStG; Art. 2(2)(a)(i) VAT Directive, which defines the
+      thresholds); version 1.0 covers land vehicles only, vessels and aircraft are outside it.
+      Art. 226(12) requires only the characteristics of Art. 2(2)(b). The engine capacity and power
+      are therefore a national invoice particular of German law. On a line with
+      ${Key({ t: REF.newMeansOfTransport, value: 'true' })} and VAT category <code>K</code>, issued by a
+      seller whose postal address (BT-40) is in <code>DE</code>, their rows MUST use the labelled form
+      (V-11), so that the particulars are readable in the structured data. A bare row is an error
+      there. Elsewhere, for example for a seller in another state, a domestic sale or an export, the
+      bare form stays allowed.
     </p>
     <p>
       Supplies of new vehicles to buyers in another member state who have no VAT identification
