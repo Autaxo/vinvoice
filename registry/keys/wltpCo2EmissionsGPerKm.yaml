@@ -14,7 +14,7 @@ valueFormat: integer ^(0|[1-9][0-9]{0,3})$
 grammar: '^(0|[1-9][0-9]{0,3})$'
 unit: null
 tokens: []
-codeList: "unit fixed: g/km (no Rec 20 code, so never BT-212); test procedure fixed: WLTP"
+codeList: "unit fixed: g/km (no Rec 20 code, so never given as BT-212; BT-212 per the XRechnung 4.0.0 pre-release, section 3.23, to be confirmed against DIN EN 16931-1:2026); test procedure fixed: WLTP"
 conditionality: MAY; useful for M1 and N1 fleets
 statutory: false
 repeatable: false

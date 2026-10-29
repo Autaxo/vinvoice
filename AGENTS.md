@@ -45,6 +45,10 @@ Rules that are easy to get wrong:
   the only script is `site/public/vocabulary-filter.js`. `node site/test.mjs` (part of
   `npm run check`) fails on external loads, inline scripts and handlers, broken links and
   missing fragments.
+- The text of EN 16931-1:2026 is not freely available (CEN and DIN sell it). Every statement about it (VAT categories for margin
+  schemes, BT-211, BT-212, category `N`) cites a public source with section and page (today the
+  XRechnung 4.0.0 pre-release, specification section 12) or is marked as an assumption "to be
+  confirmed against DIN EN 16931-1:2026". Do not state it as fact without one of the two.
 - Write regular expressions with `\uXXXX` escapes, never with literal invisible characters.
 - Before committing: `npm test`, `npm run check`, `npm run build`, and `npm run test:schematron`
   when rules change. Conventional Commits.

@@ -9,6 +9,11 @@ and every other fact is one item attribute (BG-32) named `Label [key]` with a pl
 
 Website: <https://vinvoice.org> (built from this repository).
 
+The text of EN 16931-1:2026 is not freely available (CEN and DIN sell it). What the specification says about it (margin-scheme VAT
+categories, BT-211, BT-212, category `N`) cites the XRechnung 4.0.0 pre-release of 15 September
+2026 with section and page, or is marked as an assumption to be confirmed against DIN EN
+16931-1:2026 (specification, section 12).
+
 ## What is in this repository
 
 | Path                      | Content                                                                                                                                                                                                                                | Licence                                  |
@@ -54,6 +59,15 @@ npm run preview           # serve an existing dist/
 npm run check             # Prettier, then link and structure test of the built website
 ```
 
+`npm run test:schematron` runs Java locally if there is a Java 17+ and otherwise calls Docker for
+each Saxon run. To run the whole script in one container instead, give the container what the
+script needs: `python3`, `perl` (for `shasum`), `curl` and `unzip`:
+
+```bash
+docker run --rm -v "$PWD":/w -w /w eclipse-temurin:21-jdk sh -c \
+  'apt-get update -qq && apt-get install -y -qq python3 perl curl unzip >/dev/null && sh scripts/schematron-test.sh'
+```
+
 A change to a key is: edit `registry/keys/<key>.yaml`, run `npm run generate`, commit both the
 YAML and `generated/`. CI fails if `generated/` is out of date. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for proposals and reviews, [GOVERNANCE.md](GOVERNANCE.md) for
@@ -73,12 +87,13 @@ GitHub Pages at <https://vinvoice.org> (custom domain; the `CNAME` file is in `s
 `185.199.111.153`; `AAAA` to `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`,
 `2606:50c0:8003::153`; `CNAME` for `www` to `autaxo.github.io`.
 
+Done: `vinvoice.org` is verified for the organisation (Settings → Pages → Verified domains), and
+**Enforce HTTPS** is on (http redirects with a 301).
+
 Still open for the maintainers:
 
-- [ ] Verify `vinvoice.org` for the organisation (Settings → Pages → Verified domains) to prevent
-      takeover.
-- [ ] **Enforce HTTPS** once GitHub has issued the certificate.
-- [ ] Protect `main`: pull requests only, CI must pass.
+- [ ] Protect `main`: pull requests only, CI must pass. The Pages workflow repeats the CI checks
+      before it deploys, but only a protected `main` keeps unreviewed changes out.
 - [ ] Repository description and topics, so that people and agents find it: description
       "Open convention for vehicle data in EN 16931 e-invoices (ZUGFeRD, Factur-X, XRechnung,
       Peppol)"; website `https://vinvoice.org`; topics `e-invoicing`, `en16931`, `zugferd`,
