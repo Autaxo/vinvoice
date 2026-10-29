@@ -382,7 +382,8 @@ export function render({ path }) {
       </li>
       <li>
         A margin-scheme line MUST NOT use category <code>K</code> (intra-community supply): the exemption
-        is excluded for margin-scheme goods (Art. 313(2) VAT Directive, § 25a(7) UStG).
+        for intra-community supplies does not apply to goods taxed under the margin scheme (Art. 139(3)
+        VAT Directive; § 25a(7) no. 3 UStG).
       </li>
       <li>
         Under EN 16931-1:2026, category <code>F</code> (margin scheme, second-hand goods) replaces the
@@ -402,6 +403,13 @@ export function render({ path }) {
       number (Art. 138(2)(a)) cannot currently be written as a valid EN 16931 invoice, because
       category <code>K</code> requires both VAT identifiers. They are outside the scope of version
       ${markerVersion}.
+    </p>
+    <p>
+      Conversely to the category <code>K</code> rule in the margin-scheme list above, a new means of
+      transport supplied to another member state under Art. 138(1) or (2)(a) is never a margin-scheme
+      supply (Art. 313(2) VAT Directive; § 25a(7) no. 1(b) UStG). Such a line MUST NOT carry
+      ${Key({ t: REF.marginScheme, value: 'true' })}; V-07 reports it when the line uses category
+      <code>K</code>.
     </p>
 
     <h2 id="never-in-rows">11. What never goes into rows</h2>

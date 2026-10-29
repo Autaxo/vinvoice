@@ -239,7 +239,7 @@
       "codeList": "Indicator values: true, false",
       "conditionality": "MUST be true on every line whose supply is exempt under Art. 138(1) and (2)(a) as a supply of a new means of transport, and that line MUST then carry firstEntryIntoServiceDate or an odometer reading (Art. 226(12)); MAY as a factual statement on other supplies; false only as an active statement",
       "carrier": "BG-32: BT-160 'Neues Fahrzeug (USt) [vehicle.newMeansOfTransportIndicator]', BT-161 'true'. Labelled name mandatory (statutory feature)",
-      "anchors": "Directive 2006/112/EC Art. 2(1)(b)(ii), 2(2)(a)-(c), 138(1) and (2)(a), 226(12) (DE 'neue Fahrzeuge'); national transposition e.g. DE UStG §1b and §14a(4); PL KSeF NowySrodekTransportu; HU NAV newTransportMean"
+      "anchors": "Directive 2006/112/EC Art. 2(1)(b)(ii), 2(2)(a)-(c), 138(1) and (2)(a), 226(12) (DE 'neue Fahrzeuge'), and 313(2) (never a margin-scheme supply; DE § 25a(7) no. 1(b) UStG); national transposition e.g. DE UStG §1b and §14a(4); PL KSeF NowySrodekTransportu; HU NAV newTransportMean"
     },
     {
       "key": "vehicle.firstEntryIntoServiceDate",
@@ -278,9 +278,9 @@
         "false"
       ],
       "codeList": "Indicator values: true, false",
-      "conditionality": "MUST be true on every vehicle line supplied under such an arrangement, whatever VAT category code the issuer's national rules or CIUS prescribe for it; MUST NOT be true with category K (Art. 139(3)); false only as an active statement",
+      "conditionality": "MUST be true on every vehicle line supplied under such an arrangement, whatever VAT category code the issuer's national rules or CIUS prescribe for it; MUST NOT be true with category K (Art. 139(3) Directive 2006/112/EC, § 25a(7) no. 3 UStG); false only as an active statement",
       "carrier": "BG-32: BT-160 'Differenzbesteuerung [vehicle.marginSchemeIndicator]', BT-161 'true'. Labelled name mandatory (statutory feature)",
-      "anchors": "Directive 2006/112/EC Title XII Chapter 4 (Arts. 311-343), Art. 139(3) and Art. 226(14) as amended by Directive 2010/45/EU ('Margin scheme - Second-hand goods', '- Works of art', '- Collector's items and antiques'; DE 'Differenzbesteuerung'); HU NAV marginSchemeIndicator; PL KSeF P_PMarzy; IT FatturaPA Natura N5 with RF14; ES Veri*Factu ClaveRegimen 03; national transposition e.g. DE UStG §25a"
+      "anchors": "Directive 2006/112/EC Title XII Chapter 4 (Arts. 311-343), Art. 139(3) (no intra-community exemption for margin-scheme supplies; DE § 25a(7) no. 3 UStG), Art. 313(2) (new means of transport supplied under Art. 138(1) or (2)(a) are outside the margin scheme; DE § 25a(7) no. 1(b) UStG) and Art. 226(14) as amended by Directive 2010/45/EU ('Margin scheme - Second-hand goods', '- Works of art', '- Collector's items and antiques'; DE 'Differenzbesteuerung'); HU NAV marginSchemeIndicator; PL KSeF P_PMarzy; IT FatturaPA Natura N5 with RF14; ES Veri*Factu ClaveRegimen 03; national transposition e.g. DE § 25a UStG"
     },
     {
       "key": "vehicle.registrationNumber",

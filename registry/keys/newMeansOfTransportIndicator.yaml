@@ -29,5 +29,5 @@ repeatable: false
 carrier: "BG-32: BT-160 'Neues Fahrzeug (USt) [vehicle.newMeansOfTransportIndicator]', BT-161
   'true'. Labelled name mandatory (statutory feature)"
 anchors: Directive 2006/112/EC Art. 2(1)(b)(ii), 2(2)(a)-(c), 138(1) and (2)(a), 226(12) (DE 'neue
-  Fahrzeuge'); national transposition e.g. DE UStG §1b and §14a(4); PL KSeF NowySrodekTransportu; HU
+  Fahrzeuge'), and 313(2) (never a margin-scheme supply; DE § 25a(7) no. 1(b) UStG); national transposition e.g. DE UStG §1b and §14a(4); PL KSeF NowySrodekTransportu; HU
   NAV newTransportMean
