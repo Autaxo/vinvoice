@@ -114,9 +114,10 @@ export function render({ path }) {
     </p>
     <p>
       VINvoice names those item attributes. It adds no XML element, no extension and no
-      specification identifier (BT-24), so every invoice that follows it remains a valid EN 16931
-      invoice in each syntax and each national profile. A receiver that does not know VINvoice shows
-      the rows as ordinary item attributes.
+      specification identifier (BT-24), so an invoice that follows it remains valid in XRechnung,
+      Peppol BIS Billing and ZUGFeRD / Factur-X (profiles EN 16931 and EXTENDED); the test invoices
+      pass the official validators of each (see <a href="/validation/">Validation</a>). A receiver
+      that does not know VINvoice shows the rows as ordinary item attributes.
     </p>
 
     <h2 id="conformance-language">3. Conformance language</h2>
