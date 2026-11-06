@@ -117,7 +117,9 @@ export function render({ path }) {
       specification identifier (BT-24), so an invoice that follows it remains valid in XRechnung,
       Peppol BIS Billing and ZUGFeRD / Factur-X (profiles EN 16931 and EXTENDED); the test invoices
       pass the official validators of each (see <a href="/validation/">Validation</a>). A receiver
-      that does not know VINvoice shows the rows as ordinary item attributes.
+      that does not know VINvoice shows the rows as ordinary item attributes. The ZUGFeRD / Factur-X
+      profiles MINIMUM, BASIC WL and BASIC cannot carry VINvoice: BASIC has no item attributes
+      (BG-32) and no line object identifier (BT-128), and MINIMUM and BASIC WL have no invoice lines.
     </p>
 
     <h2 id="conformance-language">3. Conformance language</h2>
@@ -242,6 +244,19 @@ export function render({ path }) {
       BT-157 (item standard identifier) and BT-158 (item classification) MUST NOT be used for the
       VIN: neither has a scheme for it, and custom schemes fail validation outside individual
       national validators.
+    </p>
+    <p>
+      <strong>XRechnung CVD (informative).</strong> The CIUS XRechnung CVD (KoSIT, specification
+      0.9), used for reporting under the Clean Vehicles Directive, writes the vehicle category in
+      BT-158 with the scheme <code>CVD</code> and the clean-vehicle classification in an item
+      attribute named <code>cva</code>. Both fit on a VINvoice vehicle line. The rule above concerns
+      only the VIN; VINvoice adds no BT-24, so a CVD invoice keeps the CVD identifier; and an
+      attribute named <code>cva</code> is not a VINvoice row (see
+      <a href="#reading">Reading rules</a>). BT-12, BT-17, the CVD class and <code>cva</code> remain
+      the CVD writer's duty. ${Key({ t: REF.category })} carries the full EU category, while BT-158
+      with the scheme <code>CVD</code> takes only the classes M1 to N3, without the suffixes G and S.
+      Outside the CVD validation scenario of KoSIT, CEN rule BR-CL-13 rejects the scheme
+      <code>CVD</code>, because it is not yet in UNTDID 7143.
     </p>
     <p>
       When no VIN is known, BT-128 MAY carry the registration number with the scheme <code>ABZ</code>; the row ${Key({ t: REF.registrationNumber })} then repeats it. A registration number is never a
