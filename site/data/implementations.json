@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "name": "Autaxo",
+    "organisation": "Autaxo GmbH",
+    "url": "https://autaxo.de/blog/fahrzeugdaten-e-rechnung-vinvoice/",
+    "role": "writes",
+    "level": 2,
+    "syntaxes": ["CII"],
+    "registry": "vehicle/1.0-draft",
+    "since": "2026-11-06"
+  }
+]
